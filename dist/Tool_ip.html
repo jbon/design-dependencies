@@ -1,0 +1,212 @@
+<!doctype html>
+
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<title>Visualisation tool</title>
+
+
+	<!-- Font awesome css library for the icon on the right click (oncontext) menu on the node : http://fontawesome.io/icons/ -->
+	<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"> 
+
+	<!-- Jquery ui library used for the autocomplete function -->
+	<link rel="stylesheet" href="../jquery-ui-1.12.1/jquery-ui.min.css">
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+	<script src="test.js"></script>
+	
+	<!-- visjs library => docs : http://visjs.org/docs/network/ 	 -->
+	<script type="text/javascript" src="vis.js"></script>
+	<link type="text/css" rel="stylesheet" href="vis-network.min.css">
+	<script type="text/javascript" src="exampleUtil.js"></script>
+	<script type="text/javascript" src="vis-network.min.js"></script>
+	
+	<!-- My css and js files -->
+	<link type="text/css" rel="stylesheet" href="mycss.css">
+	<script  type="text/javascript"  src="myjs.js"></script>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.min.css">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.5.1/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css" />
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.5.1/css/froala_style.min.css" rel="stylesheet" type="text/css" />
+</head>
+
+
+<body>
+
+	<!-- XXXXXXXXXXXXXXXXXXXX Left pane XXXXXXXXXXXXXXXXXXXXXX -->
+
+	<div id="optionsContainer" style="text-align: center;"></div>
+
+	<div id="mynetwork"></div>
+	<div id="column_left"><img src="img/network/resize_fraunhofer.png" id="photos">
+		<p style="font-size:16px; text-align:center; text-indent:justify; ">      Welcome in our visulalisation tool !  </p>
+
+		<div class="ui-widget">
+			<label for="tags"> Tags: </label>
+			<input id="tags">
+			<!-- <img alt="" src="img/network/right_triangle.png" style="height: 4%; width: 7%;cursor: pointer;" class="myButt" onclick="myfunction(this);"/> -->
+		</div>
+
+		<br />
+
+	<!-- 	<div class="legend">
+			<li><span class="Increasing"></span> Increasing</li>
+			<li><span class="Decreasing"></span> Decreasing </li>
+			<li><span class="Equal"></span> Equal </li>
+			<li><span class="Undecided"></span> Undecided </li>
+
+		</div> -->
+
+		<p> Layout : </p>
+		<button class="buttonLeft" id="physical" onclick="layout_physical() ">Physical</button>
+		<button class="buttonLeft"  id="hierarchical" onclick="layout_hierarchical()">Hierarchical</button>
+
+		<!-- <input type="button" onclick="clusterByColor()" value="Cluster"> <br /> -->
+
+
+		<div class="topcoat-button-bar full">
+			<div class="topcoat-button-bar__item">
+				<button class="topcoat-button-bar__button full" onclick="draw_the_path()">Draw</button>
+			</div>
+			<div class="topcoat-button-bar__item">
+				<button class="topcoat-button-bar__button full" onclick="reset_parameters()">Reset</button>
+			</div>
+			<div class="topcoat-button-bar__item">
+				<button class="topcoat-button-bar__button full" onclick="save_changes()">Save</button>
+			</div>
+		</div>
+	</div> 
+
+	<pre id="eventSpan"></pre>
+
+
+
+
+	<!-- XXXXXXXXXXXXXXXXXXXX Right popup pane XXXXXXXXXXXXXXXXXXXXXX -->
+
+	<div id="attributepane">
+		<div class="text">
+			<div title="Close" class="left-close returntext" onclick="closeAttributePane();"> <div class="c cf"><span>Return to the full network</span></div></div>	
+			<div class="headertext">
+				<span>Information Pane</span>
+			</div>	
+			<!-- <p  id="affichageId">Id :</p> -->
+			<p  id="affichageLabel">Label :</p>
+			<p  id="affichageDescription">Description :</p>
+			<div class="nodeattributes">
+				<div class="name"></div>
+				<div class="data"></div>
+
+
+				<div class="link">
+					<ul>
+					</ul>
+				</div>
+			</div>			
+			<div class="headertext">
+				<span>Influencing factor</span>
+			</div>	
+			<p  id="influencing"></p>
+
+			<div class="headertext">
+				<span >Influenced factor</span>
+			</div>	
+			<p  id="influenced"></p>
+
+
+		</div>
+	</div>
+
+	<!-- XXXXXXXXXXXXXXXXXXXX Right click on node menu XXXXXXXXXXXXXXXXXXXXXX -->
+
+
+	<menu class="menu" id="data-action">
+		<li class="menu-item">
+			<button type="button" class="menu-btn" id="source"> <i class="fa fa-caret-up" style="font-size:20px;"></i> <span class="menu-text">(Un)Set as source </span> </button>
+		</li>
+		<li class="menu-item">
+			<button type="button" class="menu-btn" id="target">  <i class="fa fa-star"></i><span class="menu-text"> (Un)Set as target</span> </button>
+		</li>
+		<li class="menu-separator"></li>
+		<li class="menu-item">
+			<button type="button" class="menu-btn" id="edit"> <i class="fa fa-edit"></i> <span class="menu-text">Edit selected Node</span> </button>
+		</li>
+		<li class="menu-item">
+			<button type="button" class="menu-btn" id="remove"> <i class="fa fa-trash"></i> <span class="menu-text">Remove</span> </button>
+		</li>
+
+		<li class="menu-separator"></li>
+		<li class="menu-item submenu">
+			<button type="button" class="menu-btn"> <i class="fa  fa-dot-circle-o"></i> <span class="menu-text">Target value</span> </button>
+			<menu class="menu">
+				<li class="menu-item">
+					<button type="button" class="menu-btn" id="increase"> <i class="fa fa-arrow-up"></i> <span class="menu-text">Increasing</span> </button>
+				</li>
+				<li class="menu-item">
+					<button type="button" class="menu-btn" id="decrease"> <i class="fa fa-arrow-down"></i> <span class="menu-text">Decreasing</span> </button>
+				</li>
+			</menu>
+		</li>
+	</menu>
+
+
+
+	<!-- XXXXXXXXXXXXXXXXXXXX Call the configuration function XXXXXXXXXXXXXXXXXXXXXX -->
+
+	<script type="text/javascript" >
+		redrawAll();
+	</script>
+
+	<!-- XXXXXXXXXXXXXXXXXXXX AddNode/EditNode popup window XXXXXXXXXXXXXXXXXXXXXX -->
+
+	<div id="network-popUp">
+		<span id="operation">node</span> <br>
+		<table>
+			<tr>
+				<td>label</td><td><input style="white-space:nowrap;" id="node-label" value="new value" /></td>
+			</tr>
+<!-- 			<tr>
+				<td>description</td><td><input id="node-description" value="new value" /></td>
+			</tr> -->
+
+		</table>
+
+		<P> Description </P>
+		<textarea   id="node-description" ></textarea>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.min.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/xml/xml.min.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.6.0//js/froala_editor.pkgd.min.js"></script> 
+		<P></P>
+		<P></P>
+
+		<input type="button" value="save" id="saveButton" />
+		<input type="button" value="cancel" id="cancelButton" />
+	</div>
+
+
+	<div id=network-popUp_edge>
+		<span id="operation">Edges</span> <br>
+		<!-- <div> -->
+		<input type="checkbox" name="label" class="boxplus"> + <br>
+		<input type="checkbox" name="label" class="boxminus"> - <br>
+		<!-- </div> -->
+		<input type="button" value="save" id="saveButton_edge" />
+		<input type="button" value="cancel" id="cancelButton_edge" />
+	</div>
+	<br />
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+

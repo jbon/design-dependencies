@@ -1,0 +1,765 @@
+      var network={};
+      var allNodes;
+      var allEdges;
+
+      var highlightActive = false;
+
+      var nodesDataset = new vis.DataSet(nodes); 
+      var edgesDataset = new vis.DataSet(edges); 
+      var exportAreavalue;
+      var options;
+
+      var sourceId;
+      var targetId=[];
+
+      var data;
+
+
+  // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  CONFIGURATION FUNCTION xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+  function redrawAll() {
+
+    var container = document.getElementById('mynetwork');
+
+    options = {
+      // layout:{
+      //   improvedLayout: true
+      // },
+      nodes: {
+        margin: 5,
+
+        widthConstraint: {
+          maximum: 150
+        },
+
+        scaling: {
+          min: 10,
+          max: 30,
+
+          label: {
+            min: 12,
+            max: 30,
+            drawThreshold: 12,
+            maxVisible: 20
+          }
+        },
+
+        font: {
+          size: 16,
+          face: 'Tahoma'
+        },
+      },
+
+      edges: {
+
+       color:{
+        inherit:true,
+        color:'#2b83ff'
+      },
+
+      width: 0.15,
+
+      font: {
+        size:30,
+        align: 'top'
+      },
+
+      arrows: 'to',
+    },
+
+    interaction: {
+      hover:true,
+      hoverConnectedEdges:true,
+      hideEdgesOnDrag: true,
+      tooltipDelay: 200,
+      navigationButtons: true,
+      multiselect:true,
+      keyboard: true
+
+    },
+
+    configure: {
+      container: document.getElementById('optionsContainer'),
+      showButton: false
+    },   
+
+    physics:{
+      enabled: true,
+
+      barnesHut: {
+        gravitationalConstant: -4000,
+        centralGravity: 0.15,
+        springLength: 95,
+        springConstant: 0.02,
+        avoidOverlap: 0
+      },
+
+      maxVelocity: 50,
+      minVelocity: 0.1,
+      solver: 'barnesHut',
+      timestep: 0.9,
+      stabilization: {
+        enabled: true,
+        iterations:500
+      }
+    },
+
+    manipulation: {
+
+      initiallyActive :true,
+      addEdge: function (data, callback) {
+
+        allEdges=edgesDataset.get({returnType:"Object"});
+
+        edgesDataset.add({
+          id:edgesDataset.length+1,
+          from:data.from,
+          to:data.to,
+          label:'-',
+          color:'#2b83ff'
+
+        });
+
+        allEdges=edgesDataset.get({returnType:"Object"});
+
+        if (data.from == data.to) {
+
+          var r = confirm("Do you want to connect the node to itself?");
+          if (r == true) {
+            callback(data);
+          }
+        }
+        else {
+          callback(data);
+        }
+
+        var updateArray = [];
+        for (var edgeId in allEdges) {
+          updateArray.push(allEdges[edgeId]);
+        }
+        edgesDataset.update(updateArray);
+      }
+    }
+
+  };
+
+
+  data = {nodes: nodesDataset , edges:edgesDataset };
+
+  network = new vis.Network(container, data, options);  
+
+  allNodes=nodesDataset.get({returnType:"Object"});
+  allEdges=edgesDataset.get({returnType:"Object"});
+
+
+
+
+
+  // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  CLICK EVENT xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+  network.on("stabilizationIterationsDone", function () {
+    network.setOptions( { physics: false } );
+  });
+
+  network.on("click",neighbourhoodHighlight);
+
+  network.on("click",ouvrirAttributePane);
+
+  //hide the menu on context when click on another place
+  network.on("click", function (e) {
+
+    if (!$(e.target).parents(".custom-menu").length > 0) {
+
+      $("#custom-menu").hide(100);
+    }
+  });
+
+
+  // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  Add Node on doubleclick FUNCTION xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+  var positionX;
+  var positionY
+
+  document.ondblclick=function(e){
+    positionX=e.pageX;
+    positionY=e.pageY;
+  }
+
+
+  network.on("doubleClick",function(){
+
+   document.getElementById('network-popUp').style.display = 'block';
+
+   document.getElementById('node-label').value="";
+   document.getElementById('node-description').value="";
+
+   document.getElementById('saveButton').onclick = function(){
+
+    var location=network.DOMtoCanvas({x:positionX,y:positionY});
+
+    nodesDataset.add({
+      id:nodesDataset.length,
+      label: document.getElementById('node-label').value,
+      description:  document.getElementById('node-description').value,   
+      shape:"ellipse",
+      color:'#2b83ff',
+      x:location.x,
+      y:location.y
+    });        
+
+
+    allNodes=nodesDataset.get({returnType:"Object"});
+    document.getElementById('network-popUp').style.display = 'none';
+  };
+
+
+  document.getElementById('cancelButton').onclick = function(){
+    document.getElementById('saveButton').onclick = null;
+    document.getElementById('cancelButton').onclick = null;
+    document.getElementById('network-popUp').style.display = 'none';
+
+  };
+
+  var updateArray = [];
+  for (var nodeId in allNodes) {
+    if (allNodes.hasOwnProperty(nodeId)) {
+      updateArray.push(allNodes[nodeId]);
+    }
+  }
+  nodesDataset.update(updateArray);
+
+});
+
+
+
+  // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx Change position of a selected node at dragENd FUNCTION xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+  network.on("dragEnd",function(params){
+
+    var position=network.getPositions(params.nodes[0]);
+
+    if (params.nodes[0] != undefined) {
+
+      allNodes[params.nodes[0]].x=position.x;
+      allNodes[params.nodes[0]].y=position.y;
+    }
+  })
+
+
+  // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  oncontext menu FUNCTION xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+  var cursorX;
+  var cursorY;
+  var idselect;
+
+  document.onmousemove = function(e){
+    cursorX = e.pageX;
+    cursorY = e.pageY;
+  }
+
+
+
+//  network.on("dragStart",function(params){
+
+//   console.log(params.nodes[0]);
+
+// })
+
+network.on("oncontext", function (params) {
+
+  var selectedNode = network.getNodeAt({x:cursorX, y:cursorY});
+
+  if (selectedNode != undefined) {
+    $("#custom-menu").css({
+      top: cursorY,
+      left: cursorX
+    });
+    $("#custom-menu").finish().toggle(100);
+
+    idselect=selectedNode;
+  }
+  else {
+    neighbourhoodHighlight({nodes:[]});
+    $("#custom-menu").hide(100);
+  }
+
+  params.event.preventDefault();
+
+});
+
+
+$("#custom-menu li").click(function(){
+
+  var flag=0;
+
+  switch($(this).attr("data-action")) {
+
+
+    case "source":   
+
+    if(sourceId == undefined || idselect==sourceId){
+      if(allNodes[idselect].shape!="triangle"){
+         if(idselect == targetId){
+          targetId=[];
+         }
+
+        allNodes[idselect].shape="triangle";
+        sourceId  =idselect ;
+
+      }
+      else{
+        allNodes[idselect].shape="ellipse";
+        sourceId=undefined;
+        for(var nodeId in allNodes){
+         allNodes[nodeId].color='#2b83ff';
+       }
+     }
+
+   }
+   else{
+    if(confirm("you have already selected a source node ! Do you want to replace it ?") == true){
+
+      allNodes[sourceId].shape="ellipse";
+      sourceId=idselect;
+      allNodes[idselect].shape="triangle";
+    }
+  }
+  break;
+
+
+  case "target":
+
+  if(allNodes[idselect].shape!="star"){
+    if(idselect == sourceId){
+      sourceId=undefined;
+    }
+    allNodes[idselect].shape="star";
+    targetId.push(idselect);
+  }
+  else{
+    allNodes[idselect].shape="ellipse";
+
+     // a ameliorer lorsque le programme fera plusieurs chemins vers plusieurs target ++++++++++++
+     targetId=[];
+    // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    for(var nodeId in allNodes){
+     allNodes[nodeId].color='#2b83ff';
+   }
+ }
+ break;
+
+
+ case "add_edge":
+
+
+ network.on("dragStart",function(params){
+
+  console.log(params.nodes[0]);
+
+})
+ var ft=1;
+ if(ft==0){
+   break;
+ }
+
+
+ case "edit":
+
+
+ document.getElementById('network-popUp').style.display = 'block';
+
+ document.getElementById('node-label').value=allNodes[idselect].label;
+ document.getElementById('node-description').value=allNodes[idselect].description;
+
+ document.getElementById('saveButton').onclick = function(){
+
+   allNodes[idselect].label= document.getElementById('node-label').value;
+   allNodes[idselect].description=  document.getElementById('node-description').value;
+
+   var updateArray = [];
+
+   if (allNodes.hasOwnProperty(idselect)) {
+    updateArray.push(allNodes[idselect]);
+  }
+
+  nodesDataset.update(updateArray);
+  document.getElementById('network-popUp').style.display = 'none';
+};
+
+document.getElementById('cancelButton').onclick = function(){
+  document.getElementById('saveButton').onclick = null;
+  document.getElementById('cancelButton').onclick = null;
+  document.getElementById('network-popUp').style.display = 'none';
+
+};
+
+
+break;
+
+
+case "remove" :
+nodesDataset.remove(idselect); 
+flag=1;
+break;
+}
+
+
+if(flag==0){
+  var updateArray = [];
+  for (var nodeId in allNodes) {
+    if (allNodes.hasOwnProperty(nodeId)) {
+      updateArray.push(allNodes[nodeId]);
+    }
+  }
+  nodesDataset.update(updateArray);
+}
+$("#custom-menu").hide(100);
+});
+
+};
+
+
+var active=0;
+
+
+  // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  Draw the path beetween 2 nodes FUNCTION on the button xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+  function save_changes(){
+  // data.nodes.on('*', function(event, properties, senderId) {
+    console.log('Nodes changed');
+    setTimeout(getExport,0);
+  // });
+}
+
+function draw_the_path(){
+
+
+  if (sourceId==undefined) {
+
+    alert("No source node selected");
+
+  }
+
+  if(targetId==""){
+    alert("No target node selected");
+  }
+
+  if (sourceId != undefined && targetId != "") {
+    propagation(sourceId  ,targetId );
+    console.log(coucou);
+
+    if(coucou.length==1){
+      alert("no path possible beetween the two nodes")
+    }
+
+
+    for(var i=0; i<coucou.length-1 ; i++){
+
+      var path=coucou[i].split(";"); 
+
+
+      console.log(path);
+
+      if(path!=""){
+        for(var int in path){
+
+
+          var parse_path=parseInt(path[int]);
+          neighbourhoodHighlight({nodes:[]});
+          allNodes[parse_path].color = 'rgba(250,0,0,1)';
+          
+
+
+
+          active=1;
+
+
+          var connectedEdges=network.getConnectedEdges(parse_path);
+
+          if(before!=""){
+            for(var id in connectedEdges)
+            {
+
+
+              if(allEdges[connectedEdges[id]].from == before)
+              {
+                allEdges[connectedEdges[id]].color = 'rgba(250,0,0,1)';
+
+              }
+              else {
+                if(allEdges[connectedEdges[id]].color != 'rgba(250,0,0,1)'){
+                  allEdges[connectedEdges[id]].color = '#2b83ff';
+                }
+
+              }
+
+
+            }
+          }
+          var before=parse_path;
+        }
+
+      }
+
+    }
+    path=[];
+    var updateArray = [];
+    for (var edgeId in allEdges) {
+      updateArray.push(allEdges[edgeId]);
+    }
+    edgesDataset.update(updateArray);
+
+
+    var updateArray = [];
+    for (var nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodesDataset.update(updateArray);
+
+  }
+
+
+}
+
+  // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx reset parameters i.e. shape and color of the nodes FUNCTION xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+
+  function reset_parameters()
+  { 
+   sourceId=undefined;
+   targetId=[];
+   coucou=[""];
+
+
+   var updateArray=[];
+   for(var nodeId in allNodes)
+   {
+
+     allNodes[nodeId].shape="ellipse";
+     allNodes[nodeId].color='#2b83ff';
+
+
+     var connectedEdges=network.getConnectedEdges(nodeId);
+     for(var id in connectedEdges)
+     {
+      allEdges[connectedEdges[id]].color = '#2b83ff';
+    }
+
+    if (allNodes.hasOwnProperty(nodeId)) {
+      updateArray.push(allNodes[nodeId]);
+    }
+  }
+  active=0;
+  nodesDataset.update(updateArray);
+  var updateArray = [];
+  for (var edgeId in allEdges) {
+    updateArray.push(allEdges[edgeId]);
+  }
+  edgesDataset.update(updateArray);
+
+}
+
+
+  // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  Algorithm that allows us to find the path beetween 2 nodes FUNCTION xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+  var coucou = [""];
+  function propagation(sourceId, targetId) {
+
+
+    if (sourceId == targetId) {
+      coucou[coucou.length-1] += sourceId;
+      coucou.push(coucou[coucou.length - 1].substring(0, coucou[coucou.length - 1].substring(0,coucou[coucou.length - 1].length-2).lastIndexOf(';')) + ";");
+      return;
+    }
+    else
+      coucou[coucou.length - 1] += sourceId + ";";
+
+    var influencing = [];
+    var connectedNodes = network.getConnectedNodes(sourceId);
+    for(var x=1; x<=edgesDataset.length; x++ ){
+      if(edgesDataset.get(x).from==sourceId ){
+        influencing.push(allNodes[edgesDataset.get(x).to].id);
+      }
+    }
+
+    for(var son in influencing)
+    {
+      propagation(influencing[son], targetId);
+    }
+    if (sourceId != targetId) {
+      coucou[coucou.length-1] = coucou[coucou.length-1].substring(0, coucou[coucou.length - 1].substring(0,coucou[coucou.length - 1].length-2).lastIndexOf(';')) + ";";
+    }
+  }
+
+
+
+
+
+  function ouvrirAttributePane(params) {
+    if (params.nodes.length > 0) {
+      attributepane.style.display="block";
+      var selectedNode = params.nodes[0];
+    }
+    else
+      { attributepane.style.display="none"; }
+
+
+    var LABEL=document.getElementById('affichageLabel');
+    LABEL.innerHTML = 'Label: '+  nodesDataset.get(params.nodes[0]).label  ;
+    var connectedNodes = network.getConnectedNodes(selectedNode);
+    var allConnectedNodes = [];
+
+    var DESCRIPTION=document.getElementById('affichageDescription');
+    DESCRIPTION.innerHTML = 'Description: '+  nodesDataset.get(params.nodes[0]).description  ;
+
+
+    for (j = 0; j < connectedNodes.length; j++) {
+      allConnectedNodes = allConnectedNodes.concat((connectedNodes[j]));
+    }
+
+    var INFLUENCING=document.getElementById('influencing'); 
+    var INFLUENCED=document.getElementById('influenced'); 
+    INFLUENCING.innerHTML ="";
+    INFLUENCED.innerHTML ="";
+
+
+    for(var x=1; x<edgesDataset.length; x++ ){
+      if(edgesDataset.get(x).from==params.nodes[0]){
+        INFLUENCING.innerHTML+=("<div>" + allNodes[edgesDataset.get(x).to].label + "</div>" + "<br>");
+      }
+
+
+      if(edgesDataset.get(x).to==params.nodes[0]){
+        INFLUENCED.innerHTML += allNodes[edgesDataset.get(x).from].label + "<br>";
+      }
+
+    }
+
+  }
+
+  function fermerAttributePane() {
+    attributepane.style.display="none";
+  }
+
+
+  // This function is not well implemented because at the places where the color is set to #268ac9 it should 
+  // be undefined that means the defaut color maybe a pb of data waiting for  new datafile to test
+
+
+
+  function neighbourhoodHighlight(params) {
+    if (params.nodes.length > 0 && active==0 ) {
+      highlightActive = true;
+      var i,j;
+      var selectedNode = params.nodes[0];
+      var degrees = 2;
+
+      for (var nodeId in allNodes) {
+        allNodes[nodeId].color = 'rgba(162,190,229,0.5)';
+        if (allNodes[nodeId].hiddenLabel === undefined) {
+          allNodes[nodeId].hiddenLabel = allNodes[nodeId].label;
+          allNodes[nodeId].label = undefined;
+        }
+      }
+      var connectedNodes = network.getConnectedNodes(selectedNode);
+      var allConnectedNodes = [];
+
+      for (i = 1; i < degrees; i++) {
+        for (j = 0; j < connectedNodes.length; j++) {
+          allConnectedNodes = allConnectedNodes.concat(network.getConnectedNodes(connectedNodes[j]));
+        }
+      }
+
+
+      for (i = 0; i < allConnectedNodes.length; i++) {
+        allNodes[allConnectedNodes[i]].color = 'rgba(120,144,229,0.75)';
+        if (allNodes[allConnectedNodes[i]].hiddenLabel !== undefined) {
+          allNodes[allConnectedNodes[i]].label = allNodes[allConnectedNodes[i]].hiddenLabel;
+          allNodes[allConnectedNodes[i]].hiddenLabel = undefined;
+        }
+      }
+
+      for (i = 0; i < connectedNodes.length; i++) {
+        allNodes[connectedNodes[i]].color = '#2b83ff';
+        if (allNodes[connectedNodes[i]].hiddenLabel !== undefined) {
+          allNodes[connectedNodes[i]].label = allNodes[connectedNodes[i]].hiddenLabel;
+          allNodes[connectedNodes[i]].hiddenLabel = undefined;
+        }
+      }
+
+      allNodes[selectedNode].color = '#2b83ff';
+      if (allNodes[selectedNode].hiddenLabel !== undefined) {
+        allNodes[selectedNode].label = allNodes[selectedNode].hiddenLabel;
+        allNodes[selectedNode].hiddenLabel = undefined;
+      }
+    }
+    else if (highlightActive === true) {
+
+      for (var nodeId in allNodes) {
+        allNodes[nodeId].color = '#2b83ff';
+        if (allNodes[nodeId].hiddenLabel !== undefined) {
+          allNodes[nodeId].label = allNodes[nodeId].hiddenLabel;
+          allNodes[nodeId].hiddenLabel = undefined;
+        }
+      }
+      highlightActive = false
+    }
+
+    var updateArray = [];
+    for (nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodesDataset.update(updateArray);
+  }
+
+  function myfunction(img){
+
+
+    if(img.src.match(/blank/))
+    {
+      img.src="img/network/right_triangle.png"
+      img.style="height: 14px; width: 14px;cursor: pointer;" 
+    }
+    else{
+
+      written=document.getElementById("empty").value;
+      var flag=0;
+      for(var x=0; x<nodesDataset.length; x++ ){
+        if(nodesDataset.get(x).label==written){
+          neighbourhoodHighlight({nodes:[nodesDataset.get(x).id]});
+          ouvrirAttributePane({nodes:[nodesDataset.get(x).id]});
+          flag=1;
+        }
+      }
+
+      if(flag==0){
+        alert("Wrong label of data, take an over chance");
+      }
+
+    }
+  }
+
+
+  function getExport() {
+    var out_data = {
+      nodes: data.nodes.get(),
+      edges: data.edges.get()
+    };
+
+  // Optional: retrieve node positioning data and add to output
+  var positions = network.getPositions();
+  out_data.nodes.forEach(function(item, index, array) {
+    var pos = positions[item.id];
+    if (pos !== undefined) {
+      array[index].x = pos.x;
+      array[index].y = pos.y;
+    }
+  });
+
+  console.log(out_data);
+  // Save your data to file here
+}
