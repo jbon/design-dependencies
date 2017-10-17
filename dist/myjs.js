@@ -1465,7 +1465,17 @@ $(document).keydown(function(e) {
   }
 });
 
-
+$(document).keydown(function(e) {        
+  if (e.keyCode == 27) {
+	    network.disableEditMode();
+		network.setOptions(
+		{manipulation:{
+			initiallyActive :true
+		}
+		}
+		 );
+  }
+});
 
 function clusterByColor() {
   var classifications = ['Sustainability','Product properties','Product-characteristics'];
