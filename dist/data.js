@@ -32,7 +32,7 @@ var nodes= [
     {id: 30, label: "Easiness to separate parts", description: "", shape: "ellipse", color: "rgba(80,80,80,0.6)"},
     {id: 31, label: "Easiness to remove hasardous parts", description: "", shape: "ellipse", color: "rgba(80,80,80,0.6)"},
     {id: 32, label: "Presence of moulded-in metal inserts", description: "", shape: "ellipse", color: "rgba(80,80,80,0.6)"},
-    {id: 33, label: "Presence of incompatible sets of adhesive and parts", description: "", shape: "ellipse", color: "rgba(80,80,80,0.6)"}
+    {id: 33, label: "Presence of incompatible sets of adhesive and parts", description: "",  shape: "ellipse", color: "rgba(80,80,80,0.6)"}
 ];
 
 
