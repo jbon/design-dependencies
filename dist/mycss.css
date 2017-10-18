@@ -609,6 +609,7 @@ margin-left:20%;*/
   font: medium -moz-fixed;
   font: -webkit-small-control;
   overflow: auto;
+  
   resize: both;
   padding: 1em;
   height: 150px;
