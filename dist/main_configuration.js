@@ -233,6 +233,7 @@
         console.log(edgesDataset);
 
         document.getElementById('network-popUp_edge').style.display = 'none';
+      }
       };
 
       document.getElementById('cancelButton_edge').onclick = function(){
@@ -247,7 +248,7 @@
       }
       edgesDataset.update(updateArray);
     }
-  }
+  
   },
   editEdge:function(data,callback){
 
@@ -275,7 +276,10 @@
         }
         else{
           alert("no selection");
+          edge_label_value="";
         }     
+
+        if(edge_label_value != ""){
 
         allEdges=edgesDataset.get({returnType:"Object"});
 
@@ -289,6 +293,7 @@
         allEdges=edgesDataset.get({returnType:"Object"});
 
         document.getElementById('network-popUp_edge').style.display = 'none';
+      }
       };
 
       document.getElementById('cancelButton_edge').onclick = function(){
