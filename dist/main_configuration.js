@@ -236,9 +236,9 @@
       }
       };
 	  
-	  
+/* 	  
 	  $(document).keydown(function(e) {        
-  if (e.keyCode == 13) {
+	if (e.keyCode == 13) {
 	   if($('input.boxplus').prop('checked')){
           console.log("je passe");
           edge_label_value= '+';
@@ -269,7 +269,7 @@
       }
       }
 	  });
-
+ */
       document.getElementById('cancelButton_edge').onclick = function(){
         document.getElementById('saveButton_edge').onclick = null;
         document.getElementById('cancelButton_edge').onclick = null;
