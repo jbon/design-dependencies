@@ -235,6 +235,40 @@
         document.getElementById('network-popUp_edge').style.display = 'none';
       }
       };
+	  
+	  
+	  $(document).keydown(function(e) {        
+  if (e.keyCode == 13) {
+	   if($('input.boxplus').prop('checked')){
+          console.log("je passe");
+          edge_label_value= '+';
+        }else if($('input.boxminus').prop('checked')){
+          console.log("je passe 2");
+
+          edge_label_value= '-';
+        }
+        else{
+           alert("No selection !");
+        }
+        console.log(edge_label_value)
+
+        if(edge_label_value != ""){
+        allEdges=edgesDataset.get({returnType:"Object"});
+
+        edgesDataset.add({
+          id:edgesDataset.length,
+          from:data.from,
+          to:data.to,
+          label:edge_label_value
+        });
+
+        allEdges=edgesDataset.get({returnType:"Object"});
+        console.log(edgesDataset);
+
+        document.getElementById('network-popUp_edge').style.display = 'none';
+      }
+      }
+	  });
 
       document.getElementById('cancelButton_edge').onclick = function(){
         document.getElementById('saveButton_edge').onclick = null;
