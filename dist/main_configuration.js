@@ -343,7 +343,51 @@
       edgesDataset.update(updateArray);
     }
   },
+  deleteNode:function(data,callback){
+    idselect=data.nodes[0];
+    remove();
+    neighbourhoodHighlight({nodes:[]});
 
+  },
+  deleteEdge:function(data,callback){
+
+  var length=edgesDataset.length; 
+  var edges_removed=data.edges[0];
+
+  allEdges=edgesDataset.get({returnType:"Object"});
+
+
+    for (var i=edges_removed; i<length-1; i++){
+      if(typeof allEdges[i+1] == "undefined"){
+       break;
+     }else{
+      allEdges[i]=allEdges[i+1];
+      allEdges[i].id=i;
+    }
+  }
+
+
+var updateArray = [];
+for(var edge=0; edge<length-1;edge++){
+  updateArray.push(allEdges[edge]);
+}
+if(updateArray.length != 0){
+  updateArray[updateArray.length-1].id=updateArray.length-1;
+}
+console.log(updateArray);
+
+// for(var edgeId in updateArray){
+//   if(updateArray[edgeId].from>idselect){
+//     updateArray[edgeId].from=updateArray[edgeId].from-1;
+//   }
+//   if(updateArray[edgeId].to>idselect){
+//     updateArray[edgeId].to=updateArray[edgeId].to-1;
+//   }
+// }
+edgesDataset = new vis.DataSet(updateArray); 
+redrawAll();
+  
+}
 }
 
 };
