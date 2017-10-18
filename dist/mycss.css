@@ -709,3 +709,34 @@ a.palette-item:hover {
   background: #FFF;
   margin-bottom: 2px;
 }
+
+#tags { 
+	display: table; 
+	width: 90%; 
+	max-width: 500px; 
+	list-style-type: none;
+}
+ 
+#tags label { 
+	display: table-cell;
+	white-space: nowrap;
+	vertical-align: middle;
+}
+ 
+#tags span {
+	display: table-cell; 
+	width: 100%; 
+	padding-left: 8px; 
+}
+ 
+#tags input { 
+	width: 100%;
+	box-sizing: border-box;
+}
+
+@media (max-width: 495px) {
+	.tags span {
+		display: block !important;
+		padding: 0 !important;
+	}
+}
