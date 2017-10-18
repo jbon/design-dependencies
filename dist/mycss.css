@@ -603,17 +603,9 @@ margin-left:20%;*/
 
 
 #node-description{
-/*  box-shadow: 0 0 2px #CCC;
-  height: 150px;
-  width: 90%;
-  overflow: none;*/
   padding: 1em;
-  /*margin-top: 5px;*/
-/*  resize: none;
-  outline: none;*/
   background-color: #FFFFFF;
   color:#2c2c2c;
-
   -moz-appearance: textfield-multiline;
   -webkit-appearance: textarea;
   border: 1px solid gray;
@@ -621,12 +613,8 @@ margin-left:20%;*/
   font: -webkit-small-control;
   height: 150px;
   overflow: auto;
-  /*padding: 2px;*/
   resize: both;
   width: 90%;
-
-
-
 }
 
 .toolbar {
