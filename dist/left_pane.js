@@ -36,15 +36,12 @@ function draw_the_path(){
     }
 
     if (allNodes[nodeId].hiddenLabel !== undefined) {
+    	console.log(nodeId);
      allNodes[nodeId].label=allNodes[nodeId].hiddenLabel;
      allNodes[nodeId].hiddenLabel = undefined;
    }else if(draw_in_all_canvas_active==1 && nodeId != sourceId){
     allNodes[nodeId].label=allNodes[nodeId].label.substring(0,allNodes[nodeId].label.length-4);
-  }else{
-   allNodes[nodeId].label=allNodes[nodeId].hiddenLabel;
-   allNodes[nodeId].hiddenLabel = undefined;
-
- }
+  }
 
 }
 for (var edgeId in allEdges){
