@@ -159,11 +159,13 @@
       }
   }
 }
+if(multi.length>=2){
+
 allNodes[path[int]].label=allNodes[path[int]].label.substring(0,allNodes[path[int]].label.length-4*(multi.length));
 console.log(allNodes[path[int]].label);
 allNodes[path[int]].label+=sign;
 console.log(sign);
-
+}
 
 path=[];
 var updateArray = [];
