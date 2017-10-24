@@ -13,15 +13,15 @@ function layout_physical(){
 
 function layout_hierarchical(){
 
-if(layout_hierarchical_active==false){
-	obj = {
-		hierarchical: function() {
-			network.setOptions({
-				layout: {
-					hierarchical: {
-						enabled: true,
-						levelSeparation: 300,
-						nodeSpacing: 300,
+	if(layout_hierarchical_active==false){
+		obj = {
+			hierarchical: function() {
+				network.setOptions({
+					layout: {
+						hierarchical: {
+							enabled: true,
+							levelSeparation: 300,
+							nodeSpacing: 300,
 						// treeSpacing:200,
 						// blockShifting:true,
 						// edgeMinimization:true,
@@ -51,15 +51,12 @@ if(layout_hierarchical_active==false){
 
 				}
 			})
-		}
-	};
-	network.stabilize(2000);
-	obj.hierarchical();
-		// redrawAll();
-		// network = new vis.Network(container, data, options);  
+			}
+		};
+		network.stabilize(2000);
+		obj.hierarchical();
 
 		network.on("stabilized", function () {
-			// console.log("stabilization");
 			network.setOptions( { physics: false } );
 		});
 
@@ -68,4 +65,4 @@ if(layout_hierarchical_active==false){
 	}else{
 		alert("you are already on the hierarchical layout");
 	}
-	}
+}
