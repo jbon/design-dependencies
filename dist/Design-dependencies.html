@@ -25,13 +25,13 @@
 	<!-- My css and js files -->
 	<link type="text/css" rel="stylesheet" href="mycss.css">
 	
- 	<!-- <script  type="text/javascript"  src="left_down_button.js"></script> -->
+	<!-- <script  type="text/javascript"  src="left_down_button.js"></script> -->
 	<script  type="text/javascript"  src="layout.js"></script>
 	<script  type="text/javascript"  src="event_onclick.js"></script>
 	<script  type="text/javascript"  src="oncontext_menu_function.js"></script>
 	<script  type="text/javascript"  src="propagation.js"></script>
- 	<script  type="text/javascript"  src="left_pane.js"></script>
- 	<script  type="text/javascript"  src="main_configuration.js"></script>
+	<script  type="text/javascript"  src="left_pane.js"></script>
+	<script  type="text/javascript"  src="main_configuration.js"></script>
 
 </head>
 
@@ -43,8 +43,7 @@
 	<div id="optionsContainer" style="text-align: center;"></div>
 
 	<div id="mynetwork"></div>
-	<div id="column_left">
-	<!-- <img src="img/network/resize_fraunhofer.png" id="photos"> -->
+	<div id="column_left"> <img src="../images/logo.png" id="photos">
 		<p style="font-size:16px; text-align:center; text-indent:justify; ">      Welcome in our visulalisation tool !  </p>
 
 		<div class="ui-widget">
@@ -159,18 +158,19 @@
 
 	<!-- XXXXXXXXXXXXXXXXXXXX Call the configuration function XXXXXXXXXXXXXXXXXXXXXX -->
 
-	<script type="text/javascript" >
+	<script type="text/javascript">
+	
 		redrawAll();
-	</script>
+</script>
 
-	<!-- XXXXXXXXXXXXXXXXXXXX AddNode/EditNode popup window XXXXXXXXXXXXXXXXXXXXXX -->
+<!-- XXXXXXXXXXXXXXXXXXXX AddNode/EditNode popup window XXXXXXXXXXXXXXXXXXXXXX -->
 
-	<div id="network-popUp">
-		<span id="operation"></span> <br>
-		<table>
-			<tr>
-				<td>label</td><td><input style="white-space:nowrap;" id="node-label" value="new value" /></td>
-			</tr>
+<div id="network-popUp">
+	<span id="operation"></span> <br>
+	<table>
+		<tr>
+			<td>label</td><td><input style="white-space:nowrap;" id="node-label" value="new value" /></td>
+		</tr>
 <!-- 			<tr>
 				<td>description</td><td><input id="node-description" value="new value" /></td>
 			</tr> -->
