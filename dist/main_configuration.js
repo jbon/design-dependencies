@@ -163,7 +163,7 @@
           label: document.getElementById('node-label').value,
           description: $('#node-description').html(),   
           shape:"ellipse",
-          color:'rgba(60,60,60,0.6)'
+          color:'rgba(60,60,60,0.6)',
 		  tags:tabTagg
         });        
 
