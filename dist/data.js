@@ -35,7 +35,6 @@ var nodes= [
     {id: 33, label: "Presence of incompatible sets of adhesive and parts", description: "",  shape: "ellipse", color: "rgba(80,80,80,0.6)"}
 ];
 
-
 var edges = [
     {id: 0, from: 24, to: 7, label: "+"},
     {id: 1, from: 0, to: 1, label: "-"},

@@ -131,3 +131,73 @@ $( function() {
 
 
 } );
+
+// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx TAGGGG xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+ 
+ var tabTag=[];
+ 
+ function saveTag(){
+	 
+	 for (var nodeId in allNodes)
+	 {
+		 for (var i=0; i<(allNodes[nodeId].tags).length;i++)
+		 {
+			 var tag = allNodes[nodeId].tags[i];
+			if(tabTag.includes(tag)==true)
+			{
+			}else{
+				tabTag.push(tag);
+			}
+		 } 
+	 }
+		console.log(tabTag);
+ }
+ 
+ function createButtons(){
+ 
+	 for(var i=0; i<tabTag.length;i++)
+	 { 
+	     var btn=document.createElement("BUTTON");
+		 btn.id=tabTag[i];
+		 var t = document.createTextNode(tabTag[i]); 
+		 btn.appendChild(t);
+		  
+		 btn.onclick=function() {
+		var id=this.id;
+		for (var nodeId in allNodes)
+			{		
+			     if (allNodes[nodeId].hiddenLabel !== undefined) {
+					 allNodes[nodeId].label=allNodes[nodeId].hiddenLabel;
+					 allNodes[nodeId].hiddenLabel = undefined;
+				 }	
+			}
+
+		for (var nodeId in allNodes)
+			{		
+				var tab=allNodes[nodeId].tags;
+				console.log(tab);
+
+				if (tab.includes(id)==true)
+				{
+					console.log(tab);
+				}
+				else{
+					allNodes[nodeId].hiddenLabel=allNodes[nodeId].label;
+					allNodes[nodeId].label=undefined;
+					}
+			}
+		var updateArray = [];
+		for (var nodeId in allNodes) {
+			if (allNodes.hasOwnProperty(nodeId)) {
+				updateArray.push(allNodes[nodeId]);
+			}
+		}
+		nodesDataset.update(updateArray);
+			 
+		}
+			 
+		 TAG.appendChild(btn); 
+	 }
+ 	 
+ }
+

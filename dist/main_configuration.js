@@ -144,11 +144,17 @@
         document.getElementById('operation').innerHTML = "Add Node";
         document.getElementById('network-popUp').style.display = 'block';
         document.getElementById('node-label').value="";
+		document.getElementById('tag-input').value="";
         // document.getElementById('node-description').value="";
         document.getElementById('node-label').focus(); 
  
         $('#node-description').html("");
 
+		document.getElementById('addTag').onclick = function(){
+			tabTagg.push(document.getElementById('tag-input').value);			
+			document.getElementById('show-tag').innerHTML +="    " + document.getElementById('tag-input').value;		
+			document.getElementById('tag-input').value="";	
+		};
 
          document.getElementById('saveButton').onclick = function(){
 
@@ -158,6 +164,7 @@
           description: $('#node-description').html(),   
           shape:"ellipse",
           color:'rgba(60,60,60,0.6)'
+		  tags:tabTagg
         });        
 
          var location=network.DOMtoCanvas({x:locX,y:locY});
@@ -166,6 +173,10 @@
 
          allNodes=nodesDataset.get({returnType:"Object"});
          document.getElementById('network-popUp').style.display = 'none'; 
+		 
+		 TAG.innerHTML="";
+		 saveTag();
+		 createButtons();
         };
 
         document.getElementById('cancelButton').onclick = function(){
@@ -471,6 +482,10 @@ document.ondblclick=function(e){
     positionY=e.pageY;
   }
 }
+
+saveTag();
+createButtons();
+
 };
 
 $(document).keydown(function(e) {        

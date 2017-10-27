@@ -25,7 +25,7 @@
 	<!-- My css and js files -->
 	<link type="text/css" rel="stylesheet" href="mycss.css">
 	
-	<!-- <script  type="text/javascript"  src="left_down_button.js"></script> -->
+ 	<!-- <script  type="text/javascript"  src="left_down_button.js"></script> -->
 	<script  type="text/javascript"  src="layout.js"></script>
 	<script  type="text/javascript"  src="event_onclick.js"></script>
 	<script  type="text/javascript"  src="oncontext_menu_function.js"></script>
@@ -66,6 +66,10 @@
 		<button class="buttonLeft" id="physical" onclick="layout_physical() ">Physical</button>
 		<button class="buttonLeft"  id="hierarchical" onclick="layout_hierarchical()">Hierarchical</button>
 
+		<p> Tags : </p>
+		<p  id="TAG"></p>
+		
+		
 		<!-- <input type="button" onclick="clusterByColor()" value="Cluster"> <br /> -->
 
 
@@ -158,7 +162,7 @@
 
 	<!-- XXXXXXXXXXXXXXXXXXXX Call the configuration function XXXXXXXXXXXXXXXXXXXXXX -->
 
-	<script type="text/javascript">
+	<script type="text/javascript" >
 	
 		redrawAll();
 </script>
@@ -171,9 +175,12 @@
 		<tr>
 			<td>label</td><td><input style="white-space:nowrap;" id="node-label" value="new value" /></td>
 		</tr>
-<!-- 			<tr>
-				<td>description</td><td><input id="node-description" value="new value" /></td>
-			</tr> -->
+			<tr>
+				<td>Tag</td><td><input style="white-space:nowrap;" id="tag-input" value="new value"  /></td>
+				
+			</tr>
+		</table>
+		<button type="button"  id="addTag">Add Tag</button>
 
 		</table>
 		<!-- <div class="container"> -->

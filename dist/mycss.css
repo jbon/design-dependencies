@@ -27,18 +27,19 @@
   bottom:0;
   top:0;
   right:0;
-  width: 240px;
+  width: 15%;
   background-color: #fff;
   margin: 0;
   word-wrap: break-word;
   background-color:rgba(255,255,255,0.8);
-  border-left: 1px solid #ccc;
-  padding: 0px 18px 0px 18px; 
+  border-left: 1px solid #ccc; 
+  padding: 0% 1% 0% 1%;
   z-index: 1;
 }
-#attributepane .text {
+
+  #attributepane .text {
   height:100%;
-}
+} 
 
 #attributepane .headertext {
   color: #000;
@@ -51,7 +52,7 @@
 }
 
 
-#attributepane .returntext em {
+ #attributepane .returntext em {
   background-image: url('../images/sprite.png');
   background-repeat: no-repeat;
   display: block;
@@ -60,7 +61,6 @@
   background-position: -91px -13px;
   float: left;
 }
-
 
 #attributepane .returntext span {
   padding-left: 5px;
@@ -90,27 +90,26 @@
   display: block;
   width: 151px;
   float: left;
-}
+} 
 
 .left-close {
   background-image: url('../images/fancybox_sprite.png');
-  margin-left:-37px;
+ /*  margin-left:-37px;    padding-left:31px;   margin-bottom:25px;  font-size:14px; line-height:36px; */
+  margin-left:-14%; 
   z-index:99999;
   cursor: pointer;
-  padding-left:31px;
-  line-height:36px;
+  padding-left: 19%;
+  line-height:36px; 
   background-repeat: no-repeat;
   margin-bottom:25px;
   font-weight: bold;
-  font-size:14px;
-
+  font-size:100%; 
 }
-
 
 /*left pane*/
 #column_left{ 
   width:13%;
-  height: 35%; 
+  height: 45%; 
   border: 1px solid lightgray;
   left:0;
   top:0;
