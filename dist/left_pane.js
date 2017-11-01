@@ -86,10 +86,12 @@ function save_changes(){
 		nodes_arr.push(allNodes[i]);
 	for (var i in allEdges)
 		edges_arr.push(allEdges[i]);
-
-	a.setAttribute('href', 'data:text/plain;charset=utf-u,'+encodeURIComponent(JSON.stringify({nodes:nodes_arr, edges:edges_arr})));
+	a.setAttribute('href', 'data:text/plain;charset=utf-8,'+encodeURIComponent(JSON.stringify({nodes:nodes_arr, edges:edges_arr})));
 	a.setAttribute('download', "data.json");
+	document.body.appendChild(a);
 	a.click();
+	document.body.appendChild(a);
+
 // }
 }
 // var obj = {a: "Hello", b: "World");

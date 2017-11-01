@@ -3,8 +3,8 @@
       var allEdges; 
 
       var highlightActive = false;
-      var nodes=[];
-      var edges=[];
+      // var nodes=[];
+      // var edges=[];
       var nodesDataset = new vis.DataSet(nodes);
       var edgesDataset = new vis.DataSet(edges); 
       var exportAreavalue;
