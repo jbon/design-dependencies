@@ -26,7 +26,7 @@ function layout_hierarchical(){
 						// blockShifting:true,
 						// edgeMinimization:true,
 						// parentCentralization: true,
-						direction: "UD",
+						direction: "DU",
 						sortMethod: "directed"
 					}
 				},

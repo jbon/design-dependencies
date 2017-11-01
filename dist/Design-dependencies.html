@@ -14,7 +14,7 @@
 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-	<script src="data.js"></script>
+	<!-- <script src="data.js"></script> -->
 	
 	<!-- visjs library => docs : http://visjs.org/docs/network/ 	 -->
 	<script type="text/javascript" src="vis.js"></script>
@@ -25,7 +25,7 @@
 	<!-- My css and js files -->
 	<link type="text/css" rel="stylesheet" href="mycss.css">
 	
- 	<!-- <script  type="text/javascript"  src="left_down_button.js"></script> -->
+	<!-- <script  type="text/javascript"  src="left_down_button.js"></script> -->
 	<script  type="text/javascript"  src="layout.js"></script>
 	<script  type="text/javascript"  src="event_onclick.js"></script>
 	<script  type="text/javascript"  src="oncontext_menu_function.js"></script>
@@ -54,117 +54,134 @@
 
 		<br />
 
-	<!-- 	<div class="legend">
-			<li><span class="Increasing"></span> Increasing</li>
-			<li><span class="Decreasing"></span> Decreasing </li>
-			<li><span class="Equal"></span> Equal </li>
-			<li><span class="Undecided"></span> Undecided </li>
+		<input type="file" name="file" id="file">
 
-		</div> -->
+		<script type="text/javascript">
+			document.getElementById('file').onchange = function(){
 
-		<p> Layout : </p>
-		<button class="buttonLeft" id="physical" onclick="layout_physical() ">Physical</button>
-		<button class="buttonLeft"  id="hierarchical" onclick="layout_hierarchical()">Hierarchical</button>
+				var file = this.files[0];
+
+				var reader = new FileReader();
+				reader.onload = function(progressEvent){
+    				// Entire file
+    				console.log(typeof this.result);
+    				var obj=JSON.parse(this.result);
+    			    console.log(obj);
+
+	    			nodesDataset = new vis.DataSet(obj.nodes);
+    				edgesDataset = new vis.DataSet(obj.edges);
+					redrawAll();
+				    updateLeftPane();
+				};
+				reader.readAsText(file);
+
+			};	
+		</script>
+<!-- <output id="list"></output> -->
+
+
+
+<p> Layout : </p>
+<button class="buttonLeft" id="physical" onclick="layout_physical() ">Physical</button>
+<button class="buttonLeft"  id="hierarchical" onclick="layout_hierarchical()">Hierarchical</button>
+
+<!-- <input type="button" onclick="clusterByColor()" value="Cluster"> <br /> -->
 
 		<p> Tags : </p>
 		<p  id="TAG"></p>
-		
-		
-		<!-- <input type="button" onclick="clusterByColor()" value="Cluster"> <br /> -->
 
 
-		<div class="topcoat-button-bar full">
-			<div class="topcoat-button-bar__item">
-				<button class="topcoat-button-bar__button full" onclick="draw_the_path()">Draw</button>
-			</div>
-			<div class="topcoat-button-bar__item">
-				<button class="topcoat-button-bar__button full" onclick="reset_parameters()">Reset</button>
-			</div>
-			<div class="topcoat-button-bar__item">
-				<button class="topcoat-button-bar__button full" onclick="save_changes()">Save</button>
-			</div>
-		</div>
-	</div> 
-
-	<pre id="eventSpan"></pre>
-
-
-
-
-	<!-- XXXXXXXXXXXXXXXXXXXX Right popup pane XXXXXXXXXXXXXXXXXXXXXX -->
-
-	<div id="attributepane">
-		<div class="text">
-			<div title="Close" class="left-close returntext" onclick="closeAttributePane();"> <div class="c cf"><span>Return to the full network</span></div></div>	
-			<div class="headertext">
-				<span>Information Pane</span>
-			</div>	
-			<!-- <p  id="affichageId">Id :</p> -->
-			<p  id="affichageLabel">Label :</p>
-			<p  id="affichageDescription">Description :</p>
-			<div class="nodeattributes">
-				<div class="name"></div>
-				<div class="data"></div>
-
-
-				<div class="link">
-					<ul>
-					</ul>
-				</div>
-			</div>			
-			<div class="headertext">
-				<span>Influencing factor</span>
-			</div>	
-			<p  id="influencing"></p>
-
-			<div class="headertext">
-				<span >Influenced factor</span>
-			</div>	
-			<p  id="influenced"></p>
-
-
-		</div>
+<div class="topcoat-button-bar full">
+	<div class="topcoat-button-bar__item">
+		<button class="topcoat-button-bar__button full" onclick="draw_the_path()">Draw</button>
 	</div>
+	<div class="topcoat-button-bar__item">
+		<button class="topcoat-button-bar__button full" onclick="reset_parameters()">Reset</button>
+	</div>
+	<div class="topcoat-button-bar__item">
+		<button class="topcoat-button-bar__button full" onclick="save_changes()">Save</button>
+	</div>
+</div>
+</div> 
 
-	<!-- XXXXXXXXXXXXXXXXXXXX Right click on node menu XXXXXXXXXXXXXXXXXXXXXX -->
-
-
-	<menu class="menu" id="data-action">
-		<li class="menu-item">
-			<button type="button" class="menu-btn" id="source"> <i class="fa fa-caret-up" style="font-size:20px;"></i> <span class="menu-text">(Un)Set as source </span> </button>
-		</li>
-		<li class="menu-item">
-			<button type="button" class="menu-btn" id="target">  <i class="fa fa-star"></i><span class="menu-text">(Un)Set as target</span> </button>
-		</li>
-		<li class="menu-separator"></li>
-		<li class="menu-item">
-			<button type="button" class="menu-btn" id="edit"> <i class="fa fa-edit"></i> <span class="menu-text">Edit selected Node</span> </button>
-		</li>
-		<li class="menu-item">
-			<button type="button" class="menu-btn" id="remove"> <i class="fa fa-trash"></i> <span class="menu-text">Remove</span> </button>
-		</li>
-
-		<li class="menu-separator"></li>
-		<li class="menu-item submenu">
-			<button type="button" class="menu-btn"> <i class="fa  fa-dot-circle-o"></i> <span class="menu-text">Target value</span> </button>
-			<menu class="menu">
-				<li class="menu-item">
-					<button type="button" class="menu-btn" id="increase"> <i class="fa fa-arrow-up"></i> <span class="menu-text">Increasing</span> </button>
-				</li>
-				<li class="menu-item">
-					<button type="button" class="menu-btn" id="decrease"> <i class="fa fa-arrow-down"></i> <span class="menu-text">Decreasing</span> </button>
-				</li>
-			</menu>
-		</li>
-	</menu>
+<pre id="eventSpan"></pre>
 
 
 
-	<!-- XXXXXXXXXXXXXXXXXXXX Call the configuration function XXXXXXXXXXXXXXXXXXXXXX -->
 
-	<script type="text/javascript" >
-	
-		redrawAll();
+<!-- XXXXXXXXXXXXXXXXXXXX Right popup pane XXXXXXXXXXXXXXXXXXXXXX -->
+
+<div id="attributepane">
+	<div class="text">
+		<div title="Close" class="left-close returntext" onclick="closeAttributePane();"> <div class="c cf"><span>Return to the full network</span></div></div>	
+		<div class="headertext">
+			<span>Information Pane</span>
+		</div>	
+		<!-- <p  id="affichageId">Id :</p> -->
+		<p  id="affichageLabel">Label :</p>
+		<p  id="affichageDescription">Description :</p>
+		<div class="nodeattributes">
+			<div class="name"></div>
+			<div class="data"></div>
+
+
+			<div class="link">
+				<ul>
+				</ul>
+			</div>
+		</div>			
+		<div class="headertext">
+			<span>Influencing factor</span>
+		</div>	
+		<p  id="influencing"></p>
+
+		<div class="headertext">
+			<span >Influenced factor</span>
+		</div>	
+		<p  id="influenced"></p>
+
+
+	</div>
+</div>
+
+<!-- XXXXXXXXXXXXXXXXXXXX Right click on node menu XXXXXXXXXXXXXXXXXXXXXX -->
+
+
+<menu class="menu" id="data-action">
+	<li class="menu-item">
+		<button type="button" class="menu-btn" id="source"> <i class="fa fa-caret-up" style="font-size:20px;"></i> <span class="menu-text">(Un)Set as source </span> </button>
+	</li>
+	<li class="menu-item">
+		<button type="button" class="menu-btn" id="target">  <i class="fa fa-star"></i><span class="menu-text">(Un)Set as target</span> </button>
+	</li>
+	<li class="menu-separator"></li>
+	<li class="menu-item">
+		<button type="button" class="menu-btn" id="edit"> <i class="fa fa-edit"></i> <span class="menu-text">Edit selected Node</span> </button>
+	</li>
+	<li class="menu-item">
+		<button type="button" class="menu-btn" id="remove"> <i class="fa fa-trash"></i> <span class="menu-text">Remove</span> </button>
+	</li>
+
+	<li class="menu-separator"></li>
+	<li class="menu-item submenu">
+		<button type="button" class="menu-btn"> <i class="fa  fa-dot-circle-o"></i> <span class="menu-text">Target value</span> </button>
+		<menu class="menu">
+			<li class="menu-item">
+				<button type="button" class="menu-btn" id="increase"> <i class="fa fa-arrow-up"></i> <span class="menu-text">Increasing</span> </button>
+			</li>
+			<li class="menu-item">
+				<button type="button" class="menu-btn" id="decrease"> <i class="fa fa-arrow-down"></i> <span class="menu-text">Decreasing</span> </button>
+			</li>
+		</menu>
+	</li>
+</menu>
+
+
+
+<!-- XXXXXXXXXXXXXXXXXXXX Call the configuration function XXXXXXXXXXXXXXXXXXXXXX -->
+
+<script type="text/javascript">
+	redrawAll();
 </script>
 
 <!-- XXXXXXXXXXXXXXXXXXXX AddNode/EditNode popup window XXXXXXXXXXXXXXXXXXXXXX -->
@@ -180,11 +197,10 @@
 				
 			</tr>
 		</table>
-			<input type="button" value="Add tag" id="addTag" />
+		<input type="button" value="Add tag" id="addTag" />
 		<p  id=show-tag> </p>
 
 		</table>
-	
 		<!-- <div class="container"> -->
 
 		<div class="row">
