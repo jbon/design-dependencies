@@ -99,6 +99,8 @@ function editNode(){
 
 	document.getElementById('node-label').value=allNodes[idselect].label;
 	$('#node-description').html(allNodes[idselect].description);
+	document.getElementById('tag-input').value="";
+	document.getElementById('tag-input').value="";
 
 	document.getElementById('saveButton').onclick = function(){
 

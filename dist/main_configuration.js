@@ -145,6 +145,7 @@
         document.getElementById('network-popUp').style.display = 'block';
         document.getElementById('node-label').value="";
 		document.getElementById('tag-input').value="";
+		document.getElementById('show-tag').innerHTML ="    " ;
         // document.getElementById('node-description').value="";
         document.getElementById('node-label').focus(); 
  
@@ -483,6 +484,7 @@ document.ondblclick=function(e){
   }
 }
 
+document.getElementById('TAG').innerHTML=" ";
 saveTag();
 createButtons();
 
