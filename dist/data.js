@@ -1,6 +1,6 @@
 var nodes= [
     {id: 0, label: "Diversity of materials types", description: "", shape: "ellipse", color: "rgba(80,80,80,0.6)", tags:["m1"] },
-    {id: 1, label: "Sortability of materials", description: "", shape: "ellipse", color: "rgba(80,80,80,0.6)", tags:["m4","m5","m1 "] },
+    {id: 1, label: "Sortability of materials", description: "", shape: "ellipse", color: "rgba(80,80,80,0.6)", tags:["m4","m5","m1"] },
     {id: 2, label: "Material homogeneity in groups of inseparable parts", description: "", shape: "ellipse", color: "rgba(80,80,80,0.6)", tags:["m1"] },
     {id: 3, label: "Material heterogeneity in assemblies", description: "", shape: "ellipse", color: "rgba(80,80,80,0.6)", tags:["m1"] },
     {id: 4, label: "Ability of materials to be identified", description: "", shape: "ellipse", color: "rgba(80,80,80,0.6)" , tags:["m1"] },

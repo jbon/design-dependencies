@@ -100,12 +100,21 @@ function editNode(){
 	document.getElementById('node-label').value=allNodes[idselect].label;
 	$('#node-description').html(allNodes[idselect].description);
 	document.getElementById('tag-input').value="";
-	document.getElementById('tag-input').value="";
+	document.getElementById('show-tag').innerHTML ="    " ;
+	
+	
+	document.getElementById('addTag').onclick = function(){
+			tabTagg.push(document.getElementById('tag-input').value);			
+			document.getElementById('show-tag').innerHTML +="    " + document.getElementById('tag-input').value;		
+			document.getElementById('tag-input').value="";	
+		};
+
 
 	document.getElementById('saveButton').onclick = function(){
 
 		allNodes[idselect].label= document.getElementById('node-label').value;
 		allNodes[idselect].description=   $('#node-description').html();
+		allNodes[idselect].tags= allNodes[idselect].tags.concat(tabTagg);  
 
 		var updateArray = [];
 
@@ -115,6 +124,10 @@ function editNode(){
 
 		nodesDataset.update(updateArray);
 		document.getElementById('network-popUp').style.display = 'none';
+		
+		document.getElementById('TAG').innerHTML=" ";
+		 saveTag();
+		 createButtons();
 	};
 
 	document.getElementById('cancelButton').onclick = function(){
