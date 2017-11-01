@@ -36,7 +36,7 @@ function draw_the_path(){
   		}
 
   		if (allNodes[nodeId].hiddenLabel !== undefined) {
-  			console.log(nodeId);
+  			// console.log(nodeId);
   			allNodes[nodeId].label=allNodes[nodeId].hiddenLabel;
   			allNodes[nodeId].hiddenLabel = undefined;
   		}else if(draw_in_all_canvas_active==1 && nodeId != sourceId){
@@ -77,29 +77,6 @@ function draw_the_path(){
 
   // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  Algorithm that allows us to find the path beetween 2 nodes FUNCTION xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-
-
-
-//   function save_changes() {
-//     var out_data = {
-//       nodes: data.nodes.get(),
-//       edges: data.edges.get()
-//     };
-
-//   // Optional: retrieve node positioning data and add to output
-//   var positions = network.getPositions();
-//   out_data.nodes.forEach(function(item, index, array) {
-//     var pos = positions[item.id];
-//     if (pos !== undefined) {
-//       array[index].x = pos.x;
-//       array[index].y = pos.y;
-//     }
-//   });
-// var xhReq = new XMLHttpRequest();
-// xhReq.open("GET", "file:///C:/Users/DumaAdri/Desktop/design-dependencies.git/dist/data1.js", false);
-// xhReq.send(null);
-// var jsonObject = JSON.parse(xhReq.responseText);
-// }
 function save_changes(){
 // function save(text, filename){
 	var a = document.createElement('a');

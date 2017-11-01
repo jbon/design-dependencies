@@ -218,8 +218,8 @@
     		$('input.boxminus').on('change', function() {
     			$('input.boxplus').prop('checked', false);  
     		});
-
-    		document.getElementById('saveButton_edge').onclick = function(){
+				
+			 function save_edge (){
 
     			if($('input.boxplus').prop('checked')){
     				console.log("je passe");
@@ -250,6 +250,16 @@
     				document.getElementById('network-popUp_edge').style.display = 'none';
     			}
     		};
+
+    		document.getElementById('saveButton_edge').onclick=function(e){
+    			save_edge();
+    		}
+
+    		document.onkeydown=function(e){
+    			if(e.keyCode === 13 ){
+    				save_edge();
+    			}
+    		} 
 
     		document.getElementById('cancelButton_edge').onclick = function(){
     			document.getElementById('saveButton_edge').onclick = null;
