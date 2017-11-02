@@ -77,7 +77,7 @@ function draw_the_path(){
 
   // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  Algorithm that allows us to find the path beetween 2 nodes FUNCTION xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-function save_changes(){
+  function save_changes(){
 // function save(text, filename){
 	var a = document.createElement('a');
 	var nodes_arr = [];
@@ -124,11 +124,11 @@ function updateLeftPane() {
 			var id = nodesLabels.filter(o => o[1] == label)[0][0];
       // console.log(id);
 
-      		neighbourhoodHighlight({nodes:[id]});
-      		openAttributePane({nodes:[id]});
-      		focusNode(id);
-  		}
-	});
+      neighbourhoodHighlight({nodes:[id]});
+      openAttributePane({nodes:[id]});
+      focusNode(id);
+  }
+});
 }
 
 
@@ -139,72 +139,56 @@ $(function () {
 
 
 // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx TAGGGG xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
- 
- var tabTag=[];
- 
- function saveTag(){
-	 
-	 for (var nodeId in allNodes)
-	 {
-		 for (var i=0; i<(allNodes[nodeId].tags).length;i++)
-		 {
-			 var tag = allNodes[nodeId].tags[i];
+
+var tabTag=[];
+
+function saveTag(){
+
+	for (var nodeId in allNodes)
+	{
+		for (var i=0; i<(allNodes[nodeId].tags).length;i++)
+		{
+			var tag = allNodes[nodeId].tags[i];
 			if(tabTag.includes(tag)==true)
 			{
+				console.log("je passe");
 			}else{
 				tabTag.push(tag);
 			}
-		 } 
-	 }
-		console.log(tabTag);
- }
- 
- function createButtons(){
- 
-	 for(var i=0; i<tabTag.length;i++)
-	 { 
-	     var btn=document.createElement("BUTTON");
-		 btn.id=tabTag[i];
-		 var t = document.createTextNode(tabTag[i]); 
-		 btn.appendChild(t);
-		  
-		 btn.onclick=function() {
-		var id=this.id;
-		for (var nodeId in allNodes)
-			{		
-			     if (allNodes[nodeId].hiddenLabel !== undefined) {
-					 allNodes[nodeId].label=allNodes[nodeId].hiddenLabel;
-					 allNodes[nodeId].hiddenLabel = undefined;
-				 }	
-			}
+		} 
+	}
+	console.log(tabTag);
+}
 
-		for (var nodeId in allNodes)
-			{		
-				var tab=allNodes[nodeId].tags;
-				// console.log(tab);
+var check_ifPresent_list=[];
 
-				if (tab.includes(id)==true)
-				{
-					console.log(tab);
-				}
-				else{
-					allNodes[nodeId].hiddenLabel=allNodes[nodeId].label;
-					allNodes[nodeId].label=undefined;
-					}
-			}
-		var updateArray = [];
-		for (var nodeId in allNodes) {
-			if (allNodes.hasOwnProperty(nodeId)) {
-				updateArray.push(allNodes[nodeId]);
-			}
+
+function createButtons(){
+
+	for(var i=0; i<tabTag.length;i++)
+	{ 
+		if(check_ifPresent_list.includes(tabTag[i])==false){
+			var tagList = document.getElementById("tagSelectBox");
+			var option = document.createElement("option");
+			option.text = tabTag[i];
+			tagList.add(option);
+			check_ifPresent_list.push(tabTag[i]);
 		}
-		nodesDataset.update(updateArray);
-			 
-		}
-			 
-		 TAG.appendChild(btn); 
-	 }
- 	 
- }
+
+		$(document).ready(function() {
+			console.log($(this).val());
+			$('#tagSelectBox').select2({
+				placeholder: "Select a Tag",
+				allowClear: true
+			});
+		});
+	}
+}
+
+function filterByTag(){
+	var selectedTag=($('#tagSelectBox').val());
+	console.log(selectedTag);
+	
+}
 
 

@@ -177,8 +177,7 @@
         	allNodes=nodesDataset.get({returnType:"Object"});
         	document.getElementById('network-popUp').style.display = 'none'; 
    	        updateLeftPane();
-
-		 TAG.innerHTML="";
+   	 	 // tabTag=[];
 		 saveTag();
 		 createButtons();
         };
@@ -499,7 +498,7 @@ document.ondblclick=function(e){
 	}
 }
 
-document.getElementById('TAG').innerHTML=" ";
+// document.getElementById('TAG').innerHTML=" ";
 saveTag();
 createButtons();
 
