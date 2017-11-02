@@ -57,6 +57,15 @@ function draw_the_path(){
   	active=0;
   	draw_in_all_canvas_active=0;
 
+  	if(tagFilterActive == true){
+  		console.log(temp_nodesDataset);
+		nodesDataset = temp_nodesDataset;
+  		console.log(nodesDataset);
+
+		edgesDataset = temp_edgesDataset;
+		redrawAll();
+		tagFilterActive=false;
+  	}
 
   	var updateArray = [];
   	for (var edgeId in allEdges) {
@@ -176,7 +185,6 @@ function createButtons(){
 		}
 
 		$(document).ready(function() {
-			console.log($(this).val());
 			$('#tagSelectBox').select2({
 				placeholder: "Select a Tag",
 				allowClear: true
@@ -187,8 +195,51 @@ function createButtons(){
 
 function filterByTag(){
 	var selectedTag=($('#tagSelectBox').val());
-	console.log(selectedTag);
-	
+	var nodeArray=[];
+	var edgeArray=[];
+	var nodeId_Array=[];
+
+	tagFilterActive=true;
+
+	for(var currentTag in selectedTag){
+		for(var nodeId in allNodes){
+			if(allNodes[nodeId].tags.includes(selectedTag[currentTag]) == true && nodeArray.includes(allNodes[nodeId])==false){
+				nodeArray.push(allNodes[nodeId]);
+				nodeId_Array.push(parseInt(nodeId));
+			}
+		}
+	}
+	console.log(nodeId_Array);
+
+	var influenced_nodes=[];
+	for(var edgeId in allEdges){
+		if(nodeId_Array.includes(allEdges[edgeId].from) == true){
+			edgeArray.push(allEdges[edgeId]);
+			if(nodeId_Array.includes(allEdges[edgeId].to) == false && influenced_nodes.includes(allEdges[edgeId].to) == false ){
+
+				var id_to_push=String(allEdges[edgeId].to);
+
+				influenced_nodes.push(parseInt(id_to_push));
+
+				nodeArray.push(allNodes[id_to_push]);
+			}
+		}
+	}
+
+	temp_nodesDataset=nodesDataset;
+ 	temp_edgesDataset=edgesDataset;
+
+	nodesDataset = new vis.DataSet(nodeArray);
+	edgesDataset = new vis.DataSet(edgeArray);
+
+	redrawAll();
+
+	console.log(temp_edgesDataset);
+	console.log(temp_nodesDataset);
+
+
 }
 
-
+var temp_nodesDataset=[];
+var temp_edgesDataset=[];
+var tagFilterActive=false;
