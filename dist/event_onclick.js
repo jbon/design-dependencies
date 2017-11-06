@@ -166,18 +166,18 @@ function addNodefunction(){
 
 	document.getElementById('operation').innerHTML = "Add Node";
 	document.getElementById('network-popUp').style.display = 'block';
-
 	document.getElementById('node-label').value="";
-	// document.getElementById('tag-input').value="";
+	document.getElementById('tag-input').value="";
+	document.getElementById('show-tag').innerHTML ="    " ;
 	document.getElementById('node-label').focus(); 
 
 	$('#node-description').html("");
 
-	// document.getElementById('addTag').onclick = function(){
-	// 	tabTagg.push(document.getElementById('tag-input').value);			
-	// 	document.getElementById('show-tag').innerHTML +="    " + document.getElementById('tag-input').value;		
-	// 	document.getElementById('tag-input').value="";	
-	// };
+	document.getElementById('addTag').onclick = function(){
+		tabTagg.push(document.getElementById('tag-input').value);			
+		document.getElementById('show-tag').innerHTML +="    " + document.getElementById('tag-input').value;		
+		document.getElementById('tag-input').value="";	
+	};
 
 	document.getElementById('saveButton').onclick = function(){
 
@@ -188,13 +188,14 @@ function addNodefunction(){
 			label: document.getElementById('node-label').value,
 			description: $('#node-description').html()  ,   
 			shape:"ellipse",
-			color:'rgba(60,60,60,0.6)'
-			// tags:tabTagg
+			color:'rgba(60,60,60,0.6)',
+			tags:tabTagg
 
 		});        
 
-		// saveTag();
-		// createButtons();
+		updateLeftPane();
+		saveTag();
+		createButtons();
 
 		console.log(nodesDataset);
 		network.moveNode(nodesDataset.length-1,location.x,location.y);
