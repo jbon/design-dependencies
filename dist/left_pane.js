@@ -48,6 +48,13 @@ function draw_the_path(){
   		allEdges[edgeId].color='rgba(60,60,60,0.6)';
   	}
 
+  	if(tagFilterActive == true && draw_in_all_canvas_active == 0){
+  		nodesDataset = temp_nodesDataset;
+  		edgesDataset = temp_edgesDataset;
+  		redrawAll();
+  		tagFilterActive=false;
+  	}
+
   	sourceId=undefined;
   	targetIDs=[] ;
   	result_path=[""];
@@ -56,16 +63,6 @@ function draw_the_path(){
   	target_increase=[];
   	active=0;
   	draw_in_all_canvas_active=0;
-
-  	if(tagFilterActive == true){
-  		// console.log(temp_nodesDataset);
-  		nodesDataset = temp_nodesDataset;
-  		// console.log(nodesDataset);
-
-  		edgesDataset = temp_edgesDataset;
-  		redrawAll();
-  		tagFilterActive=false;
-  	}
 
   	var updateArray = [];
   	for (var edgeId in allEdges) {
@@ -91,10 +88,12 @@ function draw_the_path(){
 	var a = document.createElement('a');
 	var nodes_arr = [];
 	var edges_arr = [];
+
 	for (var i in allNodes)
 		nodes_arr.push(allNodes[i]);
 	for (var i in allEdges)
 		edges_arr.push(allEdges[i]);
+	
 	a.setAttribute('href', 'data:text/plain;charset=utf-8,'+encodeURIComponent(JSON.stringify({nodes:nodes_arr, edges:edges_arr})));
 	a.setAttribute('download', "data.json");
 	document.body.appendChild(a);
@@ -233,8 +232,16 @@ function filterByTag(){
 			}
 		}
 
- 	temp_nodesDataset=nodesDataset;
- 	temp_edgesDataset=edgesDataset;
+		for(var id_node in nodeArray){
+			nodeArray[id_node].id=parseInt(id_node);
+		}
+
+		for(var id_edge in edgeArray){
+			edgeArray[id_edge].id=parseInt(id_edge);
+		}
+
+		console.log(nodeArray);
+		console.log(edgeArray);
 
 		nodesDataset = new vis.DataSet(nodeArray);
 		edgesDataset = new vis.DataSet(edgeArray);
