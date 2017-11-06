@@ -233,6 +233,9 @@ function filterByTag(){
 			}
 		}
 
+ 	temp_nodesDataset=nodesDataset;
+ 	temp_edgesDataset=edgesDataset;
+
 		nodesDataset = new vis.DataSet(nodeArray);
 		edgesDataset = new vis.DataSet(edgeArray);
 
