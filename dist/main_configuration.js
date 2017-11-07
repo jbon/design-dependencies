@@ -345,6 +345,8 @@
     	var length=edgesDataset.length; 
     	var edges_removed=data.edges[0];
 
+    	edgesDataset.remove(edges_removed);
+
     	allEdges=edgesDataset.get({returnType:"Object"});
 
 
@@ -366,17 +368,15 @@
     		updateArray[updateArray.length-1].id=updateArray.length-1;
     	}
     	console.log(updateArray);
+    	edgesDataset.update(updateArray);
+    	edgesDataset.remove(edgesDataset.length-1);
 
-// for(var edgeId in updateArray){
-//   if(updateArray[edgeId].from>idselect){
-//     updateArray[edgeId].from=updateArray[edgeId].from-1;
-//   }
-//   if(updateArray[edgeId].to>idselect){
-//     updateArray[edgeId].to=updateArray[edgeId].to-1;
-//   }
-// }
-edgesDataset = new vis.DataSet(updateArray); 
-redrawAll();
+		// edgesDataset = new vis.DataSet(updateArray); 
+		allEdges=edgesDataset.get({returnType:"Object"});
+
+		console.log(edgesDataset);
+		console.log(allEdges);
+// redrawAll();
 
 }
 }
