@@ -167,21 +167,37 @@ function addNodefunction(){
 	document.getElementById('operation').innerHTML = "Add Node";
 	document.getElementById('network-popUp').style.display = 'block';
 	document.getElementById('node-label').value="";
-	document.getElementById('tag-input').value="";
-	document.getElementById('show-tag').innerHTML ="    " ;
 	document.getElementById('node-label').focus(); 
 
 	$('#node-description').html("");
 
-	document.getElementById('addTag').onclick = function(){
-		tabTagg.push(document.getElementById('tag-input').value);			
-		document.getElementById('show-tag').innerHTML +="    " + document.getElementById('tag-input').value;		
-		document.getElementById('tag-input').value="";	
-	};
+	$('#tag-input').empty();
+	for(var i=0; i<tabTag.length;i++)
+	{ 
+        
+ 		var tagList = document.getElementById("tag-input");
+		var option = document.createElement("option");
+		option.text = tabTag[i];
+		tagList.add(option);
+
+		$(document).ready(function() {
+			$('#tag-input').select2({
+				placeholder: "Select a Tag",
+				allowClear: true,
+				tags: true
+			});
+		});
+	}
 
 	document.getElementById('saveButton').onclick = function(){
 
 		var location=network.DOMtoCanvas({x:positionX,y:positionY});
+		
+		var tabTagNew=[];	
+		var selectedTag=($('#tag-input').val());
+		for(var currentTag in selectedTag){
+			tabTagNew.push(selectedTag[currentTag]);	
+		} 
 
 		nodesDataset.add({
 			id:nodesDataset.length,
@@ -189,19 +205,20 @@ function addNodefunction(){
 			description: $('#node-description').html()  ,   
 			shape:"ellipse",
 			color:'rgba(60,60,60,0.6)',
-			tags:tabTagg
-
+			tags:tabTagNew
 		});        
 
 		updateLeftPane();
-		saveTag();
-		createButtons();
+		
 
 		console.log(nodesDataset);
 		network.moveNode(nodesDataset.length-1,location.x,location.y);
 
 		allNodes=nodesDataset.get({returnType:"Object"});
 		document.getElementById('network-popUp').style.display = 'none';
+		
+		saveTag();
+		createButtons();
 	};
 
 

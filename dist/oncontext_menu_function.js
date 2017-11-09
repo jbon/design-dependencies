@@ -114,12 +114,12 @@ function editNode(){
 		$(document).ready(function() {
 			$('#tag-input').select2({
 				placeholder: "Select a Tag",
-				allowClear: true
+				allowClear: true,
+				tags: true
 			});
 		});
 	}
 	
-
 	document.getElementById('saveButton').onclick = function(){
 
 		allNodes[idselect].label= document.getElementById('node-label').value;

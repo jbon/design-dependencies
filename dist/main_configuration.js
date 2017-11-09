@@ -148,7 +148,6 @@
         document.getElementById('network-popUp').style.display = 'block';
         document.getElementById('node-label').value="";
 		document.getElementById('tag-input').value="";
-		//document.getElementById('show-tag').innerHTML ="    " ;
        // document.getElementById('node-description').value="";
         document.getElementById('node-label').focus(); 
 
@@ -166,7 +165,8 @@
 		$(document).ready(function() {
 			$('#tag-input').select2({
 				placeholder: "Select a Tag",
-				allowClear: true
+				allowClear: true,
+				tags: true
 			});
 		});
 	}
