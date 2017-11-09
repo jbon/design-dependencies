@@ -99,22 +99,42 @@ function editNode(){
 
 	document.getElementById('node-label').value=allNodes[idselect].label;
 	$('#node-description').html(allNodes[idselect].description);
-	document.getElementById('tag-input').value="";
-	document.getElementById('show-tag').innerHTML ="    " ;
+	//document.getElementById('tag-input').value="";
+	//document.getElementById('show-tag').innerHTML ="    " ;
 	
-	
-	document.getElementById('addTag').onclick = function(){
-			tabTagg.push(document.getElementById('tag-input').value);			
-			document.getElementById('show-tag').innerHTML +="    " + document.getElementById('tag-input').value;		
-			document.getElementById('tag-input').value="";	
-		};
+	// document.getElementById('show-tag').innerHTML +="    " +allNodes[idselect].tags;
+	$('#tag-input').empty();
+	for(var i=0; i<tabTag.length;i++)
+	{ 
+        
+ 		var tagList = document.getElementById("tag-input");
+		var option = document.createElement("option");
+		option.text = tabTag[i];
+		if (  allNodes[idselect].tags.includes(tabTag[i])==true )  {
+		option.selected="selected";
+		}
+		tagList.add(option);
 
+		$(document).ready(function() {
+			$('#tag-input').select2({
+				placeholder: "Select a Tag",
+				allowClear: true
+			});
+		});
+	}
+	
 
 	document.getElementById('saveButton').onclick = function(){
 
 		allNodes[idselect].label= document.getElementById('node-label').value;
 		allNodes[idselect].description=   $('#node-description').html();
-		allNodes[idselect].tags= allNodes[idselect].tags.concat(tabTagg);  
+
+		var selectedTag=($('#tag-input').val());
+		for(var currentTag in selectedTag){
+				if ( allNodes[idselect].tags.includes(selectedTag[currentTag])==false ) {
+					allNodes[idselect].tags.push(selectedTag[currentTag]);
+				}
+		}
 
 		var updateArray = [];
 
@@ -125,7 +145,6 @@ function editNode(){
 		nodesDataset.update(updateArray);
 		document.getElementById('network-popUp').style.display = 'none';
 		
-		document.getElementById('TAG').innerHTML=" ";
 		 saveTag();
 		 createButtons();
 	};
