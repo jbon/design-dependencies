@@ -99,14 +99,10 @@ function editNode(){
 
 	document.getElementById('node-label').value=allNodes[idselect].label;
 	$('#node-description').html(allNodes[idselect].description);
-	//document.getElementById('tag-input').value="";
-	//document.getElementById('show-tag').innerHTML ="    " ;
 	
-	// document.getElementById('show-tag').innerHTML +="    " +allNodes[idselect].tags;
 	$('#tag-input').empty();
 	for(var i=0; i<tabTag.length;i++)
 	{ 
-        
  		var tagList = document.getElementById("tag-input");
 		var option = document.createElement("option");
 		option.text = tabTag[i];
@@ -130,10 +126,9 @@ function editNode(){
 		allNodes[idselect].description=   $('#node-description').html();
 
 		var selectedTag=($('#tag-input').val());
+		allNodes[idselect].tags=[];
 		for(var currentTag in selectedTag){
-				if ( allNodes[idselect].tags.includes(selectedTag[currentTag])==false ) {
-					allNodes[idselect].tags.push(selectedTag[currentTag]);
-				}
+			allNodes[idselect].tags.push(selectedTag[currentTag]);
 		}
 
 		var updateArray = [];
