@@ -6,7 +6,13 @@ function openAttributePane(params) {
 
 	var LABEL=document.getElementById('affichageLabel');
 	LABEL.innerHTML = 'Label: '+  nodesDataset.get(params.nodes[0]).label  ;
-
+	
+	var TAGG=document.getElementById('affichageTag');
+	TAGG.innerHTML = "Tags:"  ;
+	for (var i=0; i<nodesDataset.get(params.nodes[0]).tags.length;i++ ){
+			TAGG.innerHTML += "   " + nodesDataset.get(params.nodes[0]).tags[i];
+		} 
+	
 	var DESCRIPTION=document.getElementById('affichageDescription');
 	var msg= nodesDataset.get(params.nodes[0]).description;
 	msg= msg.replace(/\n/g, "<br />");
