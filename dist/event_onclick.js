@@ -8,7 +8,7 @@ function openAttributePane(params) {
 	LABEL.innerHTML = 'Label: '+  nodesDataset.get(params.nodes[0]).label  ;
 	
 	var TAGG=document.getElementById('affichageTag');
-	TAGG.innerHTML = "Tags:"  ;
+	TAGG.innerHTML = "Tags:";
 	for (var i=0; i<nodesDataset.get(params.nodes[0]).tags.length;i++ ){
 			TAGG.innerHTML += "   " + nodesDataset.get(params.nodes[0]).tags[i];
 		} 
@@ -95,6 +95,64 @@ function focusNode(nodeId) {
   network.focus(nodeId, options);
 }
 
+
+$(function questionMark_click(){
+ $("#questionMark").on("click",function(){
+ document.getElementById('questionMark-popUp').style.display = 'block';
+ });
+ 
+ document.getElementById("usage_1").onmouseover = function() {
+					this.style.textDecoration='underline';
+				};
+document.getElementById("usage_1").onmouseout = function() {
+					this.style.textDecoration='none';
+				};
+				
+ document.getElementById("usage_2").onmouseover = function() {
+					this.style.textDecoration='underline';
+				};
+document.getElementById("usage_2").onmouseout = function() {
+					this.style.textDecoration='none';
+				};
+				
+ document.getElementById("usage_3").onmouseover = function() {
+					this.style.textDecoration='underline';
+				};
+document.getElementById("usage_3").onmouseout = function() {
+					this.style.textDecoration='none';
+				};
+
+ $(document).keydown(function(e) {        
+	if (e.keyCode == 27) {
+		document.getElementById('questionMark-popUp').style.display = 'none';
+	}
+});
+}); 
+
+
+$(function show_consequences(){
+	$("#usage_1").on("click",function(){
+   document.getElementById('questionMark-popUp').style.display = 'none';
+   document.getElementById("text_scenario").innerHTML="Right click on a parameter for exploring the consequences of a change in this parameter";
+ });
+}); 
+
+$(function show_compliance(){
+	$("#usage_2").on("click",function(){
+  document.getElementById('questionMark-popUp').style.display = 'none';
+   document.getElementById("text_scenario").innerHTML="Right click on a parameter you want to set as target";
+ });
+}); 
+
+$(function graph_navigate(){
+$("#usage_3").on("click",function(){
+ document.getElementById('questionMark-popUp').style.display = 'none';
+  document.getElementById("text_scenario").innerHTML="Left click on a parameter to display the parameters it influences and those it is influenced by";
+ });
+});
+
+
+	
 // This function is not well implemented because at the places where the color is set to #268ac9 it should 
 // be undefined that means the defaut color maybe a pb of data waiting for  new datafile to test
 function neighbourhoodHighlight(params) {

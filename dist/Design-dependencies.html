@@ -305,6 +305,36 @@
 	<input type="button" value="save" id="saveButton_edge" />
 	<input type="button" value="cancel" id="cancelButton_edge" />
 </div>
+
+
+
+
+<div id=questionMark-popUp>
+	<span>What usage scenario do you want to be guided trough?</span> <br>
+	<ul>
+	<li><span id=usage_1 onclick="show_consequences()">Show consequences of an increase/decrease of a source parameter</span> <br></li>
+	<li><span id=usage_2 onclick="show_compliance()">Show compliance of an increase/decrease of a source parameter with predefined target parameters</span> <br></li>
+	<li><span id=usage_3 onclick="graph_navigate()">Navigate through the causal relationships between parameters</span> <br></li>
+	</ul>
+</div>
+
+<div id="questionMark">
+  <input type="image"  src="../images/questionMark.png" onclick="questionMark_click()"/ > 
+  </div>
+ 
+ 
+ <div id=text_scenario_css>
+ <p id=text_scenario>  </p>
+</div>
+
 <br />
+<<<<<<< Updated upstream
+=======
+
+
+
+
+
+>>>>>>> Stashed changes
 </body>
 </html>
