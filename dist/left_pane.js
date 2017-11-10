@@ -6,7 +6,7 @@ function draw_the_path(){
 
 	}else {
 
-		if(targetIDs.length == 0  && confirm("do you want to draw the path without target node ?") == true){
+		if(targetIDs.length == 0 ){
 			draw_in_all_canvas();
 		}
 		else if(targetIDs.length>=1){
@@ -20,7 +20,7 @@ function draw_the_path(){
 
   // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx reset parameters i.e. shape and color of the nodes FUNCTION xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-
+ 
   function reset_parameters()
   { 
   	var updateArray=[];
@@ -183,14 +183,35 @@ function createButtons(){
 		$(document).ready(function() {
 			$('#tagSelectBox').select2({
 				placeholder: "Select a Tag",
-				allowClear: true
+				allowClear: true,
+				tags: true
 			});
 		});
 	}
 }
 
+
+var temp_nodesDataset=[];
+var temp_edgesDataset=[];
+var tagFilterActive=false;
+
+$(function(){
+	// console.log($('#tagSelectBox').val());
+	$('#tagSelectBox').on('select2:select',function(){
+		filterByTag();
+	});
+	$('#tagSelectBox').on('select2:unselect',function(){
+		filterByTag();
+	});
+})
+
+
+
+
+
 function filterByTag(){
 	var selectedTag=($('#tagSelectBox').val());
+	console.log(selectedTag);
 	if(selectedTag != null){
 		var nodeArray=[];
 		var edgeArray=[];
@@ -223,9 +244,9 @@ function filterByTag(){
 				edgeArray.push(allEdges[edgeId]);
 				if(nodeId_Array.includes(allEdges[edgeId].to) == false && influenced_nodes.includes(allEdges[edgeId].to) == false ){
 
-					var id_to_push=String(allEdges[edgeId].to);
+					var id_to_push=allEdges[edgeId].to;
 
-					influenced_nodes.push(parseInt(id_to_push));
+					influenced_nodes.push(id_to_push);
 
 					nodeArray.push(allNodes[id_to_push]);
 				}
@@ -233,23 +254,40 @@ function filterByTag(){
 		}
 
 		for(var id_node in nodeArray){
+
+			var id_to_replace=nodeArray[id_node].id;
+			// console.log(id_to_replace);
 			nodeArray[id_node].id=parseInt(id_node);
+
+			for(var id_edge in edgeArray){
+
+				if(edgeArray[id_edge].to == id_to_replace){
+					edgeArray[id_edge].to=parseInt(id_node);
+					// console.log(edgeArray[id_edge].to);
+				}else if(edgeArray[id_edge].from == id_to_replace){
+					edgeArray[id_edge].from=parseInt(id_node);
+					// console.log(edgeArray[id_edge].from);
+
+				}
+			}
 		}
 
 		for(var id_edge in edgeArray){
 			edgeArray[id_edge].id=parseInt(id_edge);
 		}
 
-		console.log(nodeArray);
-		console.log(edgeArray);
+		// console.log(nodeArray);
+		// console.log(edgeArray);
 
 		nodesDataset = new vis.DataSet(nodeArray);
 		edgesDataset = new vis.DataSet(edgeArray);
+		// console.log(edgesDataset);
+		
 
 		redrawAll();
 
 	}else{
-		alert("no tag selected");
+		console.log(tagFilterActive);
 		if(tagFilterActive == true){
 			nodesDataset = temp_nodesDataset;
 			edgesDataset = temp_edgesDataset;
@@ -259,6 +297,4 @@ function filterByTag(){
 	}
 }
 
-var temp_nodesDataset=[];
-var temp_edgesDataset=[];
-var tagFilterActive=false;
+

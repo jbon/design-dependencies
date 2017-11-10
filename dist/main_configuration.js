@@ -364,11 +364,12 @@
     	var length=edgesDataset.length; 
     	var edges_removed=data.edges[0];
 
+
     	edgesDataset.remove(edges_removed);
 
     	allEdges=edgesDataset.get({returnType:"Object"});
 
-
+    	if(edges_removed != nodesDataset.length-1){
     	for (var i=edges_removed; i<length-1; i++){
     		if(typeof allEdges[i+1] == "undefined"){
     			break;
@@ -391,6 +392,8 @@
     	edgesDataset.remove(edgesDataset.length-1);
 
 		// edgesDataset = new vis.DataSet(updateArray); 
+		}
+
 		allEdges=edgesDataset.get({returnType:"Object"});
 
 		console.log(edgesDataset);
@@ -487,17 +490,17 @@ function onContextMenu(e){
 	e.preventDefault();
 	showMenu(e.pageX, e.pageY);
 
-	document.getElementById("source").onclick=set_as_source;
+	document.getElementById("source_increase").onclick=source_increase;
 
-	document.getElementById("target").onclick=set_as_target;
+	document.getElementById("source_decrease").onclick=source_decrease;
+
+	document.getElementById("target_increase").onclick=increase_target; 
+
+	document.getElementById("target_decrease").onclick=decrease_target; 
 
 	document.getElementById("edit").onclick=editNode;
 
 	document.getElementById("remove").onclick=remove;
-
-	document.getElementById("increase").onclick=increase;
-
-	document.getElementById("decrease").onclick=decrease;
 
 	document.addEventListener('click', onClick, false);
 

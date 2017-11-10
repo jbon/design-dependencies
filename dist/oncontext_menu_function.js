@@ -93,6 +93,7 @@ function set_as_source(){
 // hideMenu();
 
 }
+
 function editNode(){ 
 
 	document.getElementById('network-popUp').style.display = 'block';
@@ -161,6 +162,8 @@ function editNode(){
 // hideMenu();
 
 }
+
+
 
 function remove(){ 
 
@@ -306,3 +309,63 @@ nodesDataset.update(updateArray);
 
     // hideMenu();
 }
+
+
+function source_increase(){
+	set_as_source();
+	increase();
+	if(targetIDs.length == 0){
+		draw_in_all_canvas();
+	}else{
+		draw_with_target();
+	}
+}
+
+function source_decrease(){
+	set_as_source();
+	decrease();
+
+	if(targetIDs.length == 0){
+		draw_in_all_canvas();
+	}else{
+		draw_with_target();
+	}
+}
+
+function increase_target(){
+	set_as_target();
+	increase();
+
+	if(sourceId != undefined){
+  	for(var nodeId in allNodes)
+  	{
+  		if (allNodes[nodeId].hiddenLabel !== undefined) {
+  			// console.log(nodeId);
+  			allNodes[nodeId].label=allNodes[nodeId].hiddenLabel;
+  			allNodes[nodeId].hiddenLabel = undefined;
+  		}
+
+  	}	
+  	draw_with_target();
+	}
+}
+
+function decrease_target(){
+	set_as_target();
+	decrease();
+
+	if(sourceId != undefined){
+  	for(var nodeId in allNodes)
+  	{
+  		if (allNodes[nodeId].hiddenLabel !== undefined) {
+  			// console.log(nodeId);
+  			allNodes[nodeId].label=allNodes[nodeId].hiddenLabel;
+  			allNodes[nodeId].hiddenLabel = undefined;
+  		}
+
+  	}
+  	draw_with_target();
+	}
+}
+
+
