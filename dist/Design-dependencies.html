@@ -1,3 +1,4 @@
+
 <!doctype html>
 
 <html>
@@ -6,8 +7,10 @@
 	<title>   Design dependencies </title>
 
 
+	<!-- Font awesome css library for the icon on the right click (oncontext) menu on the node : http://fontawesome.io/icons/ -->
 	<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"> 
 
+	<!-- Jquery ui library used for the autocomplete function -->
 	<link rel="stylesheet" href="../jquery-ui-1.12.1/jquery-ui.min.css">
 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -18,13 +21,16 @@
 
 	<script src="data.js"></script>
 	
+	<!-- visjs library => docs : http://visjs.org/docs/network/ 	 -->
 	<script type="text/javascript" src="vis.js"></script>
 	<link type="text/css" rel="stylesheet" href="vis-network.min.css">
 	<script type="text/javascript" src="exampleUtil.js"></script>
 	<script type="text/javascript" src="vis-network.min.js"></script>
 	
+	<!-- My css and js files -->
 	<link type="text/css" rel="stylesheet" href="mycss.css">
 	
+	<!-- <script  type="text/javascript"  src="left_down_button.js"></script> -->
 	<script  type="text/javascript"  src="layout.js"></script>
 	<script  type="text/javascript"  src="event_onclick.js"></script>
 	<script  type="text/javascript"  src="oncontext_menu_function.js"></script>
@@ -47,6 +53,7 @@
 		<div class="ui-widget">
 			<label for="tags"> Search: </label>
 			<input id="tags">
+			<!-- <img alt="" src="img/network/right_triangle.png" style="height: 4%; width: 7%;cursor: pointer;" class="myButt" onclick="myfunction(this);"/> -->
 		</div>
 
 		<br />
@@ -55,107 +62,97 @@
 
 		<script type="text/javascript">
 			document.getElementById('file').onchange = function(){
-
 				var file = this.files[0];
-
 				var reader = new FileReader();
 				reader.onload = function(progressEvent){
-					console.log(typeof this.result);
-					var obj=JSON.parse(this.result);
-					console.log(obj);
-
-					nodesDataset = new vis.DataSet(obj.nodes);
-					edgesDataset = new vis.DataSet(obj.edges);
+    				// Entire file
+    				console.log(typeof this.result);
+    				var obj=JSON.parse(this.result);
+    			    console.log(obj);
+	    			nodesDataset = new vis.DataSet(obj.nodes);
+    				edgesDataset = new vis.DataSet(obj.edges);
 					redrawAll();
-					updateLeftPane();
+				    updateLeftPane();
 				};
 				reader.readAsText(file);
-
 			};	
 		</script>
-
-		<p> Layout :
-			<button class="buttonLeft" id="physical" onclick="layout_physical() ">Physical</button>
-			<button class="buttonLeft"  id="hierarchical" onclick="layout_hierarchical()">Hierarchical</button>
-
-			<div>
-				<p> Tags :<!-- <input type="button" value="runTag" id="RunTag" onclick="filterByTag()" /> -->
-					<select id="tagSelectBox" name="tagsFilters[]" multiple="multiple" style="width:95%">
-					</select>
-				</div>
-					<div class="topcoat-button-bar full">
-	<!-- 				<div class="topcoat-button-bar__item">
-						<button class="topcoat-button-bar__button full" onclick="draw_the_path()">Draw</button>
-					</div> -->
-					<div class="topcoat-button-bar__item">
-						<button class="topcoat-button-bar__button full" onclick="reset_parameters()">Reset</button>
-					</div>
-					<div class="topcoat-button-bar__item">
-						<button class="topcoat-button-bar__button full" onclick="save_changes()">Save</button>
-					</div>
-				</div>
-			</div> 
-
-			<pre id="eventSpan"></pre>
+<!-- <output id="list"></output> -->
 
 
 
+<p> Layout :
+<button class="buttonLeft" id="physical" onclick="layout_physical() ">Physical</button>
+<button class="buttonLeft"  id="hierarchical" onclick="layout_hierarchical()">Hierarchical</button>
 
-			<!-- XXXXXXXXXXXXXXXXXXXX Right popup pane XXXXXXXXXXXXXXXXXXXXXX -->
+<!-- <input type="button" onclick="clusterByColor()" value="Cluster"> <br /> -->
+<div>
+	<p> Tags :<input type="button" value="runTag" id="RunTag" onclick="filterByTag()" />
+<select id="tagSelectBox" name="tagsFilters[]" multiple="multiple" style="width:95%">
+  <!-- <option value="null"></option> -->
+</select>
+</div>
+
+
+
+<div class="topcoat-button-bar full">
+	<div class="topcoat-button-bar__item">
+		<button class="topcoat-button-bar__button full" onclick="draw_the_path()">Draw</button>
+	</div>
+	<div class="topcoat-button-bar__item">
+		<button class="topcoat-button-bar__button full" onclick="reset_parameters()">Reset</button>
+	</div>
+	<div class="topcoat-button-bar__item">
+		<button class="topcoat-button-bar__button full" onclick="save_changes()">Save</button>
+	</div>
+</div>
+</div> 
+
+<pre id="eventSpan"></pre>
+
+
+
+
+<!-- XXXXXXXXXXXXXXXXXXXX Right popup pane XXXXXXXXXXXXXXXXXXXXXX -->
 
 <div id="attributepane">
-				<div class="text">
-					<div title="Close" class="left-close returntext" onclick="closeAttributePane();"> <div class="c cf"><span>Return to the full network</span></div></div>	
-					<div class="headertext">
-						<span>Information Pane</span>
-					</div>	
-					<!-- <p  id="affichageId">Id :</p> -->
-					<p  id="affichageLabel">Label :</p>
-				   	<p  id="affichageTag">Tags :</p>
-					<p  id="affichageDescription">Description :</p>
-					<div class="nodeattributes">
-						<div class="name"></div>
-						<div class="data"></div>
+	<div class="text">
+		<div title="Close" class="left-close returntext" onclick="closeAttributePane();"> <div class="c cf"><span>Return to the full network</span></div></div>	
+		<div class="headertext">
+			<span>Information Pane</span>
+		</div>	
+		<!-- <p  id="affichageId">Id :</p> -->
+		<p  id="affichageLabel">Label :</p>
+		<p  id="affichageTag">Tags :</p>
+		<p  id="affichageDescription">Description :</p>
+		<div class="nodeattributes">
+			<div class="name"></div>
+			<div class="data"></div>
 
 
-						<div class="link">
-							<ul>
-							</ul>
-						</div>
-					</div>			
-					<div class="headertext">
-						<span>Influencing factor</span>
-					</div>	
-					<p  id="influencing"></p>
-
-					<div class="headertext">
-						<span >Influenced factor</span>
-					</div>	
-					<p  id="influenced"></p>
-
-
-				</div>
+			<div class="link">
+				<ul>
+				</ul>
 			</div>
+		</div>			
+		<div class="headertext">
+			<span>Influencing factor</span>
+		</div>	
+		<p  id="influencing"></p>
+
+		<div class="headertext">
+			<span >Influenced factor</span>
+		</div>	
+		<p  id="influenced"></p>
 
 
+	</div>
+</div>
 
-<div id="network-popUp">
-	<span id="operation"></span> <br>
-	<table>
-		<tr>
-			<td>label</td><td><input style="white-space:nowrap;" id="node-label" value="new value" /></td>
-		</tr>
-	
-		</table>
-			Tag	<select id="tag-input" name="tagsFilters[]" multiple="multiple" style="width:80%"></select>
-				
-
-		<!-- <div class="container"> -->
-			
-			<!-- XXXXXXXXXXXXXXXXXXXX Right click on node menu XXXXXXXXXXXXXXXXXXXXXX -->
+<!-- XXXXXXXXXXXXXXXXXXXX Right click on node menu XXXXXXXXXXXXXXXXXXXXXX -->
 
 
-			<menu class="menu" id="data-action">
+<menu class="menu" id="data-action">
 				<li class="menu-item submenu">
 					<button type="button" class="menu-btn" id="source"> <i class="fa fa-caret-up" style="font-size:20px;"></i> <span class="menu-text">(Un)Set as source </span> </button>
 					<menu class="menu">
@@ -195,72 +192,70 @@
 
 
 
-			<!-- XXXXXXXXXXXXXXXXXXXX Call the configuration function XXXXXXXXXXXXXXXXXXXXXX -->
-
-			<script type="text/javascript">
-				redrawAll();
-			</script>
-
-			<!-- XXXXXXXXXXXXXXXXXXXX AddNode/EditNode popup window XXXXXXXXXXXXXXXXXXXXXX -->
-
-			<div id="network-popUp">
-				<span id="operation"></span> <br>
-				<table>
-					<tr>
-						<td>label</td><td><input style="white-space:nowrap;" id="node-label" value="new value" /></td>
-					</tr>
-					<tr>
-						<td>Tag</td><td><input style="white-space:nowrap;" id="tag-input" value="new value"  /></td>
-
-					</tr>
-				</table>
-				<input type="button" value="Add tag" id="addTag" />
-				<p  id=show-tag> </p>
-
-			</table>
-			<!-- <div class="container"> -->
-
-			<div class="row">
-				<div id='col-md-12' >
 
 
-					<div class="toolbar">
+<!-- XXXXXXXXXXXXXXXXXXXX Call the configuration function XXXXXXXXXXXXXXXXXXXXXX -->
 
-						<a href="#" data-command='undo' title='undo'><i class='fa fa-undo'></i></a>
-						<a href="#" data-command='redo' title='redo'><i class='fa fa-repeat'></i></a>
+<script type="text/javascript">
+	redrawAll();
+</script>
 
-						<div class="fore-wrapper"><i class='fa fa-font' style='color:#C96;' title='font color'></i>
-							<div class="fore-palette">
-							</div>
+<!-- XXXXXXXXXXXXXXXXXXXX AddNode/EditNode popup window XXXXXXXXXXXXXXXXXXXXXX -->
+
+<div id="network-popUp">
+	<span id="operation"></span> <br>
+	<table>
+		<tr>
+			<td>label</td><td><input style="white-space:nowrap;" id="node-label" value="new value" /></td>
+		</tr>
+	
+		</table>
+			Tag	<select id="tag-input" name="tagsFilters[]" multiple="multiple" style="width:80%"></select>
+				
+
+		<!-- <div class="container"> -->
+
+		<div class="row">
+			<div id='col-md-12' >
+
+
+				<div class="toolbar">
+
+					<a href="#" data-command='undo' title='undo'><i class='fa fa-undo'></i></a>
+					<a href="#" data-command='redo' title='redo'><i class='fa fa-repeat'></i></a>
+
+					<div class="fore-wrapper"><i class='fa fa-font' style='color:#C96;' title='font color'></i>
+						<div class="fore-palette">
 						</div>
-						<div class="back-wrapper"><i class='fa fa-font' style='background:#C96;' title='highlight color'></i>
-							<div class="back-palette">
-							</div>
+					</div>
+					<div class="back-wrapper"><i class='fa fa-font' style='background:#C96;' title='highlight color'></i>
+						<div class="back-palette">
 						</div>
+					</div>
 
 
-						<a href="#" data-command='bold' title='bold'><i class='fa fa-bold'></i></a>
-						<a href="#" data-command='italic' title='italic'><i class='fa fa-italic'></i></a>
-						<a href="#" data-command='underline' title="underline"><i class='fa fa-underline'></i></a>
-						<a href="#" data-command='strikeThrough' title='strikethrough'><i class='fa fa-strikethrough'></i></a>
-						<a href="#" data-command='justifyLeft' title='justify left'><i class='fa fa-align-left'></i></a>
-						<a href="#" data-command='justifyCenter' title='justify center'><i class='fa fa-align-center'></i></a>
-						<a href="#" data-command='justifyFull' title='justify'><i class='fa fa-align-justify'></i></a>
-						<a href="#" data-command='indent' title='indent'><i class='fa fa-indent'></i></a>
-						<a href="#" data-command='outdent' title='outdent'><i class='fa fa-outdent'></i></a>
-						<!-- </br> -->
-						<a href="#" data-command='insertUnorderedList' title='insert unordered list'><i class='fa fa-list-ul'></i></a>
-						<a href="#" data-command='insertOrderedList' title='insert ordered list'><i class='fa fa-list-ol'></i></a>
-						<!-- <a href="#" data-command='h1' title='H1'>H1</a> -->
-						<a href="#" data-command='h2' title='H2'>H2</a>
-						<!-- <a href="#" data-command='h3' title='H3'>H3</a> -->
-						<a href="#" data-command='h4' title='H4'>H4</a>
-						<!-- <a href="#" data-command='h5' title='H5'>H5</a> -->
-						<a href="#" data-command='h6' title='H6'>H6</a>		
-						<!-- <a href="#" data-command='createlink'  title='Create link'><i class='fa fa-link'></i></a> -->
-						<!-- <a href="#" data-command='unlink'  title='remove link'><i class='fa fa-unlink'></i></a> -->
-						<!--<a href="#" data-command='insertimage'  title='insert image'><i class='fa fa-image'></i></a>-->
-						<a href="#" data-command='p'  title='paragraph'>P</a>
+					<a href="#" data-command='bold' title='bold'><i class='fa fa-bold'></i></a>
+					<a href="#" data-command='italic' title='italic'><i class='fa fa-italic'></i></a>
+					<a href="#" data-command='underline' title="underline"><i class='fa fa-underline'></i></a>
+					<a href="#" data-command='strikeThrough' title='strikethrough'><i class='fa fa-strikethrough'></i></a>
+					<a href="#" data-command='justifyLeft' title='justify left'><i class='fa fa-align-left'></i></a>
+					<a href="#" data-command='justifyCenter' title='justify center'><i class='fa fa-align-center'></i></a>
+					<a href="#" data-command='justifyFull' title='justify'><i class='fa fa-align-justify'></i></a>
+					<a href="#" data-command='indent' title='indent'><i class='fa fa-indent'></i></a>
+					<a href="#" data-command='outdent' title='outdent'><i class='fa fa-outdent'></i></a>
+					<!-- </br> -->
+					<a href="#" data-command='insertUnorderedList' title='insert unordered list'><i class='fa fa-list-ul'></i></a>
+					<a href="#" data-command='insertOrderedList' title='insert ordered list'><i class='fa fa-list-ol'></i></a>
+					<!-- <a href="#" data-command='h1' title='H1'>H1</a> -->
+					<a href="#" data-command='h2' title='H2'>H2</a>
+					<!-- <a href="#" data-command='h3' title='H3'>H3</a> -->
+					<a href="#" data-command='h4' title='H4'>H4</a>
+					<!-- <a href="#" data-command='h5' title='H5'>H5</a> -->
+					<a href="#" data-command='h6' title='H6'>H6</a>		
+					<!-- <a href="#" data-command='createlink'  title='Create link'><i class='fa fa-link'></i></a> -->
+					<!-- <a href="#" data-command='unlink'  title='remove link'><i class='fa fa-unlink'></i></a> -->
+					<!--<a href="#" data-command='insertimage'  title='insert image'><i class='fa fa-image'></i></a>-->
+					<a href="#" data-command='p'  title='paragraph'>P</a>
   <!--<a href="#" data-command='subscript' title='subscript'><i class='fa fa-subscript'></i></a>
   <a href="#" data-command='superscript'  title='superscript'><i class='fa fa-superscript'></i></a>-->
 
@@ -278,12 +273,10 @@
 	var colorPalette = ['000000', 'FF9966', '6699FF', '99FF66', 'CC0000', '00CC00', '0000CC', '333333', '0066FF', 'FFFFFF'];
 	var forePalette = $('.fore-palette');
 	var backPalette = $('.back-palette');
-
 	for (var i = 0; i < colorPalette.length; i++) {
 		forePalette.append('<a href="#" data-command="forecolor" data-value="' + '#' + colorPalette[i] + '" style="background-color:' + '#' + colorPalette[i] + ';" class="palette-item"></a>');
 		backPalette.append('<a href="#" data-command="backcolor" data-value="' + '#' + colorPalette[i] + '" style="background-color:' + '#' + colorPalette[i] + ';" class="palette-item"></a>');
 	}
-
 	$('.toolbar a').click(function(e) {
 		var command = $(this).data('command');
 		if (command == 'h1' || command == 'h2' || command == 'h3' || command == 'h4' || command == 'h5' || command == 'h6' ||command == 'p') {
@@ -297,15 +290,12 @@
 			document.execCommand($(this).data('command'), false, url);
 		} else document.execCommand($(this).data('command'), false, null);
 	});
-
 </script>
 
 </br>
 <input type="button" value="save" id="saveButton" "/>
 <input type="button" value="cancel" id="cancelButton" />
 </div>
-
-
 <div id=network-popUp_edge>
 	<span id="operation">Edges</span> <br>
 	<!-- <div> -->
@@ -316,15 +306,5 @@
 	<input type="button" value="cancel" id="cancelButton_edge" />
 </div>
 <br />
-
 </body>
-
 </html>
-
-
-
-
-
-
-
-
