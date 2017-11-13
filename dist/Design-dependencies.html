@@ -48,70 +48,61 @@
 	<div id="optionsContainer" style="text-align: center;"></div>
 
 	<div id="mynetwork"></div>
-	<div id="column_left"> <img src="../images/logo.png" id="photos">
+	<div id="column_left">
+
+		<img src="../images/logo.png" alt="" id="photos">
 
 		<div class="ui-widget">
 			<label for="tags"> Search: </label>
 			<input id="tags">
-			<!-- <img alt="" src="img/network/right_triangle.png" style="height: 4%; width: 7%;cursor: pointer;" class="myButt" onclick="myfunction(this);"/> -->
 		</div>
 
 		<br />
-
-		<!-- <input type="file" name="file" id="file"> -->
-
-		<!-- <output id="list"></output> -->
-
-
 
 		<p> Layout :
 			<button class="buttonLeft" id="physical" onclick="layout_physical() ">Physical</button>
 			<button class="buttonLeft"  id="hierarchical" onclick="layout_hierarchical()">Hierarchical</button>
 
-			<!-- <input type="button" onclick="clusterByColor()" value="Cluster"> <br /> -->
 			<div>
 				<p> Tags :
 					<select id="tagSelectBox" name="tagsFilters[]" multiple="multiple" style="width:95%">
-						<!-- <option value="null"></option> -->
 					</select>
 				</div>
 
 
-
 				<div class="topcoat-button-bar full">
-<!-- 	<div class="topcoat-button-bar__item">
-		<button class="topcoat-button-bar__button full" onclick="draw_the_path()">Draw</button>
-	</div> -->
-	<div class="topcoat-button-bar__item">
-		<button class="topcoat-button-bar__button full" onclick="reset_parameters()">Reset</button>
-	</div>
-</div>
-</div> 
 
-<pre id="eventSpan"></pre>
+					<div class="topcoat-button-bar__item">
+						<button class="topcoat-button-bar__button full" onclick="reset_parameters()">Reset</button>
+					</div>
+				</div>
+			</div> 
 
-<div class="element">
-	<i class="fa fa-upload fa-2x"></i>  <span class="name"> Load</span>
-	<input type="file" name="" id="file">
-</div>
-
-<div class="element" onclick="save_changes()">
-	<i class="fa fa-floppy-o fa-2x"></i>  <span class="name"> Save</span>
-	<!-- <input type="img" onclick="save_changes()"> -->
-</div>
+			<pre id="eventSpan"></pre>
 
 
+			<div>		
+				<div class="element">
+					<i class="fa fa-upload fa-2x"></i>  <span class="name"> Load</span>
+					<input type="file" name="load" id="file">
+				</div>
 
-<script type="text/javascript">
-	$("i.fa-upload").click(function () {
-		console.log("load")
-		$("input[type='file']").trigger('click');
-	});
+				<div class="element" onclick="save_changes()">
+					<i class="fa fa-floppy-o fa-2x"></i>  <span class="name"> Save</span>
+				</div>
 
-	document.getElementById('file').onchange = function(){
-		var file = this.files[0];
-		var reader = new FileReader();
-		reader.onload = function(progressEvent){
+
+
+				<script type="text/javascript">
+					$("i.fa-upload").click(function () {
+						console.log("load")
+						$("input[type='file']").trigger('click');
+					});
+
+					document.getElementById('file').onchange = function(){
+						var file = this.files[0];
+						var reader = new FileReader();
+						reader.onload = function(progressEvent){
     				// Entire file
     				console.log(typeof this.result);
     				var obj=JSON.parse(this.result);
@@ -124,87 +115,82 @@
     			reader.readAsText(file);
     		};	
     	</script>
+    </div>
 
+    <!-- XXXXXXXXXXXXXXXXXXXX Right popup pane XXXXXXXXXXXXXXXXXXXXXX -->
 
-    	<!-- XXXXXXXXXXXXXXXXXXXX Right popup pane XXXXXXXXXXXXXXXXXXXXXX -->
-
-    	<div id="attributepane">
-    		<div class="text">
-    			<div title="Close" class="left-close returntext" onclick="closeAttributePane();"> <div class="c cf"><span>Return to the full network</span></div></div>	
-    			<div class="headertext">
-    				<span>Information Pane</span>
-    			</div>	
-    			<!-- <p  id="affichageId">Id :</p> -->
-    			<p  id="affichageLabel">Label :</p>
-    			<p  id="affichageTag">Tags :</p>
-    			<p  id="affichageDescription">Description :</p>
-    			<div class="nodeattributes">
-    				<div class="name"></div>
-    				<div class="data"></div>
-
-
-    				<div class="link">
-    					<ul>
-    					</ul>
-    				</div>
-    			</div>			
-    			<div class="headertext">
-    				<span>Influencing factor</span>
-    			</div>	
-    			<p  id="influencing"></p>
-
-    			<div class="headertext">
-    				<span >Influenced factor</span>
-    			</div>	
-    			<p  id="influenced"></p>
-
-
+    <div id="attributepane">
+    	<div class="text">
+    		<div title="Close" class="left-close returntext" onclick="closeAttributePane();"> 
+    			<div class="c cf"><span>Return to the full network</span></div>
     		</div>
+
+    		<div class="headertext">
+    			<span>Information Pane</span>
+    		</div>	
+    		<!-- <p  id="affichageId">Id :</p> -->
+    		<p  id="affichageLabel">Label :</p>
+    		<p  id="affichageTag">Tags :</p>
+    		<p  id="affichageDescription">Description :</p>
+    		<div class="nodeattributes">
+    			<div class="name"></div>
+    			<div class="data"></div>
+
+
+    			<div class="link">
+    				<ul>
+    				</ul>
+    			</div>
+    		</div>			
+    		<div class="headertext">
+    			<span>Influencing factor</span>
+    		</div>	
+    		<p  id="influencing"></p>
+
+    		<div class="headertext">
+    			<span >Influenced factor</span>
+    		</div>	
+    		<p  id="influenced"></p>
+
+
     	</div>
+    </div>
 
-    	<!-- XXXXXXXXXXXXXXXXXXXX Right click on node menu XXXXXXXXXXXXXXXXXXXXXX -->
-
-
-    	<menu class="menu" id="data-action">
-    		<li class="menu-item submenu">
-    			<button type="button" class="menu-btn" id="source"> <i class="fa fa-caret-up" style="font-size:20px;"></i> <span class="menu-text">(Un)Set as source </span> </button>
-    			<menu class="menu">
-    				<li class="menu-item">
-    					<button type="button" class="menu-btn" id="source_increase"> <i class="fa fa-arrow-up"></i> <span class="menu-text">Increasing</span> </button>
-    				</li>
-    				<li class="menu-item">
-    					<button type="button" class="menu-btn" id="source_decrease"> <i class="fa fa-arrow-down"></i> <span class="menu-text">Decreasing</span> </button>
-    				</li>
-    			</menu>
-    		</li>
-    		<li class="menu-item submenu">
-    			<button type="button" class="menu-btn" id="target">  <i class="fa fa-star"></i><span class="menu-text">(Un)Set as target</span> </button>
-    			<menu class="menu">
-    				<li class="menu-item">
-    					<button type="button" class="menu-btn" id="target_increase"> <i class="fa fa-arrow-up"></i> <span class="menu-text">Increasing</span> </button>
-    				</li>
-    				<li class="menu-item">
-    					<button type="button" class="menu-btn" id="target_decrease"> <i class="fa fa-arrow-down"></i> <span class="menu-text">Decreasing</span> </button>
-    				</li>
-    			</menu>
-    		</li>
-    		<li class="menu-separator"></li>
-    		<li class="menu-item">
-    			<button type="button" class="menu-btn" id="edit"> <i class="fa fa-edit"></i> <span class="menu-text">Edit selected Node</span> </button>
-    		</li>
-    		<li class="menu-item">
-    			<button type="button" class="menu-btn" id="remove"> <i class="fa fa-trash"></i> <span class="menu-text">Remove</span> </button>
-    		</li>
-
-				<!-- li class="menu-separator"></li>
-				<li class="menu-item submenu">
-					<button type="button" class="menu-btn"> <i class="fa  fa-dot-circle-o"></i> <span class="menu-text">Target value</span> </button>
-
-				</li> -->
-			</menu>
+    <!-- XXXXXXXXXXXXXXXXXXXX Right click on node menu XXXXXXXXXXXXXXXXXXXXXX -->
 
 
+    <menu class="menu" id="data-action">
+    	<li class="menu-item submenu">
+    		<button type="button" class="menu-btn" id="source"> <i class="fa fa-caret-up" style="font-size:20px;"></i> <span class="menu-text">(Un)Set as source </span> </button>
+    		<menu class="menu">
+    			<li class="menu-item">
+    				<button type="button" class="menu-btn" id="source_increase"> <i class="fa fa-arrow-up"></i> <span class="menu-text">Increasing</span> </button>
+    			</li>
+    			<li class="menu-item">
+    				<button type="button" class="menu-btn" id="source_decrease"> <i class="fa fa-arrow-down"></i> <span class="menu-text">Decreasing</span> </button>
+    			</li>
+    		</menu>
+    	</li>
+    	<li class="menu-item submenu">
+    		<button type="button" class="menu-btn" id="target">  <i class="fa fa-star"></i><span class="menu-text">(Un)Set as target</span> </button>
+    		<menu class="menu">
+    			<li class="menu-item">
+    				<button type="button" class="menu-btn" id="target_increase"> <i class="fa fa-arrow-up"></i> <span class="menu-text">Increasing</span> </button>
+    			</li>
+    			<li class="menu-item">
+    				<button type="button" class="menu-btn" id="target_decrease"> <i class="fa fa-arrow-down"></i> <span class="menu-text">Decreasing</span> </button>
+    			</li>
+    		</menu>
+    	</li>
+    	<li class="menu-separator"></li>
+    	<li class="menu-item">
+    		<button type="button" class="menu-btn" id="edit"> <i class="fa fa-edit"></i> <span class="menu-text">Edit selected Node</span> </button>
+    	</li>
+    	<li class="menu-item">
+    		<button type="button" class="menu-btn" id="remove"> <i class="fa fa-trash"></i> <span class="menu-text">Remove</span> </button>
+    	</li>
 
+	</menu>
 
 
 			<!-- XXXXXXXXXXXXXXXXXXXX Call the configuration function XXXXXXXXXXXXXXXXXXXXXX -->
@@ -219,7 +205,7 @@
 				<span id="operation"></span> <br>
 				<table>
 					<tr>
-						<td>label</td><td><input style="white-space:nowrap;" id="node-label" value="new value" /></td>
+						<td>label</td><td><input type="text" style="white-space:nowrap;" id="node-label" value="new value" ></td>
 					</tr>
 
 				</table>
@@ -238,14 +224,12 @@
 							<a href="#" data-command='redo' title='redo'><i class='fa fa-repeat'></i></a>
 
 							<div class="fore-wrapper"><i class='fa fa-font' style='color:#C96;' title='font color'></i>
-								<div class="fore-palette">
-								</div>
-							</div>
-							<div class="back-wrapper"><i class='fa fa-font' style='background:#C96;' title='highlight color'></i>
-								<div class="back-palette">
-								</div>
+								<div class="fore-palette"></div>
 							</div>
 
+							<div class="back-wrapper"><i class='fa fa-font' style='background:#C96;' title='highlight color'></i>
+								<div class="back-palette"></div>
+							</div>
 
 							<a href="#" data-command='bold' title='bold'><i class='fa fa-bold'></i></a>
 							<a href="#" data-command='italic' title='italic'><i class='fa fa-italic'></i></a>
@@ -256,98 +240,83 @@
 							<a href="#" data-command='justifyFull' title='justify'><i class='fa fa-align-justify'></i></a>
 							<a href="#" data-command='indent' title='indent'><i class='fa fa-indent'></i></a>
 							<a href="#" data-command='outdent' title='outdent'><i class='fa fa-outdent'></i></a>
-							<!-- </br> -->
 							<a href="#" data-command='insertUnorderedList' title='insert unordered list'><i class='fa fa-list-ul'></i></a>
 							<a href="#" data-command='insertOrderedList' title='insert ordered list'><i class='fa fa-list-ol'></i></a>
-							<!-- <a href="#" data-command='h1' title='H1'>H1</a> -->
 							<a href="#" data-command='h2' title='H2'>H2</a>
-							<!-- <a href="#" data-command='h3' title='H3'>H3</a> -->
 							<a href="#" data-command='h4' title='H4'>H4</a>
-							<!-- <a href="#" data-command='h5' title='H5'>H5</a> -->
 							<a href="#" data-command='h6' title='H6'>H6</a>		
-							<!-- <a href="#" data-command='createlink'  title='Create link'><i class='fa fa-link'></i></a> -->
-							<!-- <a href="#" data-command='unlink'  title='remove link'><i class='fa fa-unlink'></i></a> -->
-							<!--<a href="#" data-command='insertimage'  title='insert image'><i class='fa fa-image'></i></a>-->
 							<a href="#" data-command='p'  title='paragraph'>P</a>
-  <!--<a href="#" data-command='subscript' title='subscript'><i class='fa fa-subscript'></i></a>
-  <a href="#" data-command='superscript'  title='superscript'><i class='fa fa-superscript'></i></a>-->
 
+						</div> 
+					<!-- </br> -->
+					<div contenteditable="true" id='node-description' ></div>
 
-</div> 
-</br>
-<div contenteditable="true" id='node-description' ></div>
-
-</div>  
-</div>
-
-
-<script type="text/javascript" >
-	
-	var colorPalette = ['000000', 'FF9966', '6699FF', '99FF66', 'CC0000', '00CC00', '0000CC', '333333', '0066FF', 'FFFFFF'];
-	var forePalette = $('.fore-palette');
-	var backPalette = $('.back-palette');
-	for (var i = 0; i < colorPalette.length; i++) {
-		forePalette.append('<a href="#" data-command="forecolor" data-value="' + '#' + colorPalette[i] + '" style="background-color:' + '#' + colorPalette[i] + ';" class="palette-item"></a>');
-		backPalette.append('<a href="#" data-command="backcolor" data-value="' + '#' + colorPalette[i] + '" style="background-color:' + '#' + colorPalette[i] + ';" class="palette-item"></a>');
-	}
-	$('.toolbar a').click(function(e) {
-		var command = $(this).data('command');
-		if (command == 'h1' || command == 'h2' || command == 'h3' || command == 'h4' || command == 'h5' || command == 'h6' ||command == 'p') {
-			document.execCommand('formatBlock', false, command);
-		}
-		if (command == 'forecolor' || command == 'backcolor') {
-			document.execCommand($(this).data('command'), false, $(this).data('value'));
-		}
-		if (command == 'createlink' || command == 'insertimage') {
-			url = prompt('Enter the link here: ', 'http:\/\/');
-			document.execCommand($(this).data('command'), false, url);
-		} else document.execCommand($(this).data('command'), false, null);
-	});
-</script>
-
-</br>
-<input type="button" value="save" id="saveButton" "/>
-<input type="button" value="cancel" id="cancelButton" />
-</div>
-<div id=network-popUp_edge>
-	<span id="operation">Edges</span> <br>
-	<!-- <div> -->
-	<input type="checkbox" name="label" class="boxplus"> + <br>
-	<input type="checkbox" name="label" class="boxminus"> - <br>
-	<!-- </div> -->
-	<input type="button" value="save" id="saveButton_edge" />
-	<input type="button" value="cancel" id="cancelButton_edge" />
-</div>
+				</div>  
+			</div>
 
 
 
+				<script type="text/javascript" >
 
-<div id=questionMark-popUp>
-	<span>What usage scenario do you want to be guided trough?</span> <br>
-	<ul>
-	<li><span id=usage_1 onclick="show_consequences()">Show consequences of an increase/decrease of a source parameter</span> <br></li>
-	<li><span id=usage_2 onclick="show_compliance()">Show compliance of an increase/decrease of a source parameter with predefined target parameters</span> <br></li>
-	<li><span id=usage_3 onclick="graph_navigate()">Navigate through the causal relationships between parameters</span> <br></li>
-	</ul>
-</div>
+					var colorPalette = ['000000', 'FF9966', '6699FF', '99FF66', 'CC0000', '00CC00', '0000CC', '333333', '0066FF', 'FFFFFF'];
+					var forePalette = $('.fore-palette');
+					var backPalette = $('.back-palette');
+					for (var i = 0; i < colorPalette.length; i++) {
+						forePalette.append('<a href="#" data-command="forecolor" data-value="' + '#' + colorPalette[i] + '" style="background-color:' + '#' + colorPalette[i] + ';" class="palette-item"></a>');
+						backPalette.append('<a href="#" data-command="backcolor" data-value="' + '#' + colorPalette[i] + '" style="background-color:' + '#' + colorPalette[i] + ';" class="palette-item"></a>');
+					}
+					$('.toolbar a').click(function(e) {
+						var command = $(this).data('command');
+						if (command == 'h1' || command == 'h2' || command == 'h3' || command == 'h4' || command == 'h5' || command == 'h6' ||command == 'p') {
+							document.execCommand('formatBlock', false, command);
+						}
+						if (command == 'forecolor' || command == 'backcolor') {
+							document.execCommand($(this).data('command'), false, $(this).data('value'));
+						}
+						if (command == 'createlink' || command == 'insertimage') {
+							url = prompt('Enter the link here: ', 'http:\/\/');
+							document.execCommand($(this).data('command'), false, url);
+						} else document.execCommand($(this).data('command'), false, null);
+					});
+				</script>
 
-<div id="questionMark">
-  <input type="image"  src="../images/questionMark.png" onclick="questionMark_click()"/ > 
-  </div>
- 
- 
- <div id=text_scenario_css>
- <p id=text_scenario>  </p>
-</div>
+			<!-- </br> -->
+			<input type="button" value="save" id="saveButton"/>
+			<input type="button" value="cancel" id="cancelButton"/>
+		</div>
 
-<br />
-<<<<<<< Updated upstream
-=======
+		<div id=network-popUp_edge>
+			<span>Edges</span> <br>
+			<!-- <div> -->
+			<input type="checkbox" name="label" class="boxplus"/> + <br>
+			<input type="checkbox" name="label" class="boxminus"/> - <br>
+			<!-- </div> -->
+			<input type="button" value="save" id="saveButton_edge" />
+			<input type="button" value="cancel" id="cancelButton_edge" />
+		</div>
 
 
 
 
+		<div id="questionMark-popUp">
+			<span>What usage scenario do you want to be guided through?</span> <br>
+			<ul>
+				<li><span id="usage_1" onclick="show_consequences()">Show consequences of an increase/decrease of a source parameter</span> <br></li>
+				<li><span id="usage_2" onclick="show_compliance()">Show compliance of an increase/decrease of a source parameter with predefined target parameters</span> <br></li>
+				<li><span id="usage_3" onclick="graph_navigate()">Navigate through the causal relationships between parameters</span> <br></li>
+			</ul>
+		</div>
 
->>>>>>> Stashed changes
-</body>
-</html>
+		<div id="questionMark">
+			<input type="image" alt="image" src="../images/questionMark.png" onclick="questionMark_click()"/> 
+		</div>
+
+
+		<div id="text_scenario_css">
+			<p id="text_scenario">  </p>
+		</div>
+
+		<br />
+
+	</body>
+	</html>
