@@ -2,48 +2,67 @@ function set_as_source(){
 
 	neighbourhoodHighlight({nodes:[]});
 
-	if(sourceId == undefined || idselect==sourceId){
-		if(allNodes[idselect].shape!="triangle"){
+	if(sourceId == undefined ){
+		console.log(sourceId);
+		// if(allNodes[idselect].shape!="triangle"){
 			for(var i in targetIDs)
 				if(idselect == targetIDs[i]){
 					targetIDs.splice(i,1);
 				}
 
-				allNodes[idselect].shape="triangle";
+				// allNodes[idselect].shape="triangle";
 				allNodes[idselect].font={
 					color:"#000000"
 				};
 				sourceId  =idselect ;
 
-			}
-			else{
-				allNodes[idselect].shape="ellipse";
-				allNodes[idselect].font={
-					color:"#ffffff"
-				};
-				sourceId=undefined;
-				for(var nodeId in allNodes){
-					allNodes[nodeId].color='rgba(60,60,60,0.6)';
-				}
-			}
-
-		}
-		else{
-			if(confirm("you have already selected a source node ! Do you want to replace it ?") == true){
-
-				allNodes[sourceId].shape="ellipse";
-				allNodes[sourceId].color='rgba(60,60,60,0.6)';
-				allNodes[sourceId].font={
-					color:"#ffffff"
-				};
-
-				sourceId=idselect;
-				allNodes[idselect].shape="triangle";
-				allNodes[idselect].font={
-					color:"#000000"
-				};
+			// }
+		}else{
+			allNodes[idselect].shape="ellipse";
+			allNodes[idselect].font={
+				color:"#ffffff"
+			};
+			sourceId=undefined;
+			for(var nodeId in allNodes){
+				allNodes[nodeId].color='rgba(60,60,60,0.6)';
 			}
 		}
+
+		// }
+		// else{	
+		// 	// 		for(var nodeId in allNodes)
+  // 	// {
+  // 	// 	allNodes[nodeId].shape="ellipse";
+  // 	// 	allNodes[nodeId].color='rgba(60,60,60,0.6)';
+
+  // 	// 	if(allNodes[nodeId].font != "#ffffff"){
+  // 	// 		allNodes[nodeId].font={
+  // 	// 			color:"#ffffff"
+  // 	// 		};
+  // 	// 	}
+
+  // 	// 	if (allNodes[nodeId].hiddenLabel !== undefined) {
+  // 	// 		// console.log(nodeId);
+  // 	// 		allNodes[nodeId].label=allNodes[nodeId].hiddenLabel;
+  // 	// 		allNodes[nodeId].hiddenLabel = undefined;
+  // 	// 	}else if(draw_in_all_canvas_active==1 && nodeId != sourceId){
+  // 	// 		allNodes[nodeId].label=allNodes[nodeId].label.substring(0,allNodes[nodeId].label.length-4);
+  // 	// 	}
+
+  // 	// }		
+  // 				console.log("source");
+		// 		allNodes[sourceId].shape="ellipse";
+		// 		allNodes[sourceId].color='rgba(60,60,60,0.6)';
+		// 		allNodes[sourceId].font={
+		// 			color:"#ffffff"
+		// 		};
+
+		// 		sourceId=idselect;
+		// 		allNodes[idselect].shape="triangle";
+		// 		allNodes[idselect].font={
+		// 			color:"#000000"
+		// 		};
+		// }
 
 		var updateArray = [];
 		for (var nodeId in allNodes) {
@@ -104,11 +123,11 @@ function editNode(){
 	$('#tag-input').empty();
 	for(var i=0; i<tabTag.length;i++)
 	{ 
- 		var tagList = document.getElementById("tag-input");
+		var tagList = document.getElementById("tag-input");
 		var option = document.createElement("option");
 		option.text = tabTag[i];
 		if (  allNodes[idselect].tags.includes(tabTag[i])==true )  {
-		option.selected="selected";
+			option.selected="selected";
 		}
 		tagList.add(option);
 
@@ -141,8 +160,8 @@ function editNode(){
 		nodesDataset.update(updateArray);
 		document.getElementById('network-popUp').style.display = 'none';
 		
-		 saveTag();
-		 createButtons();
+		saveTag();
+		createButtons();
 	};
 
 	document.getElementById('cancelButton').onclick = function(){
@@ -312,22 +331,25 @@ nodesDataset.update(updateArray);
 
 
 function source_increase(){
-	set_as_source();
-	increase();
-	if(targetIDs.length == 0){
+	if(targetIDs.length == 0 && sourceId == undefined){
+		set_as_source();
+		increase();
 		draw_in_all_canvas();
-	}else{
+	}else if(targetIDs.length != 0){
+		set_as_source();
+		increase();
 		draw_with_target();
 	}
 }
 
 function source_decrease(){
-	set_as_source();
-	decrease();
-
-	if(targetIDs.length == 0){
+	if(targetIDs.length == 0 && sourceId == undefined){
+		set_as_source();
+		decrease();
 		draw_in_all_canvas();
-	}else{
+	}else if(targetIDs.length != 0){
+		set_as_source();
+		increase();
 		draw_with_target();
 	}
 }
@@ -337,16 +359,7 @@ function increase_target(){
 	increase();
 
 	if(sourceId != undefined){
-  	for(var nodeId in allNodes)
-  	{
-  		if (allNodes[nodeId].hiddenLabel !== undefined) {
-  			// console.log(nodeId);
-  			allNodes[nodeId].label=allNodes[nodeId].hiddenLabel;
-  			allNodes[nodeId].hiddenLabel = undefined;
-  		}
-
-  	}	
-  	draw_with_target();
+		draw_with_target();
 	}
 }
 
@@ -355,16 +368,7 @@ function decrease_target(){
 	decrease();
 
 	if(sourceId != undefined){
-  	for(var nodeId in allNodes)
-  	{
-  		if (allNodes[nodeId].hiddenLabel !== undefined) {
-  			// console.log(nodeId);
-  			allNodes[nodeId].label=allNodes[nodeId].hiddenLabel;
-  			allNodes[nodeId].hiddenLabel = undefined;
-  		}
-
-  	}
-  	draw_with_target();
+		draw_with_target();
 	}
 }
 

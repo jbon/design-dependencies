@@ -771,3 +771,41 @@ a.palette-item:hover {
 		padding: 0 !important;
 	}
 }
+
+
+
+.element {
+  position: relative;
+  top:0px;
+  left:50%;
+  z-index: 3;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  display: inline-block;
+  /*margin: 60px;*/
+  padding: 10px;
+  text-align: center;
+}
+i.fa-upload {
+  margin: 5px;
+  cursor: pointer;
+  font-size: 30px;
+}
+i:hover {
+  opacity: 0.6;
+}
+input {
+  display: none;
+}
+
+.name{
+    display: block;
+  font-family: "Courier-new";
+      vertical-align: middle;
+    /*font-size: 40px;*/
+}
+i.fa-floppy-o {
+  margin: 5px;
+  cursor: pointer;
+  font-size: 30px;
+}

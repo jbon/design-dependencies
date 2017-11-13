@@ -30,13 +30,14 @@
  }
 
  var draw_in_all_canvas_active=0;
+ 
  function draw_in_all_canvas(){
 
  	var before="";
  	draw_in_all_canvas_active=1;
 
  	propagation(sourceId);
- 	console.log(result_path);
+ 	// console.log(result_path);
 
  	var test=[];
  	var final_test=[];
@@ -48,7 +49,7 @@
         }
         final_test=final_test.concat(test);
     }
-    console.log(final_test);
+    // console.log(final_test);
 
     if(result_path.length==1){
     	alert("no influencing parameters");
@@ -121,8 +122,6 @@
                 }
                 break;
 
-                case 0:
-                break;
             }
 
         }
@@ -140,16 +139,16 @@
     	}
     }
     if(multi.length>=2){
-    	console.log(multi);
+    	// console.log(multi);
     	for(var edge=1;edge<multi.length;edge++){
     		if(allEdges[multi[edge]].label != allEdges[multi[edge-1]].label){
           			sign=" (?)";
-          			console.log("!=");
+          			// console.log("!=");
           			break;
 
           		}else{
           			sign=allNodes[path[int]].label.substring(allNodes[path[int]].label.length-4,allNodes[path[int]].label.length);
-          			console.log("==");
+          			// console.log("==");
           		}
           	}
           }
@@ -162,9 +161,9 @@
 if(multi.length>=2){
 
 allNodes[path[int]].label=allNodes[path[int]].label.substring(0,allNodes[path[int]].label.length-4*(multi.length));
-console.log(allNodes[path[int]].label);
+// console.log(allNodes[path[int]].label);
 allNodes[path[int]].label+=sign;
-console.log(sign);
+// console.log(sign);
 }
 
 path=[];
@@ -189,7 +188,7 @@ for (nodeId in allNodes) {
 	}
 }
 nodesDataset.update(updateArray);
-console.log(allNodes);
+// console.log(allNodes);
 }
 
 function draw_with_target(){
@@ -202,7 +201,7 @@ function draw_with_target(){
 
 		result_path=[""];
 		propagation(sourceId,targetIDs[i]);
-		console.log(result_path);
+		// console.log(result_path);
 
 		if(result_path.length==1){
 			allNodes[targetIDs[i]].color='rgba(60,60,60,0.6)';
@@ -235,7 +234,7 @@ function draw_with_target(){
 
           		if(result_path.length>2 && multi_toTarget.includes(connectedEdges[id]) != true){
           			multi_toTarget.push(connectedEdges[id]);
-          			console.log(multi_toTarget);
+          			// console.log(multi_toTarget);
           		}
 
           		switch (source_movement){
@@ -247,14 +246,14 @@ function draw_with_target(){
                  // set_a_plus(path[int]);
                  allNodes[path[int]].shape="image";
                  allNodes[path[int]].image=DIR + "green_star_plus.png";
-                 console.log("1 "  + path[int]);
+                 // console.log("1 "  + path[int]);
 
              }else if(target_movement==-1){
                  // allNodes[path[int]].color = 'rgba(250,0,0,1)';
                   // set_a_minus(path[int]);
                   allNodes[path[int]].shape="image";
                   allNodes[path[int]].image=DIR + "red_star_minus.png";
-                  console.log("2 " + path[int]);
+                  // console.log("2 " + path[int]);
 
               }
           }else if (allEdges[connectedEdges[id]].label== "-"){
@@ -264,7 +263,7 @@ function draw_with_target(){
                // set_a_plus(path[int]);
                allNodes[path[int]].shape="image";
                allNodes[path[int]].image=DIR + "red_star_plus.png";
-               console.log("3 " + path[int]);
+               // console.log("3 " + path[int]);
 
            }else if(target_movement==-1){
                // allNodes[path[int]].color = 'rgba(0,250,0,1)';
@@ -272,7 +271,7 @@ function draw_with_target(){
 
                allNodes[path[int]].shape="image";
                allNodes[path[int]].image=DIR + "green_star_minus.png";
-               console.log("4 " + path[int]);
+               // console.log("4 " + path[int]);
            }
        }
        break;
@@ -286,14 +285,14 @@ function draw_with_target(){
              // set_a_plus(path[int]);
              allNodes[path[int]].shape="image";
              allNodes[path[int]].image=DIR + "red_star_plus.png";
-             console.log("5 " + path[int]);
+             // console.log("5 " + path[int]);
 
          }else if(target_movement==-1){
              // allNodes[path[int]].color = 'rgba(0,250,0,1)';
              // set_a_minus(path[int]);
              allNodes[path[int]].shape="image";
              allNodes[path[int]].image=DIR + "green_star_minus.png";
-             console.log("6 " + path[int]);
+             // console.log("6 " + path[int]);
 
          }
 
@@ -304,23 +303,19 @@ function draw_with_target(){
            // set_a_plus(path[int]);
            allNodes[path[int]].shape="image";
            allNodes[path[int]].image=DIR + "green_star_plus.png";
-           console.log("7 " + path[int]);
+           // console.log("7 " + path[int]);
 
        }else if(target_movement==-1){
            // allNodes[path[int]].color = 'rgba(250,0,0,1)';
            // set_a_minus(path[int]);
            allNodes[path[int]].shape="image";
            allNodes[path[int]].image=DIR + "red_star_minus.png";
-           console.log("8 " + path[int]);
+           // console.log("8 " + path[int]);
 
        }
    }
    break;
 
-   case 0:
-   console.log("9 " + path[int]);
-
-   break;
 }
 
 }

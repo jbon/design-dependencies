@@ -467,9 +467,12 @@ allEdges=edgesDataset.get({returnType:"Object"});
   	var selectedNode = network.getNodeAt({x:cursorX, y:cursorY});
 
   	if (selectedNode != undefined) {
+  		menu.classList.add('show-menu');
   		menu.style.left = x + 'px';
   		menu.style.top = y + 'px';
-  		menu.classList.add('show-menu');
+
+  		console.log(menu.offsetWidth);
+  		
 
   		idselect=selectedNode;
   	}
@@ -522,8 +525,8 @@ document.ondblclick=function(e){
 }
 
 // document.getElementById('TAG').innerHTML=" ";
-saveTag();
-createButtons();
+// saveTag();
+// createButtons();
 
 };
 
@@ -550,6 +553,10 @@ $(document).keydown(function(e) {
 	}
 });
 
-
+$(function(){
+	document.addEventListener('contextmenu', function() {
+		console.log("coucou");
+	});
+})
 
 
