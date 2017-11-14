@@ -149,8 +149,9 @@ $(function () {
 // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx TAGGGG xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 var tabTag=[];
+var check_ifPresent_list=[];
 
-$(function (){
+function add_tag(){
 
 	for (var nodeId in allNodes)
 	{
@@ -163,13 +164,6 @@ $(function (){
 			}
 		} 
 	}
-});
-
-var check_ifPresent_list=[];
-
-
-$(function (){
-
 	for(var i=0; i<tabTag.length;i++)
 	{ 
 		if(check_ifPresent_list.includes(tabTag[i])==false){
@@ -188,7 +182,7 @@ $(function (){
 			});
 		});
 	}
-});
+};
 
 
 var temp_nodesDataset=[];
@@ -253,28 +247,35 @@ function filterByTag(){
 			}
 		}
 
-		for(var id_node in nodeArray){
+		console.log(nodeArray);
+		console.log(edgeArray);
 
-			var id_to_replace=nodeArray[id_node].id;
-			console.log(id_to_replace);
-			nodeArray[id_node].id=parseInt(id_node);
+		// for(var id_node in nodeArray){
 
-			for(var id_edge in edgeArray){
+		// 	var id_to_replace=nodeArray[id_node].id;
+		// 	console.log("old id " + id_to_replace);
+		// 	nodeArray[id_node].id=parseInt(id_node);
+		// 	console.log("new id " + id_node);
 
-				if(edgeArray[id_edge].to == id_to_replace){
-					edgeArray[id_edge].to=parseInt(id_node);
-					console.log(edgeArray[id_edge].to);
-				}else if(edgeArray[id_edge].from == id_to_replace){
-					edgeArray[id_edge].from=parseInt(id_node);
-					console.log(edgeArray[id_edge].from);
+		// 	for(var id_edge in edgeArray){
 
-				}
-			}
-		}
+		// 		if(edgeArray[id_edge].to == id_to_replace){
+		// 			console.log("to " + edgeArray[id_edge].to);
+		// 			edgeArray[id_edge].to=parseInt(id_node);
+		// 			console.log("to " + edgeArray[id_edge].to);
+		// 		}else if(edgeArray[id_edge].from == id_to_replace){
+		// 			console.log("from " + edgeArray[id_edge].from);
+		// 			edgeArray[id_edge].from=parseInt(id_node);
+		// 			console.log("from " + edgeArray[id_edge].from);
+		// 			console.log(" ");
 
-		for(var id_edge in edgeArray){
-			edgeArray[id_edge].id=parseInt(id_edge);
-		}
+		// 		}
+		// 	}
+		// }
+
+		// for(var id_edge in edgeArray){
+		// 	edgeArray[id_edge].id=parseInt(id_edge);
+		// }
 
 		console.log(nodeArray);
 		console.log(edgeArray);

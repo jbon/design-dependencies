@@ -198,7 +198,7 @@
         	document.getElementById('network-popUp').style.display = 'none'; 
    	        updateLeftPane();
    	 	 
-		 saveTag();
+		add_tag();
 		 createButtons();
         };
 
@@ -527,6 +527,10 @@ document.ondblclick=function(e){
 // document.getElementById('TAG').innerHTML=" ";
 // saveTag();
 // createButtons();
+console.log(tabTag);
+tabTag=[];
+$.fn.select2.defaults.reset();
+add_tag();
 
 };
 

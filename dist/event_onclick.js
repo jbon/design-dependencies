@@ -281,7 +281,7 @@ function addNodefunction(){
 		allNodes=nodesDataset.get({returnType:"Object"});
 		document.getElementById('network-popUp').style.display = 'none';
 		
-		saveTag();
+		add_tag();
 		createButtons();
 	};
 

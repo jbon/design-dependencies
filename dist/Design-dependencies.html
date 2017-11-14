@@ -82,10 +82,10 @@
 
 
 			<div>		
-				<div class="element">
+				<div class="element" id="load_click">
 					<i class="fa fa-upload fa-2x"></i>  <span class="name"> Load</span>
-					<input type="file" name="load" id="file">
 				</div>
+					<input type="file" name="load" id="file">
 
 				<div class="element" onclick="save_changes()">
 					<i class="fa fa-floppy-o fa-2x"></i>  <span class="name"> Save</span>
@@ -94,8 +94,8 @@
 
 
 				<script type="text/javascript">
-					$("i.fa-upload").click(function () {
-						console.log("load")
+					$("#load_click").click(function () {
+						// console.log("load")
 						$("input[type='file']").trigger('click');
 					});
 
@@ -111,6 +111,7 @@
     				edgesDataset = new vis.DataSet(obj.edges);
     				redrawAll();
     				updateLeftPane();
+    				add_tag();
     			};
     			reader.readAsText(file);
     		};	
