@@ -52,16 +52,22 @@
 
 		<img src="../images/logo.png" alt="" id="photos">
 
+		<p></p>
+		<p></p>
+		<p></p>
+
 		<div class="ui-widget">
 			<label for="tags"> Search: </label>
 			<input id="tags">
 		</div>
 
-		<br />
 
 		<p> Layout :
-			<button class="buttonLeft" id="physical" onclick="layout_physical() ">Physical</button>
-			<button class="buttonLeft"  id="hierarchical" onclick="layout_hierarchical()">Hierarchical</button>
+			<!-- <button class="buttonLeft" id="physical" onclick="layout_physical() ">Physical</button>
+			<button class="buttonLeft"  class="topcoat-button-bar__button full" id="hierarchical" onclick="layout_hierarchical()">Hierarchical</button>
+			 -->
+			<button class="topcoat-button-bar__button full" id="physical" onclick="layout_physical() ">Physical</button>
+			<button class="topcoat-button-bar__button full" id="hierarchical" onclick="layout_hierarchical()">Hierarchical</button>
 
 			<div>
 				<p> Tags :
@@ -109,9 +115,10 @@
     				console.log(obj);
     				nodesDataset = new vis.DataSet(obj.nodes);
     				edgesDataset = new vis.DataSet(obj.edges);
+					$('#tagSelectBox').empty();
     				redrawAll();
     				updateLeftPane();
-    				add_tag();
+    				//add_tag();
     			};
     			reader.readAsText(file);
     		};	
@@ -318,6 +325,7 @@
 		</div>
 
 		<br />
+
 
 	</body>
 	</html>

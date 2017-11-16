@@ -560,7 +560,7 @@ div#text_scenario_css p {
   .button,
   .topcoat-button-bar__button {
     position: relative;
-    top:60px;
+    top:10px;
     display: inline-block;
     overflow: hidden;
     box-sizing: border-box;

@@ -77,6 +77,18 @@ function draw_the_path(){
   		}
   	}
   	nodesDataset.update(updateArray);
+	setAsSource=0;
+	setAsTarget=0;
+	
+	$('#tagSelectBox').empty();
+	
+	document.getElementById("text_scenario").innerHTML=" ";
+	clearInterval(show_consequences_2);
+    clearInterval(show_consequences_3);
+	clearInterval(show_compliance_2); 
+	clearInterval(show_compliance_3); 
+	clearInterval(show_compliance_4);
+	
 
   }
 
@@ -164,6 +176,7 @@ function add_tag(){
 			}
 		} 
 	}
+	console.log(tabTag);
 	for(var i=0; i<tabTag.length;i++)
 	{ 
 		if(check_ifPresent_list.includes(tabTag[i])==false){

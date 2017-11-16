@@ -29,10 +29,14 @@
       var active=0;
       var container;
 
-
+	  
+	  var show_menu=0;
+	  var setAsSource=0;
+	   var setAsTarget=0;
 
 	  var tabTagg=[];
       var DIR="triangle_star_img/";
+
 
  // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  CONFIGURATION FUNCTION xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
@@ -199,7 +203,6 @@
    	        updateLeftPane();
    	 	 
 		add_tag();
-		 createButtons();
         };
 
         document.getElementById('cancelButton').onclick = function(){
@@ -475,6 +478,7 @@ allEdges=edgesDataset.get({returnType:"Object"});
   		
 
   		idselect=selectedNode;
+		show_menu=1;
   	}
   	else {
   		hideMenu();
@@ -486,13 +490,13 @@ allEdges=edgesDataset.get({returnType:"Object"});
 
 function hideMenu(){
 	menu.classList.remove('show-menu');
+	show_menu=0;
 }
-
 
 function onContextMenu(e){
 	e.preventDefault();
 	showMenu(e.pageX, e.pageY);
-
+	
 	document.getElementById("source_increase").onclick=source_increase;
 
 	document.getElementById("source_decrease").onclick=source_decrease;
@@ -506,7 +510,6 @@ function onContextMenu(e){
 	document.getElementById("remove").onclick=remove;
 
 	document.addEventListener('click', onClick, false);
-
 }
 
 
@@ -527,12 +530,13 @@ document.ondblclick=function(e){
 // document.getElementById('TAG').innerHTML=" ";
 // saveTag();
 // createButtons();
-console.log(tabTag);
 tabTag=[];
-$.fn.select2.defaults.reset();
+check_ifPresent_list=[];
 add_tag();
 
 };
+
+
 
 $(document).keydown(function(e) {        
 	if (e.keyCode == 27) {

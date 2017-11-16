@@ -1,3 +1,10 @@
+var show_consequences_2;
+var show_consequences_3;
+var show_compliance_2;
+var show_compliance_3;
+var show_compliance_4;
+
+
 function openAttributePane(params) {
 
 	attributepane.style.display="block";
@@ -35,11 +42,11 @@ function openAttributePane(params) {
 
 				INFLUENCING.appendChild(ing);
 				document.getElementById(edgesDataset.get(x).to).onmouseover = function() {
-					this.style.fontSize='large';
+					this.style.textDecoration='underline';
 
 				};
 				document.getElementById(edgesDataset.get(x).to).onmouseout = function() {
-					this.style.fontSize='medium';
+					this.style.textDecoration='none';
 				};
 
 
@@ -96,10 +103,9 @@ function focusNode(nodeId) {
 }
 
 
-$(function questionMark_click(){
- $("#questionMark").on("click",function(){
+function questionMark_click(){
+ 
  document.getElementById('questionMark-popUp').style.display = 'block';
- });
  
  document.getElementById("usage_1").onmouseover = function() {
 					this.style.textDecoration='underline';
@@ -127,29 +133,100 @@ document.getElementById("usage_3").onmouseout = function() {
 		document.getElementById('questionMark-popUp').style.display = 'none';
 	}
 });
-}); 
+} 
 
-
-$(function show_consequences(){
-	$("#usage_1").on("click",function(){
+function show_consequences(){
+	
    document.getElementById('questionMark-popUp').style.display = 'none';
    document.getElementById("text_scenario").innerHTML="Right click on a parameter for exploring the consequences of a change in this parameter";
- });
-}); 
 
-$(function show_compliance(){
-	$("#usage_2").on("click",function(){
+    show_consequences_2=setInterval(
+    function () {
+       if (show_menu==1) {
+		document.getElementById("text_scenario").innerHTML="Set the parameter as a source and define whether you want it to increase or decrease";
+	   }
+    },
+    500
+     );
+	 
+	show_consequences_3=setInterval(
+    function () {
+       if (setAsSource==1) {
+		clearInterval(show_consequences_2);  
+		document.getElementById("text_scenario").innerHTML="Now all direct and indirect consequences are displayed. To come back to the initial view press „reset“";
+	   }
+    },
+    500
+     );
+	 
+	 $(document).keydown(function(e) {        
+	if (e.keyCode == 27) {
+		clearInterval(show_consequences_2);
+		clearInterval(show_consequences_3);
+		document.getElementById("text_scenario").innerHTML=" ";
+	}
+	});
+} 
+
+function show_compliance(){
+	
   document.getElementById('questionMark-popUp').style.display = 'none';
    document.getElementById("text_scenario").innerHTML="Right click on a parameter you want to set as target";
- });
-}); 
+   
+   show_compliance_2=setInterval(
+    function () {
+       if (show_menu==1) {
+		document.getElementById("text_scenario").innerHTML="Set this parameter as a target and define whether you want it to increase or decrease";
+	   }
+    },
+    500
+     );
+	 
+	show_compliance_3=setInterval(
+    function () {
+       if (setAsTarget==1) {
+		clearInterval(show_compliance_2);  
+		document.getElementById("text_scenario").innerHTML="Right click on a parameter you want to set as additional target or as a source for change";
+	   }
+	   
+	    if (show_menu==1) {
+		document.getElementById("text_scenario").innerHTML="Set this parameter as a target or a source and define whether you want it to increase or decrease";
+	   }
+    },
+    500
+     );
+	 	
+	 show_compliance_4=setInterval(
+    function () {
+       if (setAsSource==1) {
+		clearInterval(show_compliance_3);  
+		document.getElementById("text_scenario").innerHTML="Now the colors of the targets indicates whether the change in the source parameter is compatible with the targets.<br> To come back to the initial view press „reset“. To add another target, right click on it";
+	   }
+    },
+    500
+     );
+	 
+	 	 $(document).keydown(function(e) {        
+	if (e.keyCode == 27) {
+		clearInterval(show_compliance_2); 
+		clearInterval(show_compliance_3); 
+		clearInterval(show_compliance_4);
+		document.getElementById("text_scenario").innerHTML=" ";
+	}
+	}); 
+} 
 
-$(function graph_navigate(){
-$("#usage_3").on("click",function(){
+function graph_navigate(){
+
  document.getElementById('questionMark-popUp').style.display = 'none';
-  document.getElementById("text_scenario").innerHTML="Left click on a parameter to display the parameters it influences and those it is influenced by";
- });
-});
+ document.getElementById("text_scenario").innerHTML="Left click on a parameter to display the parameters it influences and those it is influenced by";
+  
+  $(document).keydown(function(e) {        
+	if (e.keyCode == 27) {
+		document.getElementById("text_scenario").innerHTML=" ";
+	}
+	}); 
+}
 
 
 	
@@ -282,7 +359,6 @@ function addNodefunction(){
 		document.getElementById('network-popUp').style.display = 'none';
 		
 		add_tag();
-		createButtons();
 	};
 
 

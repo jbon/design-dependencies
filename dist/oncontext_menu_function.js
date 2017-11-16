@@ -279,7 +279,6 @@ function increase(){
   for(var i in targetIDs){
   	if(idselect==targetIDs[i]){
   		target_increase.push(idselect);
-  		console.log("coucou");
   		allNodes[targetIDs[i]].shape="image";
   		allNodes[targetIDs[i]].image=DIR + "grey_star_plus.png";
 
@@ -331,6 +330,7 @@ nodesDataset.update(updateArray);
 
 
 function source_increase(){
+	setAsSource=1;
 	if(targetIDs.length == 0 && sourceId == undefined){
 		set_as_source();
 		increase();
@@ -343,6 +343,7 @@ function source_increase(){
 }
 
 function source_decrease(){
+	setAsSource=1;
 	if(targetIDs.length == 0 && sourceId == undefined){
 		set_as_source();
 		decrease();
@@ -353,10 +354,10 @@ function source_decrease(){
 		draw_with_target();
 	}
 }
-
 function increase_target(){
 	set_as_target();
 	increase();
+	setAsTarget=1;
 
 	if(sourceId != undefined){
 		draw_with_target();
@@ -366,6 +367,7 @@ function increase_target(){
 function decrease_target(){
 	set_as_target();
 	decrease();
+	setAsTarget=1;
 
 	if(sourceId != undefined){
 		draw_with_target();
