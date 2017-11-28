@@ -36,7 +36,6 @@ function draw_the_path(){
   		}
 
   		if (allNodes[nodeId].hiddenLabel !== undefined) {
-  			// console.log(nodeId);
   			allNodes[nodeId].label=allNodes[nodeId].hiddenLabel;
   			allNodes[nodeId].hiddenLabel = undefined;
   		}else if(draw_in_all_canvas_active==1 && nodeId != sourceId){
@@ -80,7 +79,7 @@ function draw_the_path(){
 	setAsSource=0;
 	setAsTarget=0;
 	
-	$('#tagSelectBox').empty();
+	// $('#tagSelectBox').empty();
 	
 	document.getElementById("text_scenario").innerHTML=" ";
 	clearInterval(show_consequences_2);
@@ -164,6 +163,7 @@ var tabTag=[];
 var check_ifPresent_list=[];
 
 function add_tag(){
+	// console.log(tabTag);
 
 	for (var nodeId in allNodes)
 	{
@@ -176,7 +176,7 @@ function add_tag(){
 			}
 		} 
 	}
-	console.log(tabTag);
+	// console.log(tabTag);
 	for(var i=0; i<tabTag.length;i++)
 	{ 
 		if(check_ifPresent_list.includes(tabTag[i])==false){
@@ -186,15 +186,18 @@ function add_tag(){
 			tagList.add(option);
 			check_ifPresent_list.push(tabTag[i]);
 		}
+	}
+	// console.log(tabTag);
 
 		$(document).ready(function() {
 			$('#tagSelectBox').select2({
 				placeholder: "Select a Tag",
 				allowClear: true,
-				tags: true
+				tags: true,
+				debug:true
 			});
 		});
-	}
+	
 };
 
 
@@ -204,10 +207,7 @@ var tagFilterActive=false;
 
 $(function(){
 	// console.log($('#tagSelectBox').val());
-	$('#tagSelectBox').on('select2:select',function(){
-		filterByTag();
-	});
-	$('#tagSelectBox').on('select2:unselect',function(){
+	$('#tagSelectBox').on('select2:select select2:unselect',function(){
 		filterByTag();
 	});
 })
@@ -224,6 +224,7 @@ function filterByTag(){
 		var edgeArray=[];
 		var nodeId_Array=[];
 
+		console.l
 		if(tagFilterActive == false){
 			temp_nodesDataset=nodesDataset;
 			temp_edgesDataset=edgesDataset;
@@ -263,32 +264,33 @@ function filterByTag(){
 		console.log(nodeArray);
 		console.log(edgeArray);
 
-		// for(var id_node in nodeArray){
+		for(var id_node in nodeArray){
+			if(nodeArray[id_node].id>id_to_replace){
+			var id_to_replace=nodeArray[id_node].id;
+			console.log("old id " + id_to_replace);
+			nodeArray[id_node].id=parseInt(id_node);
+			console.log("new id " + id_node);
 
-		// 	var id_to_replace=nodeArray[id_node].id;
-		// 	console.log("old id " + id_to_replace);
-		// 	nodeArray[id_node].id=parseInt(id_node);
-		// 	console.log("new id " + id_node);
+			for(var id_edge in edgeArray){
 
-		// 	for(var id_edge in edgeArray){
+				if(edgeArray[id_edge].to == id_to_replace){
+					console.log("to " + edgeArray[id_edge].to);
+					edgeArray[id_edge].to=parseInt(id_node);
+					console.log("to " + edgeArray[id_edge].to);
+				}else if(edgeArray[id_edge].from == id_to_replace){
+					console.log("from " + edgeArray[id_edge].from);
+					edgeArray[id_edge].from=parseInt(id_node);
+					console.log("from " + edgeArray[id_edge].from);
+					console.log(" ");
 
-		// 		if(edgeArray[id_edge].to == id_to_replace){
-		// 			console.log("to " + edgeArray[id_edge].to);
-		// 			edgeArray[id_edge].to=parseInt(id_node);
-		// 			console.log("to " + edgeArray[id_edge].to);
-		// 		}else if(edgeArray[id_edge].from == id_to_replace){
-		// 			console.log("from " + edgeArray[id_edge].from);
-		// 			edgeArray[id_edge].from=parseInt(id_node);
-		// 			console.log("from " + edgeArray[id_edge].from);
-		// 			console.log(" ");
+				}
+			}
+		}
+	}
 
-		// 		}
-		// 	}
-		// }
-
-		// for(var id_edge in edgeArray){
-		// 	edgeArray[id_edge].id=parseInt(id_edge);
-		// }
+		for(var id_edge in edgeArray){
+			edgeArray[id_edge].id=parseInt(id_edge);
+		}
 
 		console.log(nodeArray);
 		console.log(edgeArray);
@@ -301,7 +303,7 @@ function filterByTag(){
 		redrawAll();
 
 	}else{
-		console.log(tagFilterActive);
+		// console.log(tagFilterActive);
 		if(tagFilterActive == true){
 			nodesDataset = temp_nodesDataset;
 			edgesDataset = temp_edgesDataset;

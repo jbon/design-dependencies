@@ -115,7 +115,10 @@
     				console.log(obj);
     				nodesDataset = new vis.DataSet(obj.nodes);
     				edgesDataset = new vis.DataSet(obj.edges);
+
+    				check_ifPresent_list=[];
 					$('#tagSelectBox').empty();
+    				
     				redrawAll();
     				updateLeftPane();
     				//add_tag();

@@ -527,11 +527,7 @@ document.ondblclick=function(e){
 	}
 }
 
-// document.getElementById('TAG').innerHTML=" ";
-// saveTag();
-// createButtons();
 tabTag=[];
-check_ifPresent_list=[];
 add_tag();
 
 };

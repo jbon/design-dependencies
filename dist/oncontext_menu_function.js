@@ -160,8 +160,7 @@ function editNode(){
 		nodesDataset.update(updateArray);
 		document.getElementById('network-popUp').style.display = 'none';
 		
-		saveTag();
-		createButtons();
+add_tag();
 	};
 
 	document.getElementById('cancelButton').onclick = function(){
