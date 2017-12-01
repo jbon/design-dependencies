@@ -57,20 +57,20 @@
 		<p></p>
 
 		<div class="ui-widget">
-			<label for="tags"> Search: </label>
+			<label for="tags"> Search : </label>
 			<input id="tags">
 		</div>
 
 
-		<p> Layout :
+		 <p><span id="soustitre">Layout :</span>
 			<!-- <button class="buttonLeft" id="physical" onclick="layout_physical() ">Physical</button>
 			<button class="buttonLeft"  class="topcoat-button-bar__button full" id="hierarchical" onclick="layout_hierarchical()">Hierarchical</button>
 			 -->
-			<button class="topcoat-button-bar__button full" id="physical" onclick="layout_physical() ">Physical</button>
-			<button class="topcoat-button-bar__button full" id="hierarchical" onclick="layout_hierarchical()">Hierarchical</button>
+			<button class="topcoat-button-bar__button full" id="physical" onclick="layout_physical() "><span id="soustitre">Physical</span></button>
+			<button class="topcoat-button-bar__button full" id="hierarchical" onclick="layout_hierarchical()"><span id="soustitre">Hierarchical</span></button>
 
 			<div>
-				<p> Tags :
+				 <p><span id="soustitre">Tags :</span>
 					<select id="tagSelectBox" name="tagsFilters[]" multiple="multiple" style="width:95%">
 					</select>
 				</div>
@@ -79,7 +79,7 @@
 				<div class="topcoat-button-bar full">
 
 					<div class="topcoat-button-bar__item">
-						<button class="topcoat-button-bar__button full" onclick="reset_parameters()">Reset</button>
+						<button class="topcoat-button-bar__button full" onclick="reset_parameters()"><span id="soustitre">Reset</span></button>
 					</div>
 				</div>
 			</div> 
@@ -133,16 +133,20 @@
     <div id="attributepane">
     	<div class="text">
     		<div title="Close" class="left-close returntext" onclick="closeAttributePane();"> 
-    			<div class="c cf"><span>Return to the full network</span></div>
+    			 <div class="c cf"><span id="soustitre">Return to the full network</span></div>
     		</div>
 
     		<div class="headertext">
-    			<span>Information Pane</span>
+    			<span id="soustitre">Information Pane</span>
     		</div>	
     		<!-- <p  id="affichageId">Id :</p> -->
-    		<p  id="affichageLabel">Label :</p>
-    		<p  id="affichageTag">Tags :</p>
-    		<p  id="affichageDescription">Description :</p>
+			<br>
+			<span id="soustitre">Label :</span>
+    		<p  id="affichageLabel" class="soustitre"></p>
+			<span id="soustitre">Tags :</span>
+    		<p  id="affichageTag" class="soustitre"></p>
+			<span id="soustitre">Description :</span>
+    		<p  id="affichageDescription" class="soustitre"></p>
     		<div class="nodeattributes">
     			<div class="name"></div>
     			<div class="data"></div>
@@ -154,14 +158,14 @@
     			</div>
     		</div>			
     		<div class="headertext">
-    			<span>Influencing factor</span>
+    			<span id="soustitre" >Influencing factor</span>
     		</div>	
-    		<p  id="influencing"></p>
+    		<p  id="influencing" class="soustitre"></p>
 
     		<div class="headertext">
-    			<span >Influenced factor</span>
+    			<span id="soustitre" >Influenced factor</span>
     		</div>	
-    		<p  id="influenced"></p>
+    		<p  id="influenced" class="soustitre"></p>
 
 
     	</div>
@@ -213,16 +217,10 @@
 			<!-- XXXXXXXXXXXXXXXXXXXX AddNode/EditNode popup window XXXXXXXXXXXXXXXXXXXXXX -->
 
 			<div id="network-popUp">
-				<span id="operation"></span> <br>
-				<table>
-					<tr>
-						<td>label</td><td><input type="text" style="white-space:nowrap;" id="node-label" value="new value" ></td>
-					</tr>
-
-				</table>
-				Tag	<select id="tag-input" name="tagsFilters[]" multiple="multiple" style="width:80%"></select>
+				<span id="titre">Add Node</span> <br><br>
+				<span id="soustitre">Label </span><input type="text" style="white-space:nowrap;" id="node-label" value="new value"><br><br>
+				<span id="soustitre">Tag </span><select id="tag-input" name="tagsFilters[]" multiple="multiple" style="width:60%"></select>
 				
-
 				<!-- <div class="container"> -->
 
 				<div class="row">
@@ -259,13 +257,12 @@
 							<a href="#" data-command='p'  title='paragraph'>P</a>
 
 						</div> 
-					<!-- </br> -->
+				
+					 </br>
 					<div contenteditable="true" id='node-description' ></div>
 
 				</div>  
 			</div>
-
-
 
 				<script type="text/javascript" >
 
@@ -291,30 +288,36 @@
 					});
 				</script>
 
-			<!-- </br> -->
-			<input type="button" value="save" id="saveButton"/>
-			<input type="button" value="cancel" id="cancelButton"/>
+			</br> 
+			<input class="button_popup" type="button" value="Save" id="saveButton"/>
+			<input class="button_popup" type="button" value="Cancel" id="cancelButton"/>
 		</div>
 
 		<div id=network-popUp_edge>
-			<span>Edges</span> <br>
+			<span id="titre">Add Edge</span> <br>
 			<!-- <div> -->
-			<input type="checkbox" name="label" class="boxplus"/> + <br>
-			<input type="checkbox" name="label" class="boxminus"/> - <br>
+			<br>
+			<label class="checkbox_edge"><input type="checkbox" name="label" class="boxplus"/> + <span class="checkmark"></span></label><br>
+			<label class="checkbox_edge"><input type="checkbox" name="label" class="boxminus"/> - <span class="checkmark"></span></label><br>
 			<!-- </div> -->
-			<input type="button" value="save" id="saveButton_edge" />
-			<input type="button" value="cancel" id="cancelButton_edge" />
+			<br>
+			<input class="button_popup" type="button" value="Save" id="saveButton_edge" />
+			<input class="button_popup" type="button" value="Cancel" id="cancelButton_edge" />
 		</div>
 
 
 
 
 		<div id="questionMark-popUp">
-			<span>What usage scenario do you want to be guided through?</span> <br>
+			<img src="../images/fancybox_sprite.png" alt="" id="button_close" onclick="close_questionmark_popup()">
+			<span id="titre">What usage scenario do you want to be guided through?</span> <br>
+			
 			<ul>
-				<li><span id="usage_1" onclick="show_consequences()">Show consequences of an increase/decrease of a source parameter</span> <br></li>
-				<li><span id="usage_2" onclick="show_compliance()">Show compliance of an increase/decrease of a source parameter with predefined target parameters</span> <br></li>
-				<li><span id="usage_3" onclick="graph_navigate()">Navigate through the causal relationships between parameters</span> <br></li>
+				<li><span id="usage_1" onclick="show_consequences()" class="usages">Show consequences of an increase/decrease of a source parameter</span> <br></li>
+				<br>
+				<li><span id="usage_2" onclick="show_compliance()" class="usages">Show compliance of an increase/decrease of a source parameter with predefined target parameters</span> <br></li>
+				<br>
+				<li><span id="usage_3" onclick="graph_navigate()" class="usages">Navigate through the causal relationships between parameters</span> <br></li>
 			</ul>
 		</div>
 
@@ -324,7 +327,7 @@
 
 
 		<div id="text_scenario_css">
-			<p id="text_scenario">  </p>
+			<p id="text_scenario" class="usage_scenario"></p>
 		</div>
 
 		<br />

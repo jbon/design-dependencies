@@ -12,10 +12,11 @@ function openAttributePane(params) {
 	var selectedNode = params.nodes[0];
 
 	var LABEL=document.getElementById('affichageLabel');
-	LABEL.innerHTML = 'Label: '+  nodesDataset.get(params.nodes[0]).label  ;
+	LABEL.innerHTML = nodesDataset.get(params.nodes[0]).label  ;
+	
 	
 	var TAGG=document.getElementById('affichageTag');
-	TAGG.innerHTML = "Tags:";
+	TAGG.innerHTML = "   ";
 	for (var i=0; i<nodesDataset.get(params.nodes[0]).tags.length;i++ ){
 			TAGG.innerHTML += "   " + nodesDataset.get(params.nodes[0]).tags[i];
 		} 
@@ -23,7 +24,7 @@ function openAttributePane(params) {
 	var DESCRIPTION=document.getElementById('affichageDescription');
 	var msg= nodesDataset.get(params.nodes[0]).description;
 	msg= msg.replace(/\n/g, "<br />");
-	DESCRIPTION.innerHTML = 'Description: '+  msg  ;
+	DESCRIPTION.innerHTML = msg  ;
 
 	var connectedNodes = network.getConnectedNodes(selectedNode);
 
@@ -135,9 +136,20 @@ document.getElementById("usage_3").onmouseout = function() {
 });
 } 
 
+function close_questionmark_popup()
+{
+	document.getElementById('questionMark-popUp').style.display = 'none';
+}
+
 function show_consequences(){
 	
    document.getElementById('questionMark-popUp').style.display = 'none';
+   network.setOptions(
+		{
+			manipulation:{
+				initiallyActive :true
+			}
+		});
    document.getElementById("text_scenario").innerHTML="Right click on a parameter for exploring the consequences of a change in this parameter";
 
     show_consequences_2=setInterval(
@@ -171,6 +183,12 @@ function show_consequences(){
 function show_compliance(){
 	
   document.getElementById('questionMark-popUp').style.display = 'none';
+  network.setOptions(
+		{
+			manipulation:{
+				initiallyActive :true
+			}
+		});
    document.getElementById("text_scenario").innerHTML="Right click on a parameter you want to set as target";
    
    show_compliance_2=setInterval(
@@ -219,6 +237,12 @@ function show_compliance(){
 function graph_navigate(){
 
  document.getElementById('questionMark-popUp').style.display = 'none';
+ network.setOptions(
+		{
+			manipulation:{
+				initiallyActive :true
+			}
+		});
  document.getElementById("text_scenario").innerHTML="Left click on a parameter to display the parameters it influences and those it is influenced by";
   
   $(document).keydown(function(e) {        
@@ -305,7 +329,7 @@ function neighbourhoodHighlight(params) {
 // This function fired on double click
 function addNodefunction(){
 
-	document.getElementById('operation').innerHTML = "Add Node";
+	//document.getElementById('operation').innerHTML = "Add Node";
 	document.getElementById('network-popUp').style.display = 'block';
 	document.getElementById('node-label').value="";
 	document.getElementById('node-label').focus(); 

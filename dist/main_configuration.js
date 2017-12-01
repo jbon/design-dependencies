@@ -153,7 +153,7 @@
 
   	addNode: function (data, callback) {
         // filling in the popup DOM elements
-        document.getElementById('operation').innerHTML = "Add Node";
+        //document.getElementById('operation').innerHTML = "Add Node";
         document.getElementById('network-popUp').style.display = 'block';
         document.getElementById('node-label').value="";
 		document.getElementById('tag-input').value="";
@@ -232,7 +232,7 @@
 
     	var edge_label_value="";
     	if (data.from != data.to) {
-    		document.getElementById('operation').innerHTML = "Add Edge";
+    		//document.getElementById('operation').innerHTML = "Add Edge";
     		document.getElementById('network-popUp_edge').style.display = 'block';
 
     		$('input.boxplus').prop('checked',false);
@@ -307,7 +307,7 @@
     	var edge_label_value;
     	if (data.from != data.to) {
 
-    		document.getElementById('operation').innerHTML = "Add Edge";
+    		//document.getElementById('operation').innerHTML = "Add Edge";
     		document.getElementById('network-popUp_edge').style.display = 'block';
 
     		$('input.boxplus').prop('checked',false);
