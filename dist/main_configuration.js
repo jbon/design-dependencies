@@ -479,7 +479,7 @@ allEdges=edgesDataset.get({returnType:"Object"});
   		//menu.style.left = x + 'px';
   		//menu.style.top = y + 'px';
 		
-		menuWidth = menu.offsetWidth + 204;
+		menuWidth = menu.offsetWidth ;
 		menuHeight = menu.offsetHeight + 14;
 
 		windowWidth = window.innerWidth;
@@ -487,6 +487,7 @@ allEdges=edgesDataset.get({returnType:"Object"});
 		
 		if ( (windowWidth - x) < menuWidth ) {
 			menu.style.left = windowWidth - menuWidth + "px";
+
 		  } else {
 			menu.style.left = x + "px";
 		  }

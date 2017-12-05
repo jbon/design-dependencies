@@ -27,6 +27,22 @@
 	border-radius: 25px;
 }
 
+#load_click{
+  display: block;
+  position:absolute;
+  top:20px;
+  left:950px;
+  z-index:  2;
+}
+
+#save_changes{
+  display: block;
+  position:absolute;
+  top:20px;
+  left:990px;
+  z-index:  2;
+}
+
 #questionMark:hover {
     box-shadow: 0 0 3px 3px rgba(56,207,21,.3);
 }
@@ -601,7 +617,7 @@ div#text_scenario_css p {
 
         .menu .menu {
           top: 4px;
-          left: 99%;
+          /*left: 99%;*/
         }
 
         .show-menu, .menu-item:hover > .menu {
