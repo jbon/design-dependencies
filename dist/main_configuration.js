@@ -479,16 +479,21 @@ allEdges=edgesDataset.get({returnType:"Object"});
   		//menu.style.left = x + 'px';
   		//menu.style.top = y + 'px';
 		
-		menuWidth = menu.offsetWidth ;
+		menuWidth = menu.offsetWidth;
 		menuHeight = menu.offsetHeight + 14;
 
 		windowWidth = window.innerWidth;
 		windowHeight = window.innerHeight;
 		
-		if ( (windowWidth - x) < menuWidth ) {
+		if ( (windowWidth - x) < (menuWidth) ) {
+      $(".menu .menu").css("left","-103%");
 			menu.style.left = windowWidth - menuWidth + "px";
 
-		  } else {
+		  }else if((windowWidth - x) < (menuWidth+204)){
+          $(".menu .menu").css("left","-103%");
+          menu.style.left = x + "px";
+      } else {
+      $(".menu .menu").css("left","100%");
 			menu.style.left = x + "px";
 		  }
 

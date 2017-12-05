@@ -616,8 +616,7 @@ div#text_scenario_css p {
         .menu-item.submenu:hover::after { border-left-color: #fff; }
 
         .menu .menu {
-          top: 4px;
-          /*left: 99%;*/
+          top: 0px;
         }
 
         .show-menu, .menu-item:hover > .menu {
