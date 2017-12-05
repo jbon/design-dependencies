@@ -36,6 +36,11 @@
 
 	  var tabTagg=[];
       var DIR="triangle_star_img/";
+	  
+	  var menuWidth;
+	  var menuHeight;
+	  var windowWidth;
+	  var windowHeight;
 
 
  // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  CONFIGURATION FUNCTION xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
@@ -148,7 +153,7 @@
 
   	addNode: function (data, callback) {
         // filling in the popup DOM elements
-        document.getElementById('operation').innerHTML = "Add Node";
+        //document.getElementById('operation').innerHTML = "Add Node";
         document.getElementById('network-popUp').style.display = 'block';
         document.getElementById('node-label').value="";
 		document.getElementById('tag-input').value="";
@@ -227,7 +232,7 @@
 
     	var edge_label_value="";
     	if (data.from != data.to) {
-    		document.getElementById('operation').innerHTML = "Add Edge";
+    		//document.getElementById('operation').innerHTML = "Add Edge";
     		document.getElementById('network-popUp_edge').style.display = 'block';
 
     		$('input.boxplus').prop('checked',false);
@@ -302,7 +307,7 @@
     	var edge_label_value;
     	if (data.from != data.to) {
 
-    		document.getElementById('operation').innerHTML = "Add Edge";
+    		//document.getElementById('operation').innerHTML = "Add Edge";
     		document.getElementById('network-popUp_edge').style.display = 'block';
 
     		$('input.boxplus').prop('checked',false);
@@ -471,26 +476,55 @@ allEdges=edgesDataset.get({returnType:"Object"});
 
   	if (selectedNode != undefined) {
   		menu.classList.add('show-menu');
-  		menu.style.left = x + 'px';
-  		menu.style.top = y + 'px';
+  		//menu.style.left = x + 'px';
+  		//menu.style.top = y + 'px';
+		
+		menuWidth = menu.offsetWidth + 204;
+		menuHeight = menu.offsetHeight + 14;
 
+		windowWidth = window.innerWidth;
+		windowHeight = window.innerHeight;
+		
+		if ( (windowWidth - x) < menuWidth ) {
+			menu.style.left = windowWidth - menuWidth + "px";
+		  } else {
+			menu.style.left = x + "px";
+		  }
+
+		if ( (windowHeight - y) < menuHeight ) {
+			menu.style.top = windowHeight - menuHeight + "px";
+		  } else {
+			menu.style.top = y + "px";
+		}
+	
   		console.log(menu.offsetWidth);
-  		
 
   		idselect=selectedNode;
 		show_menu=1;
+	
   	}
   	else {
   		hideMenu();
+		//resizeListener();
   	}
 
   // params.event.preventDefault();
   return idselect;
 }
 
+/* function resizeListener() {
+	
+   window.onresize = function(e) {
+	   alert('ok');
+    hideMenu();
+  }; 
+  
+} */
+
 function hideMenu(){
 	menu.classList.remove('show-menu');
 	show_menu=0;
+	
 }
 
 function onContextMenu(e){
@@ -515,6 +549,7 @@ function onContextMenu(e){
 
 function onClick(e){
 	hideMenu();
+	//resizeListener();
 	document.removeEventListener('click', onClick);
 }
 

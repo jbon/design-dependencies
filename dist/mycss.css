@@ -21,9 +21,14 @@
 #questionMark {
 	display: block;
 	position:absolute;
-	bottom:44px;
-	right:51px;
+	bottom:47px;
+	right:55px;
 	z-index: 2;
+	border-radius: 25px;
+}
+
+#questionMark:hover {
+    box-shadow: 0 0 3px 3px rgba(56,207,21,.3);
 }
 
 
@@ -155,15 +160,21 @@ div#text_scenario_css p {
 #network-popUp {
   display:none;
   position:absolute;
-  top:43%;
-  left:3%;
+ left: 0; 
+  right: 0; 
+  top:0;
+  bottom:0;
+  margin-left: auto; 
+  margin-right: auto; 
+  margin-bottom: auto;
+  margin-top: auto;
   z-index:299;
-  width:49%;
-  height:28%;
+  width:850px;
+  height:300px;
   background-color: #f9f9f9;
   border-style:solid;
   border-width:3px;
-  border-color: #5394ed;
+  border-color: rgba(21,95,100,0.6);
   padding:2%;
   padding-bottom:10%;
 }
@@ -171,39 +182,184 @@ div#text_scenario_css p {
 #network-popUp_edge {
   display:none;
   position:absolute;
-  top:55%;
-  left:3%;
+  left: 0; 
+  right: 0; 
+  top:0;
+  bottom:0;
+  margin-left: auto; 
+  margin-right: auto; 
+  margin-bottom: auto;
+  margin-top: auto;
   z-index:299;
-  width:15%;
-  height:13%;
+  width:330px;
+  height:200px;
   background-color: #f9f9f9;
   border-style:solid;
   border-width:3px;
-  border-color: #5394ed;
-  padding:6%;
+  border-color: rgba(21,95,100,0.6);
+  padding:3%;
 }
+
+ /* Customize the label (the container) */
+.checkbox_edge {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.checkbox_edge input {
+  position: absolute;
+  opacity: 0;
+}
+
+/* /* Create a custom checkbox */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #ccc;
+}
+
+ /*On mouse-over, add a grey background color */
+.checkbox_edge:hover input ~ .checkmark {
+  background-color: #888;
+}
+
+/* When the checkbox is checked, add a blue background */
+.checkbox_edge input:checked ~ .checkmark {
+  background-color: rgba(21,95,100,0.6);
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkbox_edge:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.checkbox_edge input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.checkbox_edge .checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+} 
+
+.button_popup{
+	background-color: rgb(60,60,60);
+    border: none;
+    color: white;
+    /* padding: 15px 32px; */
+	padding: 7px 27px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+	cursor:pointer;
+}
+
 
 #questionMark-popUp {
   display:none;
   position:absolute;
-  top:45%;
-  right:3%;
+  left: 0; 
+  right: 0; 
+  top:0;
+  bottom:0;
+  margin-left: auto; 
+  margin-right: auto; 
+  margin-bottom: auto;
+  margin-top: auto;
   z-index:299;
-  width:23%;
-  height:21%;
+  width:600px;
+  height:230px;
   background-color: #f9f9f9;
   border-style:solid;
   border-width:3px;
-  border-color: #5394ed;
+  border-color: rgba(21,95,100,0.6);
   padding:2%; 
+}
+
+#button_close{
+  position:absolute;
+  right: 5px; 
+  top:5px;
+  cursor:pointer;
+}
+
+.usages{
+	cursor: pointer;
+	font-size:18px;
+	font-family: Arial, Helvetica, sans-serif;
+	color: rgb(60,60,60);
+}
+
+.usage_scenario{
+	font-size:18px;
+	font-family: Arial, Helvetica, sans-serif;
+	color: rgb(60,60,60);
+}
+
+#titre {
+	 font-size:34px;
+	 font-family: Arial, Helvetica, sans-serif;
+	 font-weight: bold;
+	 color: rgb(60,60,60);
+	 cursor: default;
+}
+
+#soustitre {
+	 font-size:16px;
+	 color: rgb(40,40,40);
+	 font-family: Arial, Helvetica, sans-serif;
+	 cursor: default;
+	 font-weight: bold;
+}
+
+.soustitre {
+	font-size:14px;
+	 color: rgb(40,40,40);
+	 font-family: Arial, Helvetica, sans-serif;
+}
+
+#node-label {
+	border:1px solid #aaa; 
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+	background-color: white;
+    background-position: 10px 10px;
+    background-repeat: no-repeat;
+	width:490px;
+	height:28px;
+	font-size: 16px;
 }
 
 
 
 /*size of the text for the left bottom corner button*/
-.operation {
+/* .operation {
   font-size:28px;
-}
+} */
 
 /*    .show {
       z-index:1000;
@@ -637,16 +793,20 @@ div#text_scenario_css p {
   -moz-appearance: textfield-multiline;
   -webkit-appearance: textarea;
   border: 1px solid gray;
-  font: medium -moz-fixed;
-  font: -webkit-small-control;
+  font-family: Arial, Helvetica, sans-serif;
   overflow: auto;
+  
+  border:1px solid #aaa; 
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
   
   resize: both;
   padding: 1em;
   height: 150px;
-  width: 90%;
   background-color: #FFFFFF;
   color:#2c2c2c;
+  max-width: 800px;
+  max-height: 130px;
 }
 
 .toolbar {
@@ -743,9 +903,14 @@ a.palette-item:hover {
 
 #tags { 
 	display: table; 
-	width: 90%; 
+	width: 94%; 
 	max-width: 500px; 
 	list-style-type: none;
+	
+	 border:1px solid #aaa; 
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+	height:25px;
 }
  
 #tags label { 
