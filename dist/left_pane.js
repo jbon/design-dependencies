@@ -213,9 +213,6 @@ $(function(){
 })
 
 
-
-
-
 function filterByTag(){
 	var selectedTag=($('#tagSelectBox').val());
 	console.log(selectedTag);
