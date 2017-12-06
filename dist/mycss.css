@@ -21,10 +21,13 @@
 #questionMark {
 	display: block;
 	position:absolute;
-	bottom:47px;
+	bottom:49px;
 	right:57px;
 	z-index: 2;
-	border-radius: 25px;
+	border-radius: 17px;
+	width: 30px;
+    height: 30px;
+    padding:2px;
 }
 
 #load_click{
@@ -33,6 +36,10 @@
   top:20px;
   left:950px;
   z-index:  2;
+  width: 30px;
+  height: 30px;
+  padding:2px;
+  border-radius: 17px;
 }
 
 #save_changes{
@@ -40,11 +47,24 @@
   position:absolute;
   top:20px;
   left:990px;
+  width: 30px;
+  height: 30px;
   z-index:  2;
+  border-radius: 17px;
+  padding:2px;
 }
 
 #questionMark:hover {
-    box-shadow: 0 0 3px 3px rgba(56,207,21,.3);
+    box-shadow: 0px 0px 3px 3px rgba(56,207,21,.3);
+}
+
+
+#load_click:hover {
+    box-shadow: 0px 0px 3px 3px rgba(162,41,187,.3);
+}
+
+#save_changes:hover {
+    box-shadow: 0px 0px 3px 3px rgba(255,152,24,.3);
 }
 
 
@@ -617,9 +637,7 @@ div#text_scenario_css p {
         .menu-item.submenu:hover::after { border-left-color: #fff; }
 
         .menu .menu {
-		  top: 4px;
-          left: 99%;
-        
+          top: 0px;
         }
 
         .show-menu, .menu-item:hover > .menu {
