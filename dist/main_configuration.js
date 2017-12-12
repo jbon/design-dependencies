@@ -257,7 +257,7 @@
     				edge_label_value= '-';
     			}
     			else{
-    				alert("No selection !");
+    				alert("Please select one of the influence directions before validating edge edtition");
     			}
     			console.log(edge_label_value)
 
@@ -327,7 +327,7 @@
     				edge_label_value= '-';
     			}
     			else{
-    				alert("no selection");
+    				alert("Please select one of the influence directions before validating edge edtition");
     				edge_label_value="";
     			}     
 
@@ -368,7 +368,6 @@
 
     },
     deleteEdge:function(data,callback){
-
     	var length=edgesDataset.length; 
     	var edges_removed=data.edges[0];
 

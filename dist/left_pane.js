@@ -191,7 +191,7 @@ function add_tag(){
 
 		$(document).ready(function() {
 			$('#tagSelectBox').select2({
-				placeholder: "Select a Tag",
+				placeholder: "Select a tag",
 				allowClear: true,
 				tags: true,
 				debug:true
@@ -221,7 +221,6 @@ function filterByTag(){
 		var edgeArray=[];
 		var nodeId_Array=[];
 
-		console.l
 		if(tagFilterActive == false){
 			temp_nodesDataset=nodesDataset;
 			temp_edgesDataset=edgesDataset;
