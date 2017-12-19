@@ -37,8 +37,6 @@
 	<script  type="text/javascript"  src="propagation.js"></script>
 	<script  type="text/javascript"  src="left_pane.js"></script>
 	<script  type="text/javascript"  src="main_configuration.js"></script>
-	
-	<link rel="icon" type="image/png" sizes="36x36" href="../images/favicon.png">
 
 </head>
 
@@ -178,7 +176,7 @@
 
     <menu class="menu" id="data-action">
     	<li class="menu-item submenu">
-    		<button type="button" class="menu-btn" id="source"> <i class="fa fa-caret-up" style="font-size:20px;"></i> <span class="menu-text">(Un)Set as source </span> </button>
+    		<button type="button" class="menu-btn" id="source"> <i class="fa fa-caret-up" style="font-size:20px;"></i> <span class="menu-text">Set as source </span> </button>
     		<menu class="menu">
     			<li class="menu-item">
     				<button type="button" class="menu-btn" id="source_increase"> <i class="fa fa-arrow-up"></i> <span class="menu-text">Increasing</span> </button>
@@ -189,7 +187,7 @@
     		</menu>
     	</li>
     	<li class="menu-item submenu">
-    		<button type="button" class="menu-btn" id="target">  <i class="fa fa-star"></i><span class="menu-text">(Un)Set as target</span> </button>
+    		<button type="button" class="menu-btn" id="target">  <i class="fa fa-star"></i><span class="menu-text">Set as target</span> </button>
     		<menu class="menu">
     			<li class="menu-item">
     				<button type="button" class="menu-btn" id="target_increase"> <i class="fa fa-arrow-up"></i> <span class="menu-text">Increasing</span> </button>
@@ -219,7 +217,7 @@
 			<!-- XXXXXXXXXXXXXXXXXXXX AddNode/EditNode popup window XXXXXXXXXXXXXXXXXXXXXX -->
 
 			<div id="network-popUp">
-				<span id="titre">Add node</span> <br><br>
+				<span id="titre">Add Node</span> <br><br>
 				<span id="soustitre">Label </span><input type="text" style="white-space:nowrap;" id="node-label" value="new value" ><br><br>
 				<span id="soustitre">Tag    </span><select id="tag-input" name="tagsFilters[]" multiple="multiple" style="width:60%"></select>
 				
@@ -297,12 +295,12 @@
 		</div>
 
 		<div id=network-popUp_edge>
-			<span id="titre">Set edge properties</span> <br>
+			<span id="titre">Add Edge</span> <br>
 			<!-- <div> -->
 			<br>
-			<label id="soustitre" class="checkbox_edge"><input  type="checkbox" name="label" class="boxplus"/> Positive influence <span class="checkmark"></span></label><br>
-			<label id="soustitre" class="checkbox_edge"><input  type="checkbox" name="label" class="boxminus"/> Negative influence <span class="checkmark"></span></label><br>
-			<!-- </div> --> 
+			<label class="checkbox_edge"><input type="checkbox" name="label" class="boxplus"/> + <span class="checkmark"></span></label><br>
+			<label class="checkbox_edge"><input type="checkbox" name="label" class="boxminus"/> - <span class="checkmark"></span></label><br>
+			<!-- </div> -->
 			<br>
 			<input class="button_popup" type="button" value="Save" id="saveButton_edge" />
 			<input class="button_popup" type="button" value="Cancel" id="cancelButton_edge" />

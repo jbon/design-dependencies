@@ -75,7 +75,7 @@ function openAttributePane(params) {
 				ed.onclick=function(){
 					neighbourhoodHighlight({nodes:[this.id]});
 					openAttributePane({nodes:[this.id]});
-					focusNode(this.id);/**/
+					focusNode(this.id);
 
 
 				}

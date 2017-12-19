@@ -18,51 +18,11 @@ function set_as_source(){
 
 			// }
 		}else{
-			allNodes[idselect].shape="ellipse";
-			allNodes[idselect].font={
-				color:"#ffffff"
-			};
-			sourceId=undefined;
-			for(var nodeId in allNodes){
-				allNodes[nodeId].color='rgba(60,60,60,0.6)';
-			}
+			console.log("je rentre");
+			target_storage();
+			set_as_source();
+
 		}
-
-		// }
-		// else{	
-		// 	// 		for(var nodeId in allNodes)
-  // 	// {
-  // 	// 	allNodes[nodeId].shape="ellipse";
-  // 	// 	allNodes[nodeId].color='rgba(60,60,60,0.6)';
-
-  // 	// 	if(allNodes[nodeId].font != "#ffffff"){
-  // 	// 		allNodes[nodeId].font={
-  // 	// 			color:"#ffffff"
-  // 	// 		};
-  // 	// 	}
-
-  // 	// 	if (allNodes[nodeId].hiddenLabel !== undefined) {
-  // 	// 		// console.log(nodeId);
-  // 	// 		allNodes[nodeId].label=allNodes[nodeId].hiddenLabel;
-  // 	// 		allNodes[nodeId].hiddenLabel = undefined;
-  // 	// 	}else if(draw_in_all_canvas_active==1 && nodeId != sourceId){
-  // 	// 		allNodes[nodeId].label=allNodes[nodeId].label.substring(0,allNodes[nodeId].label.length-4);
-  // 	// 	}
-
-  // 	// }		
-  // 				console.log("source");
-		// 		allNodes[sourceId].shape="ellipse";
-		// 		allNodes[sourceId].color='rgba(60,60,60,0.6)';
-		// 		allNodes[sourceId].font={
-		// 			color:"#ffffff"
-		// 		};
-
-		// 		sourceId=idselect;
-		// 		allNodes[idselect].shape="triangle";
-		// 		allNodes[idselect].font={
-		// 			color:"#000000"
-		// 		};
-		// }
 
 		var updateArray = [];
 		for (var nodeId in allNodes) {
@@ -73,6 +33,38 @@ function set_as_source(){
 		nodesDataset.update(updateArray);
 
 	}
+
+	var temp_target_increase;
+	var temp_target_decrease;
+	var temp_targetIds;
+	var temp_idselect;
+
+	function target_storage(){
+		temp_targetIds=targetIDs;
+		temp_target_decrease=target_decrease;
+		temp_target_increase=target_increase;
+		temp_idselect=idselect;
+
+		reset_parameters();
+
+		for(var int in temp_targetIds){
+			idselect=temp_targetIds[int];
+			set_as_target();
+		}
+
+		for(var i_inc in temp_target_increase){
+			idselect=temp_target_increase[i_inc];
+			increase();	
+		}
+		
+		for(var i_dec in temp_target_decrease){
+			idselect=temp_target_decrease[i_dec];
+			decrease();	
+		}
+
+		idselect=temp_idselect;
+	}
+
 
 	function set_as_target(){
 
@@ -126,7 +118,7 @@ function editNode(){
 		var tagList = document.getElementById("tag-input");
 		var option = document.createElement("option");
 		option.text = tabTag[i];
-		if (  allNodes[idselect].tags.includes(tabTag[i])==true )  {
+		if (allNodes[idselect].tags.includes(tabTag[i])==true)  {
 			option.selected="selected";
 		}
 		tagList.add(option);
@@ -160,7 +152,7 @@ function editNode(){
 		nodesDataset.update(updateArray);
 		document.getElementById('network-popUp').style.display = 'none';
 		
-add_tag();
+		add_tag();
 	};
 
 	document.getElementById('cancelButton').onclick = function(){
@@ -329,8 +321,7 @@ nodesDataset.update(updateArray);
 
 
 function source_increase(){
-	setAsSource=1;
-	if(targetIDs.length == 0 && sourceId == undefined){
+	if(targetIDs.length == 0 ){
 		set_as_source();
 		increase();
 		draw_in_all_canvas();
@@ -342,14 +333,13 @@ function source_increase(){
 }
 
 function source_decrease(){
-	setAsSource=1;
-	if(targetIDs.length == 0 && sourceId == undefined){
+	if(targetIDs.length == 0){
 		set_as_source();
 		decrease();
 		draw_in_all_canvas();
 	}else if(targetIDs.length != 0){
 		set_as_source();
-		increase();
+		decrease();
 		draw_with_target();
 	}
 }
