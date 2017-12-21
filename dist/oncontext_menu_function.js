@@ -352,6 +352,7 @@ function editNode(){
 	nodesDataset.update(updateArray);
 
 // hideMenu();
+		updateLeftPane();
 
 }
 
@@ -435,5 +436,7 @@ function remove(){
  	layout_hierarchical();
  	layout_physical();
  }
+	updateLeftPane();
+
   // hideMenu();
 }
