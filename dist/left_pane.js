@@ -76,6 +76,7 @@ function draw_the_path(){
   		}
   	}
   	nodesDataset.update(updateArray);
+	
 	setAsSource=0;
 	setAsTarget=0;
 	

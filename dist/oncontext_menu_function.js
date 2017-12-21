@@ -62,6 +62,9 @@ function set_as_source(){
 			decrease();	
 		}
 
+		targetIDs=temp_targetIds;
+		target_increase=temp_target_increase;
+		target_decrease=temp_target_decrease;
 		idselect=temp_idselect;
 	}
 
@@ -76,7 +79,9 @@ function set_as_source(){
 			allNodes[idselect].font={
 				color:"#000000"
 			};
-			targetIDs.push(idselect);
+			if(targetIDs.includes(idselect)==false){
+				targetIDs.push(idselect);
+			}
 
 		}
 		else{
@@ -104,6 +109,183 @@ function set_as_source(){
 // hideMenu();
 
 }
+
+
+function increase(){ 
+
+	if(sourceId==idselect){
+		source_movement=1;
+      // set_a_plus(sourceId);
+      allNodes[sourceId].shape="image";
+      allNodes[sourceId].image=DIR + "grey_triangle_plus.png";
+  }
+
+  for(var i in targetIDs){
+
+  	if(target_decrease.includes(targetIDs[i]) && idselect==targetIDs[i]){
+  		target_decrease = jQuery.grep(target_decrease, function(value) {
+  			return value != targetIDs[i];
+		});
+  	target_increase.push(targetIDs[i]);
+	}
+
+  	if(idselect==targetIDs[i]){
+  		if(target_increase.includes(idselect)==false){
+  			target_increase.push(idselect);
+  		}
+  		allNodes[idselect].shape="image";
+  		allNodes[idselect].image=DIR + "grey_star_plus.png";
+
+        // set_a_plus(targetIDs[i]);
+    }
+}
+
+var updateArray = [];
+for (var nodeId in allNodes) {
+	if (allNodes.hasOwnProperty(nodeId)) {
+		updateArray.push(allNodes[nodeId]);
+	}
+}
+nodesDataset.update(updateArray);
+
+    // hideMenu();
+}
+
+
+function decrease(){ 
+
+	if(sourceId==idselect){
+		source_movement=-1;
+		var sourceId_decrease=sourceId;
+		allNodes[sourceId].shape="image";
+		allNodes[sourceId].image=DIR + "grey_triangle_minus.png";
+      // set_a_minus(sourceId);
+  }
+
+  for(var i in targetIDs){
+  	if(target_increase.includes(targetIDs[i]) && idselect==targetIDs[i]){
+  		target_increase = jQuery.grep(target_increase, function(value) {
+  			return value != targetIDs[i];
+		});
+  		target_decrease.push(targetIDs[i]);
+
+
+  	}
+  	if(idselect==targetIDs[i]){
+  		if(target_decrease.includes(idselect)==false){
+  			console.log("dec");
+  			target_decrease.push(idselect);
+  		}
+  		allNodes[idselect].shape="image";
+  		allNodes[idselect].image=DIR + "grey_star_minus.png";
+        // set_a_minus(targetIDs[i]);
+    }
+}
+
+var updateArray = [];
+for (var nodeId in allNodes) {
+	if (allNodes.hasOwnProperty(nodeId)) {
+		updateArray.push(allNodes[nodeId]);
+	}
+}
+nodesDataset.update(updateArray);
+
+    // hideMenu();
+}
+
+
+function source_increase(){
+	if(targetIDs.length == 0 ){
+		set_as_source();
+		increase();
+		draw_in_all_canvas();
+	}else if(targetIDs.length != 0){
+		set_as_source();
+		increase();
+		draw_with_target();
+	}
+}
+
+function source_decrease(){
+	if(targetIDs.length == 0){
+		set_as_source();
+		decrease();
+		draw_in_all_canvas();
+	}else if(targetIDs.length != 0){
+		set_as_source();
+		decrease();
+		draw_with_target();
+	}
+}
+function increase_target(){
+	set_as_target();
+	increase();
+	setAsTarget=1;
+
+	if(sourceId != undefined){
+		draw_with_target();
+	}
+}
+
+function decrease_target(){
+	set_as_target();
+	decrease();
+	setAsTarget=1;
+
+	if(sourceId != undefined){
+		draw_with_target();
+	}
+}
+
+
+function unset_selected(){
+
+  	if(allNodes[idselect].shape != "ellipse" && idselect!=sourceId){
+
+  		allNodes[idselect].shape="ellipse";
+  		allNodes[idselect].color='rgba(60,60,60,0.6)';
+
+  		if(allNodes[idselect].font != "#ffffff"){
+  			allNodes[idselect].font={
+  			color:"#ffffff"
+  			};
+  		}
+
+  		if(target_increase.includes(idselect)){
+  			target_increase = jQuery.grep(target_increase, function(value) {
+  				return value != idselect;
+			});
+	 	}
+
+	 	if(target_decrease.includes(idselect)){
+  			target_decrease = jQuery.grep(target_decrease, function(value) {
+  				return value != idselect;
+			});
+	 	}
+
+  		for(var i in targetIDs){
+  			if(idselect==targetIDs[i]){
+  				targetIDs.splice(i,1);
+  				console.log(targetIDs);
+  			}
+  		}
+  	}else if(idselect==sourceId && targetIDs.length == 0){
+  		reset_parameters();
+
+  	}else if(idselect==sourceId && targetIDs.length != 0){
+		target_storage();
+  	}
+  	
+
+   	var updateArray = [];
+  	for (nodeId in allNodes) {
+  		if (allNodes.hasOwnProperty(nodeId)) {
+  			updateArray.push(allNodes[nodeId]);
+  		}
+  	}
+  	nodesDataset.update(updateArray);
+}
+
 
 function editNode(){ 
 
@@ -255,112 +437,3 @@ function remove(){
  }
   // hideMenu();
 }
-
-
-
-function increase(){ 
-
-	if(sourceId==idselect){
-		source_movement=1;
-      // set_a_plus(sourceId);
-      allNodes[sourceId].shape="image";
-      allNodes[sourceId].image=DIR + "grey_triangle_plus.png";
-  }
-
-  for(var i in targetIDs){
-  	if(idselect==targetIDs[i]){
-  		target_increase.push(idselect);
-  		allNodes[targetIDs[i]].shape="image";
-  		allNodes[targetIDs[i]].image=DIR + "grey_star_plus.png";
-
-        // set_a_plus(targetIDs[i]);
-    }
-}
-
-var updateArray = [];
-for (var nodeId in allNodes) {
-	if (allNodes.hasOwnProperty(nodeId)) {
-		updateArray.push(allNodes[nodeId]);
-	}
-}
-nodesDataset.update(updateArray);
-
-    // hideMenu();
-}
-
-
-function decrease(){ 
-
-	if(sourceId==idselect){
-		source_movement=-1;
-		var sourceId_decrease=sourceId;
-		allNodes[sourceId].shape="image";
-		allNodes[sourceId].image=DIR + "grey_triangle_minus.png";
-      // set_a_minus(sourceId);
-  }
-
-  for(var i in targetIDs){
-  	if(idselect==targetIDs[i]){
-  		target_decrease.push(idselect);
-  		allNodes[targetIDs[i]].shape="image";
-  		allNodes[targetIDs[i]].image=DIR + "grey_star_minus.png";
-        // set_a_minus(targetIDs[i]);
-    }
-}
-
-var updateArray = [];
-for (var nodeId in allNodes) {
-	if (allNodes.hasOwnProperty(nodeId)) {
-		updateArray.push(allNodes[nodeId]);
-	}
-}
-nodesDataset.update(updateArray);
-
-    // hideMenu();
-}
-
-
-function source_increase(){
-	if(targetIDs.length == 0 ){
-		set_as_source();
-		increase();
-		draw_in_all_canvas();
-	}else if(targetIDs.length != 0){
-		set_as_source();
-		increase();
-		draw_with_target();
-	}
-}
-
-function source_decrease(){
-	if(targetIDs.length == 0){
-		set_as_source();
-		decrease();
-		draw_in_all_canvas();
-	}else if(targetIDs.length != 0){
-		set_as_source();
-		decrease();
-		draw_with_target();
-	}
-}
-function increase_target(){
-	set_as_target();
-	increase();
-	setAsTarget=1;
-
-	if(sourceId != undefined){
-		draw_with_target();
-	}
-}
-
-function decrease_target(){
-	set_as_target();
-	decrease();
-	setAsTarget=1;
-
-	if(sourceId != undefined){
-		draw_with_target();
-	}
-}
-
-
