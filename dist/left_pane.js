@@ -47,12 +47,12 @@ function draw_the_path(){
   		allEdges[edgeId].color='rgba(60,60,60,0.6)';
   	}
 
-  	if(tagFilterActive == true && draw_in_all_canvas_active == 0){
-  		nodesDataset = temp_nodesDataset;
-  		edgesDataset = temp_edgesDataset;
-  		redrawAll();
-  		tagFilterActive=false;
-  	}
+  	// if(tagFilterActive == true && draw_in_all_canvas_active == 0){
+  	// 	nodesDataset = temp_nodesDataset;
+  	// 	edgesDataset = temp_edgesDataset;
+  	// 	redrawAll();
+  	// 	tagFilterActive=false;
+  	// }
 
   	sourceId=undefined;
   	targetIDs=[] ;
@@ -227,7 +227,12 @@ function filterByTag(){
 		}else{
 			nodesDataset = temp_nodesDataset;
 			edgesDataset = temp_edgesDataset;
+			var layout_state=layout_hierarchical_active;
 			redrawAll();
+
+			if(layout_state == true){
+				layout_hierarchical();
+			}
 			tagFilterActive = false;
 		}
 
@@ -295,15 +300,25 @@ function filterByTag(){
 		edgesDataset = new vis.DataSet(edgeArray);
 		// console.log(edgesDataset);
 		
+			var layout_state=layout_hierarchical_active;
 
 		redrawAll();
+			if(layout_state == true){
+				layout_hierarchical();
+			}
 
 	}else{
 		// console.log(tagFilterActive);
 		if(tagFilterActive == true){
 			nodesDataset = temp_nodesDataset;
 			edgesDataset = temp_edgesDataset;
+
+			var layout_state=layout_hierarchical_active;
+
 			redrawAll();
+			if(layout_state == true){
+				layout_hierarchical();
+			}
 			tagFilterActive = false;
 		}
 	}

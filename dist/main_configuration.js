@@ -30,17 +30,16 @@
       var container;
 
 	  
-	  var show_menu=0;
-	  var setAsSource=0;
-	   var setAsTarget=0;
+	    var show_menu=0;
+	    var setAsTarget=0;
 
-	  var tabTagg=[];
+	    var tabTagg=[];
       var DIR="triangle_star_img/";
 	  
-	  var menuWidth;
-	  var menuHeight;
-	  var windowWidth;
-	  var windowHeight;
+	    var menuWidth;
+	    var menuHeight;
+	    var windowWidth;
+	    var windowHeight;
 
 
  // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  CONFIGURATION FUNCTION xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
@@ -148,19 +147,16 @@
   },
 
   manipulation: {
-
+    enabled:true,
   	initiallyActive :true,
 
-  	addNode: function (data, callback) {
-        // filling in the popup DOM elements
-        //document.getElementById('operation').innerHTML = "Add Node";
-        document.getElementById('network-popUp').style.display = 'block';
-        document.getElementById('node-label').value="";
-		document.getElementById('tag-input').value="";
-       // document.getElementById('node-description').value="";
-        document.getElementById('node-label').focus(); 
+  addNode: function (data, callback) {
+   document.getElementById('network-popUp').style.display = 'block';
+   document.getElementById('node-label').value="";
+	 document.getElementById('tag-input').value="";
+   document.getElementById('node-label').focus(); 
 
-        $('#node-description').html("");
+   $('#node-description').html("");
 
 	$('#tag-input').empty();
 	for(var i=0; i<tabTag.length;i++)
@@ -180,7 +176,7 @@
 		});
 	}
 
-        document.getElementById('saveButton').onclick = function(){
+    document.getElementById('saveButton').onclick = function(){
 			
 	 	var tabTagNew=[];	
 		var selectedTag=($('#tag-input').val());
@@ -194,7 +190,7 @@
         		description: $('#node-description').html(),   
         		shape:"ellipse",
         		color:'rgba(60,60,60,0.6)',
-				tags:tabTagNew
+				    tags:tabTagNew
         	});       
 			
 			
@@ -207,7 +203,7 @@
         	document.getElementById('network-popUp').style.display = 'none'; 
    	        updateLeftPane();
    	 	 
-		add_tag();
+	 	add_tag();
         };
 
         document.getElementById('cancelButton').onclick = function(){
@@ -249,17 +245,16 @@
 			 function save_edge (){
 
     			if($('input.boxplus').prop('checked')){
-    				console.log("je passe");
+    				// console.log("je passe");
     				edge_label_value= '+';
     			}else if($('input.boxminus').prop('checked')){
-    				console.log("je passe 2");
-
+    				// console.log("je passe 2");
     				edge_label_value= '-';
     			}
     			else{
     				alert("Please select one of the influence directions before validating edge edtition");
     			}
-    			console.log(edge_label_value)
+    			// console.log(edge_label_value)
 
     			if(edge_label_value != ""){
     				allEdges=edgesDataset.get({returnType:"Object"});
@@ -272,7 +267,7 @@
     				});
 
     				allEdges=edgesDataset.get({returnType:"Object"});
-    				console.log(edgesDataset);
+    				// console.log(edgesDataset);
 
     				document.getElementById('network-popUp_edge').style.display = 'none';
     			}
@@ -301,6 +296,9 @@
     		edgesDataset.update(updateArray);
     	}
 
+    },
+    editNode:function(data,callback){
+      console.log("bonjour");
     },
     editEdge:function(data,callback){
 
@@ -362,7 +360,6 @@
     	}
     },
     deleteNode:function(data,callback){
-    	idselect=data.nodes[0];
     	remove();
     	neighbourhoodHighlight({nodes:[]});
 
@@ -394,7 +391,6 @@
     	if(updateArray.length != 0){
     		updateArray[updateArray.length-1].id=updateArray.length-1;
     	}
-    	console.log(updateArray);
     	edgesDataset.update(updateArray);
     	edgesDataset.remove(edgesDataset.length-1);
 
@@ -403,9 +399,6 @@
 
 		allEdges=edgesDataset.get({returnType:"Object"});
 
-		console.log(edgesDataset);
-		console.log(allEdges);
-// redrawAll();
 
 }
 }
@@ -437,6 +430,7 @@ allEdges=edgesDataset.get({returnType:"Object"});
   		neighbourhoodHighlight(params);
   		openAttributePane(params);
   		focusNode(params.nodes[0]);
+      idselect=params.nodes[0];
   	}else{
   		neighbourhoodHighlight({nodes:[]});
   		closeAttributePane();
@@ -444,13 +438,13 @@ allEdges=edgesDataset.get({returnType:"Object"});
   });
 
   document.onclick=function(e){
+
   	if(locX==0 && locY==0)
   	{
   		locX=e.pageX,
   		locY=e.pageY
-
-    // console.log(locX + "  " + locY);
-}
+     console.log(locX + "  " + locY);
+    }
 }
   // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  Add Node on doubleclick FUNCTION xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
@@ -502,7 +496,7 @@ allEdges=edgesDataset.get({returnType:"Object"});
 			menu.style.top = y + "px";
 		}
 	
-  		console.log(menu.offsetWidth);
+  		// console.log(menu.offsetWidth);
 
   		idselect=selectedNode;
 		show_menu=1;
@@ -570,8 +564,20 @@ document.ondblclick=function(e){
 tabTag=[];
 add_tag();
 
+layout_physical_active=true;
+layout_hierarchical_active=false;
+
+
 };
 
+
+var node_pos_onclkX=0;
+var node_pos_onclkY=0;
+
+$(document).on("click",function(e){
+      node_pos_onclkX=e.pageX;
+      node_pos_onclkY=e.pageY;
+});
 
 
 $(document).keydown(function(e) {        
@@ -597,9 +603,15 @@ $(document).keydown(function(e) {
 	}
 });
 
+$(document).keydown(function(e) {  
+   if (e.keyCode == 46 && idselect!=undefined ) {
+    remove();
+  }
+});
+
 $(function(){
 	document.addEventListener('contextmenu', function() {
-		console.log("coucou");
+		// console.log("coucou");
 	});
 })
 

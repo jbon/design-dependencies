@@ -3,17 +3,22 @@ var layout_hierarchical_active=false;
 
 function layout_physical(){  
 	if(layout_physical_active != true){
+	   document.getElementById("text_scenario").innerHTML="";
+	   console.log(typeof $("#text_scenario")[0].innerHTML);
+
 		redrawAll();
-		layout_physical_active=true;
-		layout_hierarchical_active=false;
-	}else{
-		alert("you are already on the physical layout");
-	}
+	}else if($("#text_scenario")[0].innerHTML.includes("You are already on the") == false){
+
+	  		document.getElementById("text_scenario").innerHTML+="<br>" + "You are already on the physical layout !";
+		}
+	
 }
 
 function layout_hierarchical(){
 
 	if(layout_hierarchical_active==false){
+	   document.getElementById("text_scenario").innerHTML="";
+
 		obj = {
 			hierarchical: function() {
 				network.setOptions({
@@ -62,7 +67,9 @@ function layout_hierarchical(){
 
 		layout_physical_active=false;
 		layout_hierarchical_active=true;
-	}else{
-		alert("you are already on the hierarchical layout");
+
+
+	}else if($("#text_scenario")[0].innerHTML.includes("You are already on the") == false) {
+	  		document.getElementById("text_scenario").innerHTML+="<br>" + "You are already on the hierarchical layout !";
+		}
 	}
-}
