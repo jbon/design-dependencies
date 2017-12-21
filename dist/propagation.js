@@ -207,6 +207,9 @@ function draw_with_target(){
 			allNodes[targetIDs[i]].color='rgba(60,60,60,0.6)';
 		}
 
+      console.log(target_decrease);
+      console.log(target_increase);
+
 		if (target_increase.includes(targetIDs[i])){
 			target_movement = 1;
 		}
@@ -220,7 +223,6 @@ function draw_with_target(){
 			for(var i2=0; i2<path.length;i2++) {
 				path[i2] = +path[i2];
 			}
-        // console.log(path);
 
         if(result_path[i1] != ";"){
         	for(var int in path){

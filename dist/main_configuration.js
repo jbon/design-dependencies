@@ -538,6 +538,8 @@ function onContextMenu(e){
 
 	document.getElementById("target_decrease").onclick=decrease_target; 
 
+  document.getElementById("unset").onclick=unset_selected; 
+
 	document.getElementById("edit").onclick=editNode;
 
 	document.getElementById("remove").onclick=remove;
