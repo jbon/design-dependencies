@@ -356,8 +356,24 @@ function editNode(){
 }
 
 
+function remove() {
+	
+	var selected = network.getSelectedNodes();
+	selected.sort(function(a,b){
+		return a.id - b.id;
+		});
+	selected.reverse();
+		
+	console.log(selected);
 
-function remove(){ 
+	 for (var n in selected) {
+      idselect = selected[n];
+	  remove2();
+	}
+	
+ }
+ 
+function remove2(){ 
 
   // Remove the edges connected to the selected Node and update EdgesDataset XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
   var length=edgesDataset.length; 
