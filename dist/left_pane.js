@@ -237,6 +237,7 @@ function filterByTag(){
 			tagFilterActive = false;
 		}
 
+
 		tagFilterActive=true;
 
 		for(var currentTag in selectedTag){
@@ -299,6 +300,9 @@ function filterByTag(){
 
 		nodesDataset = new vis.DataSet(nodeArray);
 		edgesDataset = new vis.DataSet(edgeArray);
+
+		console.log(nodesDataset);
+		updateLeftPane();
 		// console.log(edgesDataset);
 		
 			var layout_state=layout_hierarchical_active;
