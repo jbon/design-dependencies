@@ -359,19 +359,23 @@ function editNode(){
 
 function remove() {
 	
-	var selected = network.getSelectedNodes();
-	selected.sort(function(a,b){
-		return a.id - b.id;
-		});
-	selected.reverse();
-		
-	console.log(selected);
+	console.log(idselect);
+	if(idselect == undefined){
+		var selected = network.getSelectedNodes();
+		selected.sort(function(a,b){
+			return a.id - b.id;
+			});
+		selected.reverse();
+			
+		console.log(selected);
 
-	 for (var n in selected) {
-      idselect = selected[n];
-	  remove2();
+		 for (var n in selected) {
+	      idselect = selected[n];
+		  remove2();
+		}
+	}else{
+		remove2();
 	}
-	
  }
  
 function remove2(){ 
