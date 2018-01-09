@@ -576,6 +576,8 @@ function onContextMenu(e){
     
     console.log("node");
   	
+     $("#toHide").show();
+
     document.getElementById("source_increase").onclick=source_increase;
 
   	document.getElementById("source_decrease").onclick=source_decrease;
@@ -590,6 +592,9 @@ function onContextMenu(e){
 
   	document.getElementById("remove").onclick=remove;
     
+    selectedNode=undefined;
+
+
     document.addEventListener('click', onClick, false);
 
 }else if(selectedEdge != undefined){
@@ -608,6 +613,7 @@ function onContextMenu(e){
     
     document.addEventListener('click', onClick, false);
 
+    selectedEdge=undefined;
 }
 
 }

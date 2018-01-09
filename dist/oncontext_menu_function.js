@@ -367,17 +367,15 @@ function remove() {
 		return a.id - b.id;
 		});
 	selected.reverse();
-		
-	console.log(selected);
 
-	 for (var n in selected) {
-      idselect = selected[n];
-	  remove2();
-	}
-	}
-	
-	else
+		 for (var n in selected) {
+	      idselect = selected[n];
+		  remove2();
+		}
+	}else{
 		remove2();
+	}
+
  }
  
 function remove2(){ 
