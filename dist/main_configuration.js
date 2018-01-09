@@ -692,6 +692,7 @@ $(document).keydown(function(e) {
 	}
 });
 
+
 $(document).keydown(function(e) {        
 	if (e.keyCode == 27) {
 		network.setOptions(
