@@ -62,12 +62,18 @@
 		</div>
 
 
-		 <p><span id="soustitre">Layout :</span>
+		 <p><div id="soustitre">Layout :</div>
 			<!-- <button class="buttonLeft" id="physical" onclick="layout_physical() ">Physical</button>
 			<button class="buttonLeft"  class="topcoat-button-bar__button full" id="hierarchical" onclick="layout_hierarchical()">Hierarchical</button>
 			 -->
-			<button class="topcoat-button-bar__button full" id="physical" onclick="layout_physical() "><span id="soustitre">Physical</span></button>
-			<button class="topcoat-button-bar__button full" id="hierarchical" onclick="layout_hierarchical()"><span id="soustitre">Hierarchical</span></button>
+		<div class="topcoat-button-bar full">
+  			 <div class="topcoat-button-bar__item">
+				<button class="topcoat-button-bar__button full" id="physical" onclick="layout_physical() "><span id="soustitre">Physical</span></button>
+  			 </div>
+   			 <div class="topcoat-button-bar__item">
+				<button class="topcoat-button-bar__button full" id="hierarchical" onclick="layout_hierarchical()"><span id="soustitre">Hierarchical</span></button>		
+   			</div>
+		</div>
 
 			<div>
 				 <p><span id="soustitre">Tags :</span>
@@ -75,13 +81,17 @@
 					</select>
 				</div>
 
-
-				<div class="topcoat-button-bar full">
-
-					<div class="topcoat-button-bar__item">
+		<div class="topcoat-button-bar full">
+  			 <div class="topcoat-button-bar__item">
+					<button class="topcoat-button-bar__button full" onclick="reset_dataset()"><span id="soustitre">New graph</span></button>
+  			 </div>
+   			 <div class="topcoat-button-bar__item">
 						<button class="topcoat-button-bar__button full" onclick="reset_parameters()"><span id="soustitre">Reset</span></button>
-					</div>
-				</div>
+   			</div>
+
+		</div>
+
+
 			</div> 
 
 			<pre id="eventSpan"></pre>
@@ -175,6 +185,7 @@
 
 
     <menu class="menu" id="data-action">
+      <div id="toHide">
     	<li class="menu-item submenu">
     		<button type="button" class="menu-btn" id="source"> <i class="fa fa-caret-up" style="font-size:20px;"></i> <span class="menu-text">Set as source </span> </button>
     		<menu class="menu">
@@ -201,8 +212,9 @@
     		<button type="button" class="menu-btn" id="unset"> <i class="fa fa-eraser"></i> <span class="menu-text">Unset</span> </button>
     	</li>
     	<li class="menu-separator"></li>
+    	</div>
     	<li class="menu-item">
-    		<button type="button" class="menu-btn" id="edit"> <i class="fa fa-edit"></i> <span class="menu-text">Edit</span> </button>
+    		<button type="button" class="menu-btn" id="edit"> <i class="fa fa-edit"></i> <span class="menu-text" id="editProperties">Edit</span> </button>
     	</li>
     	<li class="menu-item">
     		<button type="button" class="menu-btn" id="remove"> <i class="fa fa-trash"></i> <span class="menu-text">Delete</span> </button>

@@ -440,3 +440,95 @@ function remove(){
 
   // hideMenu();
 }
+
+function editEdge(){
+	var edge_label_value;
+
+    		//document.getElementById('operation').innerHTML = "Add Edge";
+    		document.getElementById('network-popUp_edge').style.display = 'block';
+
+    		$('input.boxplus').prop('checked',false);
+    		$('input.boxminus').prop('checked',false);
+
+    		$('input.boxplus').on('change', function() {
+    			$('input.boxminus').prop('checked', false);  
+    		});
+    		$('input.boxminus').on('change', function() {
+    			$('input.boxplus').prop('checked', false);  
+    		});
+
+    		document.getElementById('saveButton_edge').onclick = function(){
+    			if($('input.boxplus').prop('checked')){
+    				edge_label_value= '+';
+    			}else if($('input.boxminus').prop('checked')){
+    				edge_label_value= '-';
+    			}
+    			else{
+    				alert("Please select one of the influence directions before validating edge edtition");
+    				edge_label_value="";
+    			}     
+
+    			if(edge_label_value != ""){
+
+    				allEdges=edgesDataset.get({returnType:"Object"});
+
+    				edgesDataset.update({
+    					id:idselect,
+    					label:edge_label_value
+    				});
+
+    				allEdges=edgesDataset.get({returnType:"Object"});
+
+    				document.getElementById('network-popUp_edge').style.display = 'none';
+    			}
+    		};
+
+    		document.getElementById('cancelButton_edge').onclick = function(){
+    			document.getElementById('saveButton_edge').onclick = null;
+    			document.getElementById('cancelButton_edge').onclick = null;
+    			document.getElementById('network-popUp_edge').style.display = 'none';
+    		};
+
+    		var updateArray = [];
+    		for (var edgeId in allEdges) {
+    			updateArray.push(allEdges[edgeId]);
+    		}
+    		edgesDataset.update(updateArray);
+    	
+}
+
+function removeEdge(){
+	   	var length=edgesDataset.length; 
+    	var edges_removed=idselect;
+
+
+    	edgesDataset.remove(edges_removed);
+
+    	allEdges=edgesDataset.get({returnType:"Object"});
+
+    	if(edges_removed != nodesDataset.length-1){
+    	for (var i=edges_removed; i<length-1; i++){
+    		if(typeof allEdges[i+1] == "undefined"){
+    			break;
+    		}else{
+    			allEdges[i]=allEdges[i+1];
+    			allEdges[i].id=i;
+    		}
+    	}
+
+
+    	var updateArray = [];
+    	for(var edge=0; edge<length-1;edge++){
+    		updateArray.push(allEdges[edge]);
+    	}
+    	if(updateArray.length != 0){
+    		updateArray[updateArray.length-1].id=updateArray.length-1;
+    	}
+    	edgesDataset.update(updateArray);
+    	edgesDataset.remove(edgesDataset.length-1);
+
+		// edgesDataset = new vis.DataSet(updateArray); 
+		}
+
+		allEdges=edgesDataset.get({returnType:"Object"});
+}

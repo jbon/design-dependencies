@@ -329,4 +329,9 @@ function filterByTag(){
 	}
 }
 
-
+function reset_dataset(){
+	nodesDataset= new vis.DataSet([]);
+	edgesDataset=new vis.DataSet([]);
+	console.log(typeof nodesDataset);
+	redrawAll();
+}

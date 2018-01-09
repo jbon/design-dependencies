@@ -298,59 +298,78 @@
 
     },
     editNode:function(data,callback){
-      console.log("bonjour");
+
+    editNode();
+    
+    network.setOptions(
+    {
+      manipulation:{
+        initiallyActive :true
+      }
+    });
     },
     editEdge:function(data,callback){
 
     	var edge_label_value;
     	if (data.from != data.to) {
 
-    		//document.getElementById('operation').innerHTML = "Add Edge";
-    		document.getElementById('network-popUp_edge').style.display = 'block';
+    		// document.getElementById('operation').innerHTML = "Add Edge";
+    		// document.getElementById('network-popUp_edge').style.display = 'block';
 
-    		$('input.boxplus').prop('checked',false);
-    		$('input.boxminus').prop('checked',false);
+    		// $('input.boxplus').prop('checked',false);
+    		// $('input.boxminus').prop('checked',false);
 
-    		$('input.boxplus').on('change', function() {
-    			$('input.boxminus').prop('checked', false);  
-    		});
-    		$('input.boxminus').on('change', function() {
-    			$('input.boxplus').prop('checked', false);  
-    		});
+    		// $('input.boxplus').on('change', function() {
+    		// 	$('input.boxminus').prop('checked', false);  
+    		// });
+    		// $('input.boxminus').on('change', function() {
+    		// 	$('input.boxplus').prop('checked', false);  
+    		// });
 
-    		document.getElementById('saveButton_edge').onclick = function(){
-    			if($('input.boxplus').prop('checked')){
-    				edge_label_value= '+';
-    			}else if($('input.boxminus').prop('checked')){
-    				edge_label_value= '-';
-    			}
-    			else{
-    				alert("Please select one of the influence directions before validating edge edtition");
-    				edge_label_value="";
-    			}     
+    		// document.getElementById('saveButton_edge').onclick = function(){
+    		// 	if($('input.boxplus').prop('checked')){
+    		// 		edge_label_value= '+';
+    		// 	}else if($('input.boxminus').prop('checked')){
+    		// 		edge_label_value= '-';
+    		// 	}
+    		// 	else{
+    		// 		alert("Please select one of the influence directions before validating edge edtition");
+    		// 		edge_label_value="";
+    		// 	}     
 
-    			if(edge_label_value != ""){
+    		// 	if(edge_label_value != ""){
 
-    				allEdges=edgesDataset.get({returnType:"Object"});
+    		// 		allEdges=edgesDataset.get({returnType:"Object"});
 
-    				edgesDataset.update({
-    					id:data.id,
-    					from:data.from,
-    					to:data.to,
-    					label:edge_label_value
-    				});
+    		// 		edgesDataset.update({
+    		// 			id:data.id,
+    		// 			from:data.from,
+    		// 			to:data.to,
+    		// 			// label:edge_label_value
+    		// 		});
 
-    				allEdges=edgesDataset.get({returnType:"Object"});
+    		// 		allEdges=edgesDataset.get({returnType:"Object"});
 
-    				document.getElementById('network-popUp_edge').style.display = 'none';
-    			}
-    		};
+    		// 		document.getElementById('network-popUp_edge').style.display = 'none';
+    		// 	}
+    		// };
 
-    		document.getElementById('cancelButton_edge').onclick = function(){
-    			document.getElementById('saveButton_edge').onclick = null;
-    			document.getElementById('cancelButton_edge').onclick = null;
-    			document.getElementById('network-popUp_edge').style.display = 'none';
-    		};
+        console.log(data.from + " : " + data.to);
+
+           edgesDataset.update({
+             id:data.id,
+             from:data.from,
+             to:data.to,
+           });
+
+        console.log(data.from + " : " + data.to);
+        allEdges=edgesDataset.get({returnType:"Object"});
+
+    		// document.getElementById('cancelButton_edge').onclick = function(){
+    		// 	document.getElementById('saveButton_edge').onclick = null;
+    		// 	document.getElementById('cancelButton_edge').onclick = null;
+    		// 	document.getElementById('network-popUp_edge').style.display = 'none';
+    		// };
 
     		var updateArray = [];
     		for (var edgeId in allEdges) {
@@ -362,7 +381,6 @@
     deleteNode:function(data,callback){
     	remove();
     	neighbourhoodHighlight({nodes:[]});
-
     },
     deleteEdge:function(data,callback){
     	var length=edgesDataset.length; 
@@ -463,6 +481,56 @@ allEdges=edgesDataset.get({returnType:"Object"});
   }
 
 
+  function showMenuEdge(x,y){
+    var selectedEdge= network.getEdgeAt({x:cursorX, y:cursorY});
+    console.log(selectedEdge);
+
+    if (selectedEdge != undefined) {
+      menu.classList.add('show-menu');
+      //menu.style.left = x + 'px';
+      //menu.style.top = y + 'px';
+    
+    menuWidth = menu.offsetWidth;
+    menuHeight = menu.offsetHeight + 14;
+
+    windowWidth = window.innerWidth;
+    windowHeight = window.innerHeight;
+    
+     if ( (windowWidth - x) < (menuWidth) ) {
+      $(".menu .menu").css("left","-103%");
+      menu.style.left = windowWidth - menuWidth + "px";
+
+      }else if((windowWidth - x) < (menuWidth+204)){
+          $(".menu .menu").css("left","-103%");
+          menu.style.left = x + "px";
+      } else {
+      $(".menu .menu").css("left","100%");
+      menu.style.left = x + "px";
+      }
+
+    if ( (windowHeight - y) < menuHeight ) {
+      menu.style.top = windowHeight - menuHeight + "px";
+      } else {
+      menu.style.top = y + "px";
+    }
+  
+      
+
+      // console.log(menu.offsetWidth);
+
+      // idselect=selectedEdge;
+    show_menu=1;
+  
+    }
+    else {
+      hideMenu();
+    //resizeListener();
+    }
+
+  // params.event.preventDefault();
+  return selectedEdge;
+  }
+
   function showMenu(x, y){
 
   	var selectedNode = network.getNodeAt({x:cursorX, y:cursorY});
@@ -498,7 +566,7 @@ allEdges=edgesDataset.get({returnType:"Object"});
 	
   		// console.log(menu.offsetWidth);
 
-  		idselect=selectedNode;
+  		// idselect=selectedNode;
 		show_menu=1;
 	
   	}
@@ -508,7 +576,7 @@ allEdges=edgesDataset.get({returnType:"Object"});
   	}
 
   // params.event.preventDefault();
-  return idselect;
+  return selectedNode;
 }
 
 /* function resizeListener() {
@@ -528,23 +596,53 @@ function hideMenu(){
 
 function onContextMenu(e){
 	e.preventDefault();
-	showMenu(e.pageX, e.pageY);
+	var selectedNode=showMenu(e.pageX, e.pageY);
+  var selectedEdge=showMenuEdge(e.pageX, e.pageY);
+
+  console.log(selectedNode + " edge " + selectedEdge);
 	
-	document.getElementById("source_increase").onclick=source_increase;
+  if(selectedNode != undefined){
 
-	document.getElementById("source_decrease").onclick=source_decrease;
+    idselect=selectedNode;
+    
+    showMenu(e.pageX, e.pageY);
+    
+    console.log("node");
+  	
+    document.getElementById("source_increase").onclick=source_increase;
 
-	document.getElementById("target_increase").onclick=increase_target; 
+  	document.getElementById("source_decrease").onclick=source_decrease;
 
-	document.getElementById("target_decrease").onclick=decrease_target; 
+  	document.getElementById("target_increase").onclick=increase_target; 
 
-  document.getElementById("unset").onclick=unset_selected; 
+  	document.getElementById("target_decrease").onclick=decrease_target; 
 
-	document.getElementById("edit").onclick=editNode;
+    document.getElementById("unset").onclick=unset_selected; 
 
-	document.getElementById("remove").onclick=remove;
+  	document.getElementById("edit").onclick=editNode;
 
-	document.addEventListener('click', onClick, false);
+  	document.getElementById("remove").onclick=remove;
+    
+    document.addEventListener('click', onClick, false);
+
+}else if(selectedEdge != undefined){
+
+    idselect=selectedEdge;
+
+    console.log("edge");
+
+    $("#toHide").hide();
+
+    $('#editProperties').text("Edit properties");
+
+    document.getElementById("edit").onclick=editEdge;
+
+    document.getElementById("remove").onclick=removeEdge;
+    
+    document.addEventListener('click', onClick, false);
+
+}
+
 }
 
 
