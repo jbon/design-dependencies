@@ -359,8 +359,6 @@ function editNode(){
 
 function remove() {
 	
-	console.log(idselect);
-	if(idselect == undefined){
 		var selected = network.getSelectedNodes();
 		selected.sort(function(a,b){
 			return a.id - b.id;
@@ -373,9 +371,6 @@ function remove() {
 	      idselect = selected[n];
 		  remove2();
 		}
-	}else{
-		remove2();
-	}
  }
  
 function remove2(){ 

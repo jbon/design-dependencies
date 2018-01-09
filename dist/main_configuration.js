@@ -311,6 +311,10 @@
     editEdge:function(data,callback){
 
     	var edge_label_value;
+      idselect=network.getSelectedEdges();
+      console.log(network.getSelectedEdges());
+      var temp= allEdges[idselect].from;
+
     	if (data.from != data.to) {
 
     		// document.getElementById('operation').innerHTML = "Add Edge";
@@ -354,15 +358,16 @@
     		// 	}
     		// };
 
-        console.log(data.from + " : " + data.to);
+
+        console.log(data.to + "  " + temp);
 
            edgesDataset.update({
              id:data.id,
-             from:data.from,
-             to:data.to,
+             from:data.to,
+             to:temp,
            });
 
-        console.log(data.from + " : " + data.to);
+        console.log(typeof data.from);
         allEdges=edgesDataset.get({returnType:"Object"});
 
     		// document.getElementById('cancelButton_edge').onclick = function(){
@@ -383,6 +388,7 @@
     	neighbourhoodHighlight({nodes:[]});
     },
     deleteEdge:function(data,callback){
+      console.log(data.edges[0]);
     	var length=edgesDataset.length; 
     	var edges_removed=data.edges[0];
 
