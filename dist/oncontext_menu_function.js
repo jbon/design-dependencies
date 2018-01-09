@@ -359,19 +359,22 @@ function editNode(){
 
 function remove() {
 	
-		var selected = network.getSelectedNodes();
+	var selected = network.getSelectedNodes();
+	
+	if (selected.length>1)
+	{	
 		selected.sort(function(a,b){
 			return a.id - b.id;
-			});
+		});
 		selected.reverse();
-			
-		console.log(selected);
-
 		 for (var n in selected) {
-	      idselect = selected[n];
-		  remove2();
+		    idselect = selected[n];
+		    remove2();
 		}
- }
+	}else{
+		remove2();
+	}
+}
  
 function remove2(){ 
 
@@ -512,7 +515,32 @@ function editEdge(){
     	
 }
 
-function removeEdge(){
+function removeEdge() {
+	
+	var selected = network.getSelectedEdges();
+	
+	if (selected.length>1)
+		{
+			selected.sort(function(a,b){
+		return a.id - b.id;
+		});
+	selected.reverse();
+		
+	console.log(selected);
+
+	 for (var n in selected) {
+      idselect = selected[n];
+	  removeEdge2();
+	}
+		}	
+	else 
+		removeEdge2();
+		
+	
+ }
+ 
+ 
+function removeEdge2(){
 	   	var length=edgesDataset.length; 
     	var edges_removed=idselect;
 

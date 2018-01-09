@@ -388,45 +388,10 @@
     	neighbourhoodHighlight({nodes:[]});
     },
     deleteEdge:function(data,callback){
-      console.log(data.edges[0]);
-    	var length=edgesDataset.length; 
-    	var edges_removed=data.edges[0];
-
-
-    	edgesDataset.remove(edges_removed);
-
-    	allEdges=edgesDataset.get({returnType:"Object"});
-
-    	if(edges_removed != nodesDataset.length-1){
-    	for (var i=edges_removed; i<length-1; i++){
-    		if(typeof allEdges[i+1] == "undefined"){
-    			break;
-    		}else{
-    			allEdges[i]=allEdges[i+1];
-    			allEdges[i].id=i;
-    		}
-    	}
-
-
-    	var updateArray = [];
-    	for(var edge=0; edge<length-1;edge++){
-    		updateArray.push(allEdges[edge]);
-    	}
-    	if(updateArray.length != 0){
-    		updateArray[updateArray.length-1].id=updateArray.length-1;
-    	}
-    	edgesDataset.update(updateArray);
-    	edgesDataset.remove(edgesDataset.length-1);
-
-		// edgesDataset = new vis.DataSet(updateArray); 
-		}
-
-		allEdges=edgesDataset.get({returnType:"Object"});
-
-
-}
-}
-
+  		idselect=data.edges[0];
+	   	removeEdge();
+    }
+  }
 };
 
 data = {nodes: nodesDataset , edges:edgesDataset };
