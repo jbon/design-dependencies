@@ -41,6 +41,8 @@
 	    var windowWidth;
 	    var windowHeight;
 
+      var popUpEditEdges=0;
+      var editEdgeId;
 
  // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  CONFIGURATION FUNCTION xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
@@ -310,78 +312,134 @@
     },
     editEdge:function(data,callback){
 
+     console.log("je suis dans editEdge");
     	var edge_label_value;
-      idselect=network.getSelectedEdges();
-      console.log(network.getSelectedEdges());
-      var temp= allEdges[idselect].from;
 
-    	if (data.from != data.to) {
+        edgesDataset.update({
+              id:data.id,
+              from:data.from,
+              to:data.to
+              // label:edge_label_value
+            });
+
+        var updateArray = [];
+        for (var edgeId in allEdges) {
+          updateArray.push(allEdges[edgeId]);
+        }
+        edgesDataset.update(updateArray);
+
+    	if (typeof data.to == "number") {
 
     		// document.getElementById('operation').innerHTML = "Add Edge";
-    		// document.getElementById('network-popUp_edge').style.display = 'block';
+    		document.getElementById('network-popUp_edge').style.display = 'block';
 
-    		// $('input.boxplus').prop('checked',false);
-    		// $('input.boxminus').prop('checked',false);
+    		$('input.boxplus').prop('checked',false);
+    		$('input.boxminus').prop('checked',false);
 
-    		// $('input.boxplus').on('change', function() {
-    		// 	$('input.boxminus').prop('checked', false);  
-    		// });
-    		// $('input.boxminus').on('change', function() {
-    		// 	$('input.boxplus').prop('checked', false);  
-    		// });
+    		$('input.boxplus').on('change', function() {
+    			$('input.boxminus').prop('checked', false);  
+    		});
+    		$('input.boxminus').on('change', function() {
+    			$('input.boxplus').prop('checked', false);  
+    		});
 
-    		// document.getElementById('saveButton_edge').onclick = function(){
-    		// 	if($('input.boxplus').prop('checked')){
-    		// 		edge_label_value= '+';
-    		// 	}else if($('input.boxminus').prop('checked')){
-    		// 		edge_label_value= '-';
-    		// 	}
-    		// 	else{
-    		// 		alert("Please select one of the influence directions before validating edge edtition");
-    		// 		edge_label_value="";
-    		// 	}     
+    		document.getElementById('saveButton_edge').onclick = function(){
+    			if($('input.boxplus').prop('checked')){
+    				edge_label_value= '+';
+    			}else if($('input.boxminus').prop('checked')){
+    				edge_label_value= '-';
+    			}
+    			else{
+    				alert("Please select one of the influence directions before validating edge edtition");
+    				edge_label_value="";
+    			}     
 
-    		// 	if(edge_label_value != ""){
+    			if(edge_label_value != ""){
 
-    		// 		allEdges=edgesDataset.get({returnType:"Object"});
+    				allEdges=edgesDataset.get({returnType:"Object"});
 
-    		// 		edgesDataset.update({
-    		// 			id:data.id,
-    		// 			from:data.from,
-    		// 			to:data.to,
-    		// 			// label:edge_label_value
-    		// 		});
+    				edgesDataset.update({
+    					id:data.id,
+    					from:data.from,
+    					to:data.to,
+    					label:edge_label_value
+    				});
 
-    		// 		allEdges=edgesDataset.get({returnType:"Object"});
+    				allEdges=edgesDataset.get({returnType:"Object"});
 
-    		// 		document.getElementById('network-popUp_edge').style.display = 'none';
-    		// 	}
-    		// };
+    				document.getElementById('network-popUp_edge').style.display = 'none';
+    			}
+    		};
 
 
-        console.log(data.to + "  " + temp);
-
-           edgesDataset.update({
-             id:data.id,
-             from:data.to,
-             to:temp,
-           });
-
-        console.log(typeof data.from);
-        allEdges=edgesDataset.get({returnType:"Object"});
-
-    		// document.getElementById('cancelButton_edge').onclick = function(){
-    		// 	document.getElementById('saveButton_edge').onclick = null;
-    		// 	document.getElementById('cancelButton_edge').onclick = null;
-    		// 	document.getElementById('network-popUp_edge').style.display = 'none';
-    		// };
+    		document.getElementById('cancelButton_edge').onclick = function(){
+    			document.getElementById('saveButton_edge').onclick = null;
+    			document.getElementById('cancelButton_edge').onclick = null;
+    			document.getElementById('network-popUp_edge').style.display = 'none';
+    		};
 
     		var updateArray = [];
     		for (var edgeId in allEdges) {
     			updateArray.push(allEdges[edgeId]);
     		}
     		edgesDataset.update(updateArray);
-    	}
+        popUpEditEdges=1;
+    	}else{
+
+          document.getElementById('network-popUp_edge').style.display = 'block';
+
+        $('input.boxplus').prop('checked',false);
+        $('input.boxminus').prop('checked',false);
+
+        $('input.boxplus').on('change', function() {
+          $('input.boxminus').prop('checked', false);  
+        });
+        $('input.boxminus').on('change', function() {
+          $('input.boxplus').prop('checked', false);  
+        });
+
+        document.getElementById('saveButton_edge').onclick = function(){
+          if($('input.boxplus').prop('checked')){
+            edge_label_value= '+';
+          }else if($('input.boxminus').prop('checked')){
+            edge_label_value= '-';
+          }
+          else{
+            alert("Please select one of the influence directions before validating edge edtition");
+            edge_label_value="";
+          }     
+
+          if(edge_label_value != ""){
+
+            allEdges=edgesDataset.get({returnType:"Object"});
+
+
+            edgesDataset.update({
+              id:data.id,
+              from:allEdges[editEdgeId].to,
+              to:allEdges[editEdgeId].from,
+              label:edge_label_value
+            });
+
+            allEdges=edgesDataset.get({returnType:"Object"});
+
+            document.getElementById('network-popUp_edge').style.display = 'none';
+             }
+          };
+
+
+        document.getElementById('cancelButton_edge').onclick = function(){
+          document.getElementById('saveButton_edge').onclick = null;
+          document.getElementById('cancelButton_edge').onclick = null;
+          document.getElementById('network-popUp_edge').style.display = 'none';
+        };
+
+        var updateArray = [];
+        for (var edgeId in allEdges) {
+          updateArray.push(allEdges[edgeId]);
+        }
+        edgesDataset.update(updateArray);
+      }
     },
     deleteNode:function(data,callback){
     	remove();
@@ -389,6 +447,7 @@
     },
     deleteEdge:function(data,callback){
   		idselect=data.edges[0];
+      console.log(idselect);
 	   	removeEdge();
     }
   }
@@ -654,6 +713,11 @@ var node_pos_onclkY=0;
 $(document).on("click",function(e){
       node_pos_onclkX=e.pageX;
       node_pos_onclkY=e.pageY;
+
+    if( network.getEdgeAt({x:node_pos_onclkX, y:node_pos_onclkY}) != undefined){
+      editEdgeId= network.getEdgeAt({x:node_pos_onclkX, y:node_pos_onclkY});
+      console.log(editEdgeId);
+    }
 });
 
 
@@ -668,6 +732,7 @@ $(document).keydown(function(e) {
 		document.getElementById('network-popUp_edge').style.display = 'none';
 	}
 });
+
 
 
 $(document).keydown(function(e) {        
@@ -687,10 +752,8 @@ $(document).keydown(function(e) {
   }
 });
 
-$(function(){
-	document.addEventListener('contextmenu', function() {
-		// console.log("coucou");
-	});
-})
+// $("div.vis-button.vis-edit").on("click",function(){
+//   console.log(data.from + "  " + data.to);
 
 
+// });

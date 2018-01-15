@@ -35,7 +35,7 @@ function openAttributePane(params) {
 
 	if(connectedNodes.length != 0){
 		for(var x=0; x<edgesDataset.length; x++ ){
-			if(edgesDataset.get(x).from==params.nodes[0]){
+			if(edgesDataset.get(x).from==params.nodes[0] && allNodes[edgesDataset.get(x).to].label != undefined){
 
 				var ing=document.createElement("div");
 				ing.id=edgesDataset.get(x).to;
@@ -59,7 +59,7 @@ function openAttributePane(params) {
 			}
 
 
-			if(edgesDataset.get(x).to==params.nodes[0]){
+			if(edgesDataset.get(x).to==params.nodes[0] && allNodes[edgesDataset.get(x).from].label != undefined){
 				var ed=document.createElement("div");
 				ed.id=edgesDataset.get(x).from;
 				ed.innerHTML=allNodes[edgesDataset.get(x).from].label;

@@ -360,7 +360,8 @@ function editNode(){
 function remove() {
 	
 	var selected = network.getSelectedNodes();
-	
+	var selectedEdges = network.getSelectedEdges();
+
 	if (selected.length>1)
 	{	
 		selected.sort(function(a,b){
