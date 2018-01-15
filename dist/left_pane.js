@@ -333,5 +333,7 @@ function reset_dataset(){
 	nodesDataset= new vis.DataSet([]);
 	edgesDataset=new vis.DataSet([]);
 	console.log(typeof nodesDataset);
+	check_ifPresent_list=[];
+	$('#tagSelectBox').empty();
 	redrawAll();
 }

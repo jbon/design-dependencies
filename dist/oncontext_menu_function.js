@@ -360,23 +360,22 @@ function editNode(){
 function remove() {
 	
 	var selected = network.getSelectedNodes();
-	
+	var selectedEdges = network.getSelectedEdges();
+
 	if (selected.length>1)
 	{	
-	selected.sort(function(a,b){
-		return a.id - b.id;
+		selected.sort(function(a,b){
+			return a.id - b.id;
 		});
-	selected.reverse();
-
+		selected.reverse();
 		 for (var n in selected) {
-	      idselect = selected[n];
-		  remove2();
+		    idselect = selected[n];
+		    remove2();
 		}
 	}else{
 		remove2();
 	}
-
- }
+}
  
 function remove2(){ 
 

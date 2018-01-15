@@ -22,40 +22,27 @@ function layout_hierarchical(){
 		obj = {
 			hierarchical: function() {
 				network.setOptions({
-					layout: {
-						hierarchical: {
-							enabled: true,
-							levelSeparation: 300,
-							nodeSpacing: 300,
-						// treeSpacing:200,
-						// blockShifting:true,
-						// edgeMinimization:true,
-						// parentCentralization: true,
-						direction: "DU",
-						sortMethod: "directed"
-					}
-				},
-				physics:{
-					enabled: true,
-
-					hierarchicalRepulsion: {
-						nodeDistance :300,
-						centralGravity:0.0,
-						springLength:200,
-						springConstant: 0.01,
-						damping: 0.09
-					}, 
-					maxVelocity: 50,
-					minVelocity: 0.1,
-					solver: 'hierarchicalRepulsion',
-					timestep: 0.9,
-					stabilization: {
-						enabled:true,
-						iterations:1000
-					}
-
-				}
-			})
+				    layout: {
+				        hierarchical: {
+				            levelSeparation: 250,
+				            direction: "DU",
+				            sortMethod: "directed"
+				        }
+				    },
+				    physics: {
+				        hierarchicalRepulsion: {
+				            springLength: 170,
+				            nodeDistance: 300
+				        },
+				        timestep: 0.40,
+				        stabilization: {
+				            enabled: true,
+				            iterations: 10000,
+				            updateInterval: 30,
+				            fit: false
+				        }
+				    }
+				})
 			}
 		};
 		network.stabilize(2000);
