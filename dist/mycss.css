@@ -79,8 +79,9 @@ div#text_scenario_css p {
 /*Right popup window onclick on a node*/
 #attributepane {
   display: none;  
-  position:absolute;
- height:auto; 
+  position:fixed;
+  overflow:auto;
+ height:100%; 
   bottom:0;
   top:0;
   right:0;
@@ -92,7 +93,7 @@ div#text_scenario_css p {
   background-color:rgba(255,255,255,0.8);
   border-left: 1px solid #ccc; 
   padding: 0% 1% 0% 1%;
-  z-index: 1;
+  z-index: 10;
 }
 
   #attributepane .text {
@@ -153,7 +154,7 @@ div#text_scenario_css p {
 .left-close {
   background-image: url('../images/fancybox_sprite.png');
  /*  margin-left:-37px;    padding-left:31px;   margin-bottom:25px;  font-size:14px; line-height:36px; */
-  margin-left:-14%; 
+  margin-left:-8%; 
   z-index:99999;
   cursor: pointer;
   padding-left: 19%;
