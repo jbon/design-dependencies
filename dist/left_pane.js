@@ -147,6 +147,9 @@ function updateLeftPane() {
       neighbourhoodHighlight({nodes:[id]});
       openAttributePane({nodes:[id]});
       focusNode(id);
+
+      this.value = "";
+      return false;
   }
 });
 }
