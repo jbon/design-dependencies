@@ -31,6 +31,7 @@
 
 	  
 	    var show_menu=0;
+		var setAsSource=0; 
 	    var setAsTarget=0;
 
 	    var tabTagg=[];
@@ -119,7 +120,7 @@
   	container: document.getElementById('optionsContainer'),
   	showButton: false
   },   
-
+ 
   physics:{
   	enabled: true,
 
@@ -130,21 +131,22 @@
       //   springConstant: 0.02,
       //   avoidOverlap: 0
       // },
-      repulsion:{
-      	nodeDistance:200,
-      	centralGravity:0.002,
+      barnesHut:{
+        gravitationalConstant:-50000,
+      	centralGravity:0.0002,
       	springLength: 200,
       	springConstant: 0.05,
-      	damping:0.09
+      	damping:0.09,
+        avoidOverlap:0.5
       },
 
       maxVelocity: 50,
       minVelocity: 0.1,
-      solver: 'repulsion',
+      solver: 'barnesHut',
       timestep: 0.9,
       stabilization: {
       	enabled: true,
-      	iterations:40000
+      	iterations:3000
       }
   },
 

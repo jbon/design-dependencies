@@ -336,4 +336,5 @@ function reset_dataset(){
 	check_ifPresent_list=[];
 	$('#tagSelectBox').empty();
 	redrawAll();
+	attributepane.style.display="none";
 }

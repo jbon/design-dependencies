@@ -195,26 +195,35 @@ nodesDataset.update(updateArray);
 
 
 function source_increase(){
+	setAsSource=1;
 	if(targetIDs.length == 0 ){
 		set_as_source();
 		increase();
 		draw_in_all_canvas();
+		
 	}else if(targetIDs.length != 0){
 		set_as_source();
 		increase();
 		draw_with_target();
+		
+
 	}
 }
 
 function source_decrease(){
+	setAsSource=1;
 	if(targetIDs.length == 0){
 		set_as_source();
 		decrease();
 		draw_in_all_canvas();
+	
+
 	}else if(targetIDs.length != 0){
 		set_as_source();
 		decrease();
 		draw_with_target();
+		
+
 	}
 }
 function increase_target(){
