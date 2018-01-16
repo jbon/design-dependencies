@@ -152,6 +152,8 @@ function show_consequences(){
 		});
    document.getElementById("text_scenario").innerHTML="Right click on a parameter for exploring the consequences of a change in this parameter";
 
+   $()
+
     show_consequences_2=setInterval(
     function () {
        if (show_menu==1) {
@@ -172,7 +174,7 @@ function show_consequences(){
      );
 	 
 	 $(document).keydown(function(e) {        
-	if (e.keyCode == 27) {
+	if (e.keyCode == 27)  {
 		clearInterval(show_consequences_2);
 		clearInterval(show_consequences_3);
 		document.getElementById("text_scenario").innerHTML=" ";
@@ -192,7 +194,7 @@ function show_compliance(){
    document.getElementById("text_scenario").innerHTML="Right click on a parameter you want to set as target";
    
    show_compliance_2=setInterval(
-    function () {
+    function() {
        if (show_menu==1) {
 		document.getElementById("text_scenario").innerHTML="Set this parameter as a target and define whether you want it to increase or decrease";
 	   }
@@ -202,12 +204,22 @@ function show_compliance(){
 	 
 	show_compliance_3=setInterval(
     function () {
-       if (setAsTarget==1) {
+       if (targetIDs.length != 0 && sourceId == undefined) {
 		clearInterval(show_compliance_2);  
 		document.getElementById("text_scenario").innerHTML="Right click on a parameter you want to set as additional target or as a source for change";
-	   }
+	   }else if(targetIDs.length == 0 && sourceId != undefined) {
+	   		document.getElementById("text_scenario").innerHTML="Right click on a parameter you want to set as target";
+				show_compliance_2=setInterval(
+			    function() {
+			       if (show_menu==1) {
+					document.getElementById("text_scenario").innerHTML="Set this parameter as a target and define whether you want it to increase or decrease";
+				   }
+			    },
+			    500
+			     );
+		}
 	   
-	    if (show_menu==1) {
+	    if (show_menu==1 && targetIDs.lenth != 0 && sourceId==undefined) {
 		document.getElementById("text_scenario").innerHTML="Set this parameter as a target or a source and define whether you want it to increase or decrease";
 	   }
     },
@@ -216,7 +228,8 @@ function show_compliance(){
 	 	
 	 show_compliance_4=setInterval(
     function () {
-       if (setAsSource==1) {
+       if (targetIDs.length != 0 && sourceId != undefined){
+		clearInterval(show_compliance_2); 
 		clearInterval(show_compliance_3);  
 		document.getElementById("text_scenario").innerHTML="Now the colors of the targets indicates whether the change in the source parameter is compatible with the targets.<br> To come back to the initial view press „reset“. To add another target, right click on it";
 	   }
@@ -225,12 +238,12 @@ function show_compliance(){
      );
 	 
 	 	 $(document).keydown(function(e) {        
-	if (e.keyCode == 27) {
-		clearInterval(show_compliance_2); 
-		clearInterval(show_compliance_3); 
-		clearInterval(show_compliance_4);
-		document.getElementById("text_scenario").innerHTML=" ";
-	}
+			if (e.keyCode == 27) {
+				clearInterval(show_compliance_2); 
+				clearInterval(show_compliance_3); 
+				clearInterval(show_compliance_4);
+				document.getElementById("text_scenario").innerHTML=" ";
+			}
 	}); 
 } 
 

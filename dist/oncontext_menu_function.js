@@ -195,6 +195,7 @@ nodesDataset.update(updateArray);
 
 
 function source_increase(){
+	setAsSource=1;
 	if(targetIDs.length == 0 ){
 		set_as_source();
 		increase();
@@ -207,6 +208,7 @@ function source_increase(){
 }
 
 function source_decrease(){
+	setAsSource=1;
 	if(targetIDs.length == 0){
 		set_as_source();
 		decrease();

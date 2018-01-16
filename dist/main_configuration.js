@@ -31,6 +31,7 @@
 
 	  
 	    var show_menu=0;
+      var setAsSource=0;
 	    var setAsTarget=0;
 
 	    var tabTagg=[];
