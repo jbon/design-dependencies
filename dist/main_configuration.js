@@ -31,11 +31,7 @@
 
 	  
 	    var show_menu=0;
-<<<<<<< HEAD
 		var setAsSource=0; 
-=======
-      var setAsSource=0;
->>>>>>> a8eaba4658e54520453b81d09c81ce935185e682
 	    var setAsTarget=0;
 
 	    var tabTagg=[];

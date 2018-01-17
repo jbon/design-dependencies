@@ -209,7 +209,7 @@ function show_compliance(){
 		document.getElementById("text_scenario").innerHTML="Right click on a parameter you want to set as additional target or as a source for change";
 	   }else if(targetIDs.length == 0 && sourceId != undefined) {
 	   		document.getElementById("text_scenario").innerHTML="Right click on a parameter you want to set as target";
-				show_compliance_2=setInterval(
+				show_compliance_temp=setInterval(
 			    function() {
 			       if (show_menu==1) {
 					document.getElementById("text_scenario").innerHTML="Set this parameter as a target and define whether you want it to increase or decrease";
@@ -217,6 +217,7 @@ function show_compliance(){
 			    },
 			    500
 			     );
+
 		}
 	   
 	    if (show_menu==1 && targetIDs.lenth != 0 && sourceId==undefined) {
@@ -230,7 +231,7 @@ function show_compliance(){
     function () {
 
        if (targetIDs.length != 0 && sourceId != undefined){
-		clearInterval(show_compliance_2); 
+		   
 		clearInterval(show_compliance_3);  
 		document.getElementById("text_scenario").innerHTML="Now the colors of the targets indicates whether the change in the source parameter is compatible with the targets.<br> To come back to the initial view press „reset“. To add another target, right click on it";
 	   }
