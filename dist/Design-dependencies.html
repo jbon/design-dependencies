@@ -39,6 +39,9 @@
 	<script  type="text/javascript"  src="main_configuration.js"></script>
 	
 	<link rel="icon" type="image/png" sizes="36x36" href="../images/favicon.png">
+	
+	<script src="../dagre-master/dist/dagre.js"></script>
+
 
 </head>
 
@@ -132,6 +135,11 @@
 					$('#tagSelectBox').empty();
     				
     				redrawAll();
+					
+					for(var i in allNodes){
+						console.log()
+					}
+					
     				updateLeftPane();
     				//add_tag();
     			};

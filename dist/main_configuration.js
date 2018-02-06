@@ -52,9 +52,9 @@
  	container = document.getElementById('mynetwork');
 
  	options = {
-      // layout:{
-      //   improvedLayout: true
-      // },
+      /*  layout:{
+         improvedLayout: false
+       }, */
       nodes: {
       	margin: 5,
         // color:'#000000',
@@ -461,11 +461,14 @@ network = new vis.Network(container, data, options);
 
 allNodes=nodesDataset.get({returnType:"Object"});
 allEdges=edgesDataset.get({returnType:"Object"});
-
+listener();
 
 
   // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  CLICK EVENT xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
+ }
+ 
+ function listener(){
+	 
   if(nodesDataset.length == 0){
   	network.setOptions( { physics: false } );
   }
@@ -705,9 +708,7 @@ add_tag();
 layout_physical_active=true;
 layout_hierarchical_active=false;
 
-
-};
-
+ }
 
 var node_pos_onclkX=0;
 var node_pos_onclkY=0;
