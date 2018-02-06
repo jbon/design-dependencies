@@ -2,14 +2,9 @@ var layout_physical_active=true;
 var layout_hierarchical_active=false; 
 
 function layout_physical(){ 
-
-	for (var nodeId in allNodes) {
-		 allNodes[nodeId].x=" ";
-		 allNodes[nodeId].y=" ";
-	 }
-	 
-	 
+ 
 	if(layout_physical_active != true){
+
 	   document.getElementById("text_scenario").innerHTML="";
 	   console.log(typeof $("#text_scenario")[0].innerHTML);
 
@@ -23,7 +18,9 @@ function layout_physical(){
 
 function layout_hierarchical(){
 	
-	 if(layout_hierarchical_active==false){
+	if(layout_hierarchical_active==false){
+	   //var tempNodeDataset=nodesDataset;
+	   //console.log(nodesDataset);
 	   document.getElementById("text_scenario").innerHTML="";
 	
 	 // Create a new directed graph 
@@ -53,20 +50,17 @@ function layout_hierarchical(){
 	 
 	g.nodes().forEach(function(v) {
 		var string=JSON.stringify(g.node(v));
-		console.log(string);
 		
 		var pos1=string.indexOf("x");
 		var pos2=string.indexOf(",\"y\":");
 		var stringx=string.substring(pos1+3,pos2);
 		var x=parseInt(stringx);
-		console.log(x);
 		allNodes[i].x=x;
 		
 		var pos3=string.indexOf("y");
 	    var pos4=string.indexOf("}");
 		var stringy=string.substring(pos3+3,pos4);
 		var y=parseInt(stringy);
-		console.log(y);
 		allNodes[i].y=y;
 		
 		i++;
@@ -462,9 +456,14 @@ options = {
 	data = {nodes: nodesDataset , edges:edgesDataset };
 	network = new vis.Network(container, data, options);  
 	listener();
+	    //console.log(tempNodeDataset);
 
+		//nodesDataset=tempNodeDataset;
 		layout_physical_active=false;
 		layout_hierarchical_active=true;
+
+		
+		
     }
 	
 	else if($("#text_scenario")[0].innerHTML.includes("You are already on the") == false) {
