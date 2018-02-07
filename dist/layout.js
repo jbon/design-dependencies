@@ -90,9 +90,9 @@ options = {
         	max: 30,
 
         	label: {
-        		min: 12,
+        		min: 6,
         		max: 30,
-        		drawThreshold: 12,
+        		drawThreshold: 5,
         		maxVisible: 20
         	}
         },
