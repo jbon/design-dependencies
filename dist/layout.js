@@ -1,6 +1,9 @@
 var layout_physical_active=true;
 var layout_hierarchical_active=false; 
 
+var temp;
+var allNodesTemp;
+
 function layout_physical(){ 
  
 	if(layout_physical_active != true){
@@ -18,9 +21,22 @@ function layout_physical(){
 
 function layout_hierarchical(){
 	
+		console.log(JSON.stringify(allNodes));
+	//allNodes=nodesDataset.get({returnType:"Object"});
+
+		var updateArray = [];
+ 	for (var nodeId in allNodes) {
+ 		if (allNodes.hasOwnProperty(nodeId)) {
+ 			updateArray.push(allNodes[nodeId]);
+ 		}
+ 	}
+	temp= new vis.DataSet(updateArray);
+	
+	console.log(JSON.stringify(temp));
+
+
 	if(layout_hierarchical_active==false){
-	   //var tempNodeDataset=nodesDataset;
-	   //console.log(nodesDataset);
+	   
 	   document.getElementById("text_scenario").innerHTML="";
 	
 	 // Create a new directed graph 
@@ -458,16 +474,35 @@ options = {
 	listener();
 	    //console.log(tempNodeDataset);
 
-		//nodesDataset=tempNodeDataset;
 		layout_physical_active=false;
 		layout_hierarchical_active=true;
 
-		
-		
     }
 	
 	else if($("#text_scenario")[0].innerHTML.includes("You are already on the") == false) {
 	  		document.getElementById("text_scenario").innerHTML+="<br>" + "You are already on the hierarchical layout !";
 		} 
+
+	allNodes=temp.get({returnType:"Object"});
 	
+	
+		  var updateArray = [];
+ 	for (var nodeId in allNodes) {
+ 		if (allNodes.hasOwnProperty(nodeId)) {
+ 			updateArray.push(allNodes[nodeId]);
+ 		}
+ 	}
+	nodesDataset.update(updateArray);
+	
+	data.nodes.update(data.nodes.get().map(function(item) {
+	  item.x = undefined;
+	  item.y = undefined;
+	  return item;
+	}));
+	
+
+	console.log(JSON.stringify(allNodes));
+	console.log(JSON.stringify(temp));
+	console.log(JSON.stringify(nodesDataset));
+
 	}
