@@ -21,7 +21,7 @@ function layout_physical(){
 
 function layout_hierarchical(){
 	
-		console.log(JSON.stringify(allNodes));
+		//console.log(JSON.stringify(allNodes));
 	//allNodes=nodesDataset.get({returnType:"Object"});
 
 		var updateArray = [];
@@ -32,7 +32,7 @@ function layout_hierarchical(){
  	}
 	temp= new vis.DataSet(updateArray);
 	
-	console.log(JSON.stringify(temp));
+	//console.log(JSON.stringify(temp));
 
 
 	if(layout_hierarchical_active==false){
@@ -501,8 +501,10 @@ options = {
 	}));
 	
 
-	console.log(JSON.stringify(allNodes));
+	/* console.log(JSON.stringify(allNodes));
 	console.log(JSON.stringify(temp));
-	console.log(JSON.stringify(nodesDataset));
-
+	console.log(JSON.stringify(nodesDataset)); */
+	
+	
+ 
 	}

@@ -28,6 +28,7 @@
       var positionY=0;
       var active=0;
       var container;
+	   var containerr;
 
 	  
 	    var show_menu=0;
@@ -44,12 +45,19 @@
 
       var popUpEditEdges=0;
       var editEdgeId;
+	  
+	    var canvas;
+		var ctx;
+		var rect = {}, drag = false;
+		var drawingSurfaceImageData;
+		var nodesIdInDrawing = [];
 
  // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  CONFIGURATION FUNCTION xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
  function redrawAll() {
 
- 	container = document.getElementById('mynetwork');
+ container = document.getElementById('mynetwork');
+ containerr = $("#mynetwork");
 
  	options = {
       /*  layout:{
@@ -444,8 +452,9 @@
       }
     },
     deleteNode:function(data,callback){
-    	remove();
-    	neighbourhoodHighlight({nodes:[]});
+		idselect = data.nodes[0];
+		remove();
+		neighbourhoodHighlight({nodes:[]});
     },
     deleteEdge:function(data,callback){
   		idselect=data.edges[0];
@@ -464,9 +473,13 @@ allEdges=edgesDataset.get({returnType:"Object"});
 listener();
 
 
-  // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  CLICK EVENT xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+
+
  }
  
+  // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  CLICK EVENT xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  
  function listener(){
 	 
   if(nodesDataset.length == 0){
@@ -515,10 +528,9 @@ listener();
   	cursorY = e.pageY;
   }
 
-
   function showMenuEdge(x,y){
     var selectedEdge= network.getEdgeAt({x:cursorX, y:cursorY});
-    console.log(selectedEdge);
+    //console.log(selectedEdge);
 
     if (selectedEdge != undefined) {
       menu.classList.add('show-menu');
@@ -634,7 +646,7 @@ function onContextMenu(e){
 	var selectedNode=showMenu(e.pageX, e.pageY);
   var selectedEdge=showMenuEdge(e.pageX, e.pageY);
 
-  console.log(selectedNode + " edge " + selectedEdge);
+ // console.log(selectedNode + " edge " + selectedEdge);
 	
   if(selectedNode != undefined){
 
@@ -723,7 +735,6 @@ $(document).on("click",function(e){
     }
 });
 
-
 $(document).keydown(function(e) {        
 	if (e.keyCode == 27) {
 		document.getElementById('network-popUp').style.display = 'none';
@@ -735,8 +746,6 @@ $(document).keydown(function(e) {
 		document.getElementById('network-popUp_edge').style.display = 'none';
 	}
 });
-
-
 
 $(document).keydown(function(e) {        
 	if (e.keyCode == 27) {
@@ -759,3 +768,109 @@ $(document).keydown(function(e) {
 //   console.log(data.from + "  " + data.to);
 // });
 
+/* var canvasWidth= canvas.width;
+var canvasHeight= canvas.height; */
+
+ function saveDrawingSurface() {
+   drawingSurfaceImageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+   //drawingSurfaceImageData = ctx.getImageData(0, 0, canvasWidth, canvasHeight );
+   //drawingSurfaceImageData = ctx.getImageData(0, 0, 1680, 966 );
+	//console.log(drawingSurfaceImageData);
+   }
+
+function restoreDrawingSurface() {
+    ctx.putImageData(drawingSurfaceImageData, 0, 0);
+}
+
+function selectNodesFromHighlight() {
+    var fromX, toX, fromY, toY;
+    // var nodesIdInDrawing = [];
+	nodesIdInDrawing = [];
+    var xRange = getStartToEnd(rect.startX, rect.w);
+    var yRange = getStartToEnd(rect.startY, rect.h);
+
+    var allNodes = nodesDataset.get();
+    for (var i = 0; i < allNodes.length; i++) {
+        var curNode = allNodes[i];
+        var nodePosition = network.getPositions([curNode.id]);
+        var nodeXY = network.canvasToDOM({x: nodePosition[curNode.id].x, y: nodePosition[curNode.id].y});
+        if (xRange.start <= nodeXY.x && nodeXY.x <= xRange.end && yRange.start <= nodeXY.y && nodeXY.y <= yRange.end) {
+            nodesIdInDrawing.push(curNode.id);
+        }
+    }
+    network.selectNodes(nodesIdInDrawing);
+}
+
+function getStartToEnd(start, theLen) {
+    return theLen > 0 ? {start: start, end: start + theLen} : {start: start + theLen, end: start};
+}
+
+$(document).ready(function() {
+    containerr.on("mousemove", function(e) {
+        if (drag) { 
+			//console.log("container mouse move 1 if drag");
+            restoreDrawingSurface();
+            rect.w = (e.pageX - this.offsetLeft) - rect.startX;
+            rect.h = (e.pageY - this.offsetTop) - rect.startY ;
+
+            ctx.setLineDash([5]);
+            ctx.strokeStyle = "rgb(102, 102, 102)";
+            ctx.strokeRect(rect.startX, rect.startY, rect.w, rect.h);
+            ctx.setLineDash([]);
+            ctx.fillStyle = "rgba(255, 255, 255, 0.2)";
+			//console.log(rect.startX);
+			//console.log(rect.startY);
+			//console.log(rect.w);
+			//console.log(rect.h);
+            ctx.fillRect(rect.startX, rect.startY, rect.w, rect.h);
+			//console.log(ctx);
+
+        }
+    });
+
+    containerr.on("mousedown", function(e) {
+        if (e.button == 2) { 
+			
+			canvas = network.canvas.frame.canvas;
+			ctx = canvas.getContext('2d');
+			console.log("test");
+			
+			//console.log("container mouse move 2 e.button´--2");
+            selectedNodes = e.ctrlKey ? network.getSelectedNodes() : null;
+            saveDrawingSurface();
+            var that = this;
+            rect.startX = e.pageX - this.offsetLeft;
+            rect.startY = e.pageY - this.offsetTop;
+            drag = true;
+            containerr[0].style.cursor = "crosshair";
+        }
+    }); 
+
+    containerr.on("mouseup", function(e) {
+        if (e.button == 2) { 
+			//console.log("container mouse move 3 e.button´--2");
+
+            restoreDrawingSurface();
+            drag = false;
+
+            containerr[0].style.cursor = "default";
+            selectNodesFromHighlight();
+        }
+		
+		if (network.getSelectedNodes().length!= 0)
+			{
+					 network.setOptions(
+		{
+			manipulation:{
+				initiallyActive :true
+			}
+		}); 
+			}
+			
+    });
+
+//document.body.oncontextmenu = function() {return false;};
+
+	network = new vis.Network(containerr[0], data, options);
+
+});

@@ -366,16 +366,20 @@ function editNode(){
 }
 
 
-function remove() {
+ function remove() {
 	
 	var selected = network.getSelectedNodes();
-	var selectedEdges = network.getSelectedEdges();
-
-	if (selected.length>1)
+	//var selectedEdges = network.getSelectedEdges();
+	
+	/*  for (var i = 0; i < nodesIdInDrawing.length; i++) {
+		 selected.push(allNodes[nodesIdInDrawing[i]]);
+	}	  
+*/
+	 if (selected.length>1)
 	{	
-		selected.sort(function(a,b){
+		 selected.sort(function(a,b){
 			return a.id - b.id;
-		});
+		}); 
 		selected.reverse();
 		 for (var n in selected) {
 		    idselect = selected[n];
@@ -383,8 +387,8 @@ function remove() {
 		}
 	}else{
 		remove2();
-	}
-}
+	} 
+} 
  
 function remove2(){ 
 
@@ -455,15 +459,20 @@ function remove2(){
  	allNodes=nodesDataset.get({returnType:"Object"});
 
  }
- if(layout_hierarchical_active==true){
-
- 	layout_physical();
- 	layout_hierarchical();
+else{
+	allNodes=nodesDataset.get({returnType:"Object"});
+	}
+	
+  if(layout_hierarchical_active==true){
+ 	
+	layout_physical();
+	layout_hierarchical();
 
  }else{
- 	layout_hierarchical();
- 	layout_physical();
- }
+ 	
+	layout_hierarchical();
+	layout_physical();
+ } 
 	updateLeftPane();
 
   // hideMenu();
@@ -526,6 +535,7 @@ function editEdge(){
 }
 
 function removeEdge() {
+	
 	
 	var selected = network.getSelectedEdges();
 	
