@@ -59,7 +59,7 @@
  container = document.getElementById('mynetwork');
  containerr = $("#mynetwork");
 
- 	options = {
+ 	 options = { 
       /*  layout:{
          improvedLayout: false
        }, */
@@ -97,7 +97,7 @@
     	color:{
     		inherit:false,
     		color:'rgba(60,60,60,0.6)',
-    		hover:'rgba(60,60,60,0.6)',
+    		//hover:'rgba(60,60,60,0.6)',
     		highlight:'rgba(60,60,60,0.6)',
 
     	},
@@ -473,14 +473,14 @@ allEdges=edgesDataset.get({returnType:"Object"});
 listener();
 
 
-
-
+/* createTab();
+openGraph(); */
 
  }
  
   // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  CLICK EVENT xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   
- function listener(){
+   function listener(){
 	 
   if(nodesDataset.length == 0){
   	network.setOptions( { physics: false } );
@@ -768,14 +768,8 @@ $(document).keydown(function(e) {
 //   console.log(data.from + "  " + data.to);
 // });
 
-/* var canvasWidth= canvas.width;
-var canvasHeight= canvas.height; */
-
  function saveDrawingSurface() {
    drawingSurfaceImageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-   //drawingSurfaceImageData = ctx.getImageData(0, 0, canvasWidth, canvasHeight );
-   //drawingSurfaceImageData = ctx.getImageData(0, 0, 1680, 966 );
-	//console.log(drawingSurfaceImageData);
    }
 
 function restoreDrawingSurface() {
@@ -805,10 +799,9 @@ function getStartToEnd(start, theLen) {
     return theLen > 0 ? {start: start, end: start + theLen} : {start: start + theLen, end: start};
 }
 
-$(document).ready(function() {
+$(document).ready(function() { 
     containerr.on("mousemove", function(e) {
         if (drag) { 
-			//console.log("container mouse move 1 if drag");
             restoreDrawingSurface();
             rect.w = (e.pageX - this.offsetLeft) - rect.startX;
             rect.h = (e.pageY - this.offsetTop) - rect.startY ;
@@ -818,13 +811,7 @@ $(document).ready(function() {
             ctx.strokeRect(rect.startX, rect.startY, rect.w, rect.h);
             ctx.setLineDash([]);
             ctx.fillStyle = "rgba(255, 255, 255, 0.2)";
-			//console.log(rect.startX);
-			//console.log(rect.startY);
-			//console.log(rect.w);
-			//console.log(rect.h);
             ctx.fillRect(rect.startX, rect.startY, rect.w, rect.h);
-			//console.log(ctx);
-
         }
     });
 
@@ -833,9 +820,8 @@ $(document).ready(function() {
 			
 			canvas = network.canvas.frame.canvas;
 			ctx = canvas.getContext('2d');
-			console.log("test");
+			//console.log("test");
 			
-			//console.log("container mouse move 2 e.button´--2");
             selectedNodes = e.ctrlKey ? network.getSelectedNodes() : null;
             saveDrawingSurface();
             var that = this;
@@ -848,7 +834,6 @@ $(document).ready(function() {
 
     containerr.on("mouseup", function(e) {
         if (e.button == 2) { 
-			//console.log("container mouse move 3 e.button´--2");
 
             restoreDrawingSurface();
             drag = false;
@@ -869,7 +854,7 @@ $(document).ready(function() {
 			
     });
 
-//document.body.oncontextmenu = function() {return false;};
+document.body.oncontextmenu = function() {return false;};
 
 	network = new vis.Network(containerr[0], data, options);
 

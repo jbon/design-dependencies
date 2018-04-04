@@ -1,3 +1,11 @@
+var socket = io.connect('http://localhost:8080/'); 
+
+socket.on('connect',function(){
+    socket.emit('connection message', 'Hello server');
+  });
+ 
+
+	
 function draw_the_path(){
 
 	if (sourceId==undefined) {
@@ -333,6 +341,7 @@ function filterByTag(){
 }
 
 function reset_dataset(){
+	
 	nodesDataset= new vis.DataSet([]);
 	edgesDataset=new vis.DataSet([]);
 	console.log(typeof nodesDataset);
@@ -341,3 +350,148 @@ function reset_dataset(){
 	redrawAll();
 	attributepane.style.display="none";
 }
+
+
+
+// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx GRAPH xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+
+function createTab() {
+	
+	var tab=new Array();
+	var ing=0;
+	var ed=0;
+	
+	for (var i=0; i<nodesDataset.length; i++)
+		{  tab[i]=new Array();
+		   var selected=allNodes[i];
+		   tab[i][0]=selected.label;
+
+				for(var x=0; x<edgesDataset.length; x++ ){
+					if(edgesDataset.get(x).from==selected.id){
+						ing++;
+					}	
+					
+					 if(edgesDataset.get(x).to==selected.id){
+						ed++;
+			        }
+				}
+			tab[i][1]=ing;
+			tab[i][2]=ed;			
+		
+			ing=0;
+			ed=0;
+		}
+	console.log(tab);
+	//return tab;
+	
+	var tab2=new Array();
+	var quit= 0 ;
+	tab2[0]	= tab[0];
+	for (var k=1; k<nodesDataset.length; k++)
+		{  for (var j=0; j<tab2.length; j++)
+			{
+				 if(tab[k][1]==tab2[j][1] && tab[k][2]==tab2[j][2] )
+					 {
+						tab2[j][0]+=',  </br><br>' + tab[k][0];
+						quit = 1 ;
+						break; 
+					 }
+				if ( quit )
+				break ;	 
+			}
+		if (quit == 0 )
+		{
+			tab2[j]	= tab[k];
+		}
+		quit= 0;
+		}
+
+		console.log(tab2);
+		return tab2;
+}
+
+
+/* function openGraph(){
+	createTab();
+	network.destroy();
+	
+	 var items = [];
+	  var labells = [];
+  for (var i = 0; i <nodesDataset.length; i++) {
+      items.push({x: tab[i][1], y: tab[i][2], label: tab[i][0] });
+  }
+  
+  for (var i = 0; i <nodesDataset.length; i++) {
+      labells.push(tab[i][0]);
+  }
+	
+var ctx = document.getElementById('myChart').getContext('2d');
+var chart = new Chart(ctx, {
+    type: 'scatter',
+    data: {
+        labels:labells,
+		
+        datasets: [{
+            data: items,
+			pointBackgroundColor: '#000000',
+			pointBorderColor: '#000000',
+		    pointBorderWidth:7,
+        }]
+    },
+
+    options: {
+		showLines:false,
+		
+		tooltips: {
+                enabled: true,
+                callbacks: {
+                    label: function(tooltipItem, data) { 
+					//var value=data.datasets[0].data.label[tooltipItem.index];
+					var value=data.labels[tooltipItem,data];
+                    return value;
+                    }
+                }
+		},
+		scales: {
+        yAxes: [{ 
+          scaleLabel: {
+            display: true,
+            labelString: "Influenced nodes"
+          }
+        }],
+        xAxes: [{ 
+          scaleLabel: {
+            display: true,
+            labelString: "Influencing nodes"
+          }
+        }]
+      },
+	  
+	}
+});
+	
+} */
+
+function openGraph(){
+	
+	
+	 var items = [];
+	  var labells = [];
+  for (var i = 0; i <nodesDataset.length; i++) {
+      items.push({x: tab[i][1], y: tab[i][2], label: tab[i][0] });
+  }
+  
+  for (var i = 0; i <nodesDataset.length; i++) {
+      labells.push(tab[i][0]);
+  }
+
+
+
+	
+}
+
+ socket.on("need data", function(){
+		console.log("Graph Connected");
+		socket.emit("tab to server", createTab());
+	});

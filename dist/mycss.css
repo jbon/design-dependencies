@@ -9,6 +9,10 @@
   /*background-color:#EEEEEE;*/
   z-index: 1;
 }
+/* 
+#myChart{
+	z-index: 100;
+	} */
 
 #optionsContainer {
   height:100%; 
@@ -171,7 +175,7 @@ div#text_scenario_css p {
  /*  width:13%;
   height: 45%; */ 
   width:250px;
-  height: 400px; 
+  height: 430px; 
   border: 1px solid lightgray;
   left:0;
   top:0;
