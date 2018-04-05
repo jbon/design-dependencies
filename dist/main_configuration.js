@@ -36,7 +36,7 @@
 	    var setAsTarget=0;
 
 	    var tabTagg=[];
-      var DIR="triangle_star_img/";
+      var DIR="dist/triangle_star_img/";
 	  
 	    var menuWidth;
 	    var menuHeight;
@@ -859,3 +859,10 @@ document.body.oncontextmenu = function() {return false;};
 	network = new vis.Network(containerr[0], data, options);
 
 });
+
+function LocalStorage(){
+  createTab();
+  sessionStorage.setItem("storage",JSON.stringify(tab2));
+
+
+}

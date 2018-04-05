@@ -1,12 +1,10 @@
-var socket = io.connect('http://localhost:8080/'); 
 
-socket.on('connect',function(){
-    socket.emit('graph connection', 'Hello server');
-  });
-  
-  socket.on('tab to graph',function(tab){
+function Storage(){
 	 var items = [];
-  for (var i = 0; i <tab.length; i++) {
+
+	 var tab= JSON.parse(sessionStorage.getItem("storage"));
+
+	 for (var i = 0; i <tab.length; i++) {
       items.push({x: tab[i][1], y: tab[i][2], label: tab[i][0] });
   }
   
@@ -85,7 +83,7 @@ socket.on('connect',function(){
     }]
      
 	}); 
-  });
+    }
   
  /*  (function (H) {
     H.wrap(H.Tooltip.prototype, 'refresh', function (proceed, point, e) {

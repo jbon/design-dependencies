@@ -1,10 +1,3 @@
-var socket = io.connect('http://localhost:8080/'); 
-
-socket.on('connect',function(){
-    socket.emit('connection message', 'Hello server');
-  });
- 
-
 	
 function draw_the_path(){
 
@@ -355,6 +348,7 @@ function reset_dataset(){
 
 // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx GRAPH xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
+	var tab2=new Array();
 
 function createTab() {
 	
@@ -385,7 +379,6 @@ function createTab() {
 	console.log(tab);
 	//return tab;
 	
-	var tab2=new Array();
 	var quit= 0 ;
 	tab2[0]	= tab[0];
 	for (var k=1; k<nodesDataset.length; k++)
@@ -491,7 +484,3 @@ function openGraph(){
 	
 }
 
- socket.on("need data", function(){
-		console.log("Graph Connected");
-		socket.emit("tab to server", createTab());
-	});
