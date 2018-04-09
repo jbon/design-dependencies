@@ -128,6 +128,13 @@ document.getElementById("usage_2").onmouseout = function() {
 document.getElementById("usage_3").onmouseout = function() {
 					this.style.textDecoration='none';
 				};
+				
+document.getElementById("usage_4").onmouseover = function() {
+					this.style.textDecoration='underline';
+				};
+document.getElementById("usage_4").onmouseout = function() {
+					this.style.textDecoration='none';
+				};
 
  $(document).keydown(function(e) {        
 	if (e.keyCode == 27) {
