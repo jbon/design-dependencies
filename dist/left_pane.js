@@ -405,66 +405,7 @@ function createTab() {
 }
 
 
-/* function openGraph(){
-	createTab();
-	network.destroy();
-	
-	 var items = [];
-	  var labells = [];
-  for (var i = 0; i <nodesDataset.length; i++) {
-      items.push({x: tab[i][1], y: tab[i][2], label: tab[i][0] });
-  }
-  
-  for (var i = 0; i <nodesDataset.length; i++) {
-      labells.push(tab[i][0]);
-  }
-	
-var ctx = document.getElementById('myChart').getContext('2d');
-var chart = new Chart(ctx, {
-    type: 'scatter',
-    data: {
-        labels:labells,
-		
-        datasets: [{
-            data: items,
-			pointBackgroundColor: '#000000',
-			pointBorderColor: '#000000',
-		    pointBorderWidth:7,
-        }]
-    },
 
-    options: {
-		showLines:false,
-		
-		tooltips: {
-                enabled: true,
-                callbacks: {
-                    label: function(tooltipItem, data) { 
-					//var value=data.datasets[0].data.label[tooltipItem.index];
-					var value=data.labels[tooltipItem,data];
-                    return value;
-                    }
-                }
-		},
-		scales: {
-        yAxes: [{ 
-          scaleLabel: {
-            display: true,
-            labelString: "Influenced nodes"
-          }
-        }],
-        xAxes: [{ 
-          scaleLabel: {
-            display: true,
-            labelString: "Influencing nodes"
-          }
-        }]
-      },
-	  
-	}
-});
-	
-} */
 
 function openGraph(){
 	
@@ -478,8 +419,6 @@ function openGraph(){
   for (var i = 0; i <nodesDataset.length; i++) {
       labells.push(tab[i][0]);
   }
-
-
 
 	
 }
