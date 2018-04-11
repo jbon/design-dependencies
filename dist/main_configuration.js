@@ -54,14 +54,9 @@
 
  // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  CONFIGURATION FUNCTION xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
- //network = new vis.Network(containerr[0], data, options);
-
-
  function redrawAll() {
 containerr = $("#mynetwork");
  container = document.getElementById('mynetwork');
- //container = $("#mynetwork");
-
 
  	 options = { 
       /*  layout:{
