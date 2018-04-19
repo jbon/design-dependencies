@@ -196,7 +196,7 @@ containerr = $("#mynetwork");
 		} 
 		
         	nodesDataset.add({
-        		id:nodesDataset.length,
+        		id:maxid+1,
         		label: document.getElementById('node-label').value,
         		description: $('#node-description').html(),   
         		shape:"ellipse",
@@ -204,7 +204,7 @@ containerr = $("#mynetwork");
 				    tags:tabTagNew
         	});       
 			
-			
+			maxid++;
 
         	var location=network.DOMtoCanvas({x:locX,y:locY});
 
@@ -233,6 +233,8 @@ containerr = $("#mynetwork");
         	}
         }
         nodesDataset.update(updateArray);
+
+		
     },
 
     addEdge: function (data, callback) {
@@ -454,6 +456,7 @@ containerr = $("#mynetwork");
 		idselect = data.nodes[0];
 		remove();
 		neighbourhoodHighlight({nodes:[]});
+		
     },
     deleteEdge:function(data,callback){
   		idselect=data.edges[0];
@@ -470,6 +473,14 @@ network = new vis.Network(containerr[0], data, options);
 allNodes=nodesDataset.get({returnType:"Object"});
 allEdges=edgesDataset.get({returnType:"Object"});
 listener();
+
+if (tagFilterActive==false){
+maxid = 0;
+nodesDataset.map(function(obj){     
+    if (obj.id > maxid) maxid = obj.id;    
+});
+//alert(maxid);
+}
 
  }
  

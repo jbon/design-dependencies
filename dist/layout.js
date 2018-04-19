@@ -18,11 +18,16 @@ function layout_physical(){
 		}
 	
 }
-
+var maxid;
 function layout_hierarchical(){
 	
 		//console.log(JSON.stringify(allNodes));
 	//allNodes=nodesDataset.get({returnType:"Object"});
+	
+	/* maxid = 0;
+nodesDataset.map(function(obj){     
+    if (obj.id > maxid) maxid = obj.id;    
+}); */
 
 		var updateArray = [];
  	for (var nodeId in allNodes) {
@@ -46,7 +51,8 @@ function layout_hierarchical(){
 	 g.setGraph({
 		nodestep:30,
 		edgesep:40,
-		ranksep:500
+		ranksep:500,
+		rankdir:"BT"
 	 });
 
 	 // Default to assigning a new object as a label for each new edge.
@@ -63,8 +69,13 @@ function layout_hierarchical(){
 	 dagre.layout(g);
 
 	 var i=0;
-	 
-	g.nodes().forEach(function(v) {
+	//g.nodes().forEach(function(v)
+
+	for (var nodeId=0;nodeId<maxid+1;nodeId++){
+		if (allNodes[i]!= undefined)
+			{
+			
+		v=nodeId;
 		var string=JSON.stringify(g.node(v));
 		
 		var pos1=string.indexOf("x");
@@ -78,9 +89,10 @@ function layout_hierarchical(){
 		var stringy=string.substring(pos3+3,pos4);
 		var y=parseInt(stringy);
 		allNodes[i].y=y;
-		
+		}
 		i++;
-		});
+		}
+		
 	
 	var updateArray = [];
  	for (var nodeId in allNodes) {
@@ -460,6 +472,7 @@ options = {
     deleteNode:function(data,callback){
     	remove();
     	neighbourhoodHighlight({nodes:[]});
+
     },
     deleteEdge:function(data,callback){
   		idselect=data.edges[0];
@@ -470,7 +483,7 @@ options = {
 };
 
 	data = {nodes: nodesDataset , edges:edgesDataset };
-	network = new vis.Network(container, data, options);  
+	network = new vis.Network(containerr[0], data, options);  
 	listener();
 	    //console.log(tempNodeDataset);
 

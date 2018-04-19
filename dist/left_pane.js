@@ -218,13 +218,16 @@ $(function(){
 })
 
 
+var nodeId_Array=[];
+var nodeArray=[];
 function filterByTag(){
+	
 	var selectedTag=($('#tagSelectBox').val());
-	console.log(selectedTag);
+	//console.log(selectedTag);
 	if(selectedTag != null){
-		var nodeArray=[];
+		nodeArray=[];
 		var edgeArray=[];
-		var nodeId_Array=[];
+		nodeId_Array=[];
 
 		if(tagFilterActive == false){
 			temp_nodesDataset=nodesDataset;
@@ -268,8 +271,8 @@ function filterByTag(){
 			}
 		}
 
-		console.log(nodeArray);
-		console.log(edgeArray);
+		//console.log(nodeArray);
+		//console.log(edgeArray);
 
 		for(var id_node in nodeArray){
 			if(nodeArray[id_node].id>id_to_replace){
@@ -299,13 +302,13 @@ function filterByTag(){
 			edgeArray[id_edge].id=parseInt(id_edge);
 		}
 
-		console.log(nodeArray);
-		console.log(edgeArray);
+		//console.log(nodeArray);
+		//console.log(edgeArray);
 
 		nodesDataset = new vis.DataSet(nodeArray);
 		edgesDataset = new vis.DataSet(edgeArray);
 
-		console.log(nodesDataset);
+		//console.log(nodesDataset);
 		updateLeftPane();
 		// console.log(edgesDataset);
 		
@@ -352,14 +355,27 @@ function reset_dataset(){
 
 function createTab() {
 	
+	/* maxid = 0;
+nodesDataset.map(function(obj){     
+    if (obj.id > maxid) maxid = obj.id;    
+}); */
+
 	var tab=new Array();
 	var ing=0;
 	var ed=0;
-	
-	for (var i=0; i<nodesDataset.length; i++)
-		{  tab[i]=new Array();
+	var indice=0;
+	for (var i=0; i<maxid+1; i++)
+		{
+		if(allNodes[i] != undefined){
+	tab[indice]=new Array();
 		   var selected=allNodes[i];
-		   tab[i][0]=selected.label;
+		   
+		    if (selected.hiddenLabel !== undefined) {
+				selected.label = selected.hiddenLabel;
+				selected.hiddenLabel = undefined;
+			} 
+		   
+		   tab[indice][0]=selected.label;
 
 				for(var x=0; x<edgesDataset.length; x++ ){
 					if(edgesDataset.get(x).from==selected.id){
@@ -370,15 +386,17 @@ function createTab() {
 						ed++;
 			        }
 				}
-			tab[i][1]=ing;
-			tab[i][2]=ed;			
+			tab[indice][1]=ing;
+			tab[indice][2]=ed;			
 		
 			ing=0;
 			ed=0;
+			indice++;
+		}
 		}
 	console.log(tab);
 	//return tab;
-	
+	tab2=new Array();
 	var quit= 0 ;
 	tab2[0]	= tab[0];
 	for (var k=1; k<nodesDataset.length; k++)
@@ -403,7 +421,6 @@ function createTab() {
 		console.log(tab2);
 		return tab2;
 }
-
 
 
 

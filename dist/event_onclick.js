@@ -388,7 +388,7 @@ function addNodefunction(){
 		} 
 
 		nodesDataset.add({
-			id:nodesDataset.length,
+			id:maxid+1,
 			label: document.getElementById('node-label').value,
 			description: $('#node-description').html()  ,   
 			shape:"ellipse",
@@ -398,6 +398,11 @@ function addNodefunction(){
 
 		updateLeftPane();
 		
+		maxid = 0;
+	nodesDataset.map(function(obj){     
+		if (obj.id > maxid) maxid = obj.id;    
+	});
+			
 
 		console.log(nodesDataset);
 		network.moveNode(nodesDataset.length-1,location.x,location.y);
@@ -426,5 +431,6 @@ function addNodefunction(){
 		}
 	}
 	nodesDataset.update(updateArray);
+	
 
 }
