@@ -179,8 +179,11 @@ options = {
   manipulation: {
     enabled:true,
   	initiallyActive :true,
+	
+	
 
   addNode: function (data, callback) {
+	  if (tagFilterActive==false){
    document.getElementById('network-popUp').style.display = 'block';
    document.getElementById('node-label').value="";
 	 document.getElementById('tag-input').value="";
@@ -215,7 +218,7 @@ options = {
 		} 
 		
         	nodesDataset.add({
-        		id:nodesDataset.length,
+        		id:maxid+1,
         		label: document.getElementById('node-label').value,
         		description: $('#node-description').html(),   
         		shape:"ellipse",
@@ -223,7 +226,7 @@ options = {
 				    tags:tabTagNew
         	});       
 			
-			
+			maxid++;
 
         	var location=network.DOMtoCanvas({x:locX,y:locY});
 
@@ -252,11 +255,17 @@ options = {
         	}
         }
         nodesDataset.update(updateArray);
+		 }
     },
 
     addEdge: function (data, callback) {
-
+		 if (tagFilterActive==false){
     	var edge_label_value="";
+		//no possibility to add an edge which already exist
+		for(var i=0; i<edgesDataset.length;i++){
+			if(data.from==allEdges[i].from && data.to==allEdges[i].to){
+			return;}
+		}
     	if (data.from != data.to) {
     		//document.getElementById('operation').innerHTML = "Add Edge";
     		document.getElementById('network-popUp_edge').style.display = 'block';
@@ -325,10 +334,10 @@ options = {
     		}
     		edgesDataset.update(updateArray);
     	}
-
+	}
     },
     editNode:function(data,callback){
-
+	if (tagFilterActive==false){
     editNode();
     
     network.setOptions(
@@ -337,9 +346,10 @@ options = {
         initiallyActive :true
       }
     });
+	 }
     },
     editEdge:function(data,callback){
-
+	if (tagFilterActive==false){
      console.log("je suis dans editEdge");
     	var edge_label_value;
 
@@ -468,19 +478,24 @@ options = {
         }
         edgesDataset.update(updateArray);
       }
+	  }
     },
     deleteNode:function(data,callback){
+		 if (tagFilterActive==false){
     	remove();
     	neighbourhoodHighlight({nodes:[]});
-
+		}
     },
     deleteEdge:function(data,callback){
+		if (tagFilterActive==false){
   		idselect=data.edges[0];
       console.log(idselect);
 	   	removeEdge();
+		}
     }
   }
 };
+
 
 	data = {nodes: nodesDataset , edges:edgesDataset };
 	network = new vis.Network(containerr[0], data, options);  

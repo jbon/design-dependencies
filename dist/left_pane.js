@@ -334,10 +334,26 @@ function filterByTag(){
 			tagFilterActive = false;
 		}
 	}
+	
+	/* if (tagFilterActive==true){
+	network.setOptions(
+		{
+			manipulation:{
+				addNode :false,
+				addEdge: false,
+				deleteNode:false,
+				deleteEdge:false,
+				editEdge:false
+				
+			}
+		}); 
+	} */
+		
+	
 }
 
 function reset_dataset(){
-	
+	tagFilterActive=false;
 	nodesDataset= new vis.DataSet([]);
 	edgesDataset=new vis.DataSet([]);
 	console.log(typeof nodesDataset);
@@ -345,6 +361,13 @@ function reset_dataset(){
 	$('#tagSelectBox').empty();
 	redrawAll();
 	attributepane.style.display="none";
+	
+	/* var tagList = document.getElementById("tagSelectBox");
+	var option = document.createElement("option");
+	option.text = "";
+	tagList.add(option); */
+			
+	
 }
 
 

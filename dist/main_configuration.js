@@ -162,6 +162,7 @@ containerr = $("#mynetwork");
   	initiallyActive :true,
 
   addNode: function (data, callback) {
+	  if (tagFilterActive==false){
    document.getElementById('network-popUp').style.display = 'block';
    document.getElementById('node-label').value="";
 	 document.getElementById('tag-input').value="";
@@ -234,12 +235,18 @@ containerr = $("#mynetwork");
         }
         nodesDataset.update(updateArray);
 
-		
+		}
     },
 
     addEdge: function (data, callback) {
-
+	if (tagFilterActive==false){
     	var edge_label_value="";
+		//no possibility to add an edge which already exist
+		for(var i=0; i<edgesDataset.length;i++){
+			if(data.from==allEdges[i].from && data.to==allEdges[i].to){
+			return;}
+		}
+		
     	if (data.from != data.to) {
     		//document.getElementById('operation').innerHTML = "Add Edge";
     		document.getElementById('network-popUp_edge').style.display = 'block';
@@ -308,10 +315,10 @@ containerr = $("#mynetwork");
     		}
     		edgesDataset.update(updateArray);
     	}
-
+	}	
     },
     editNode:function(data,callback){
-
+	if (tagFilterActive==false){
     editNode();
     
     network.setOptions(
@@ -320,10 +327,10 @@ containerr = $("#mynetwork");
         initiallyActive :true
       }
     });
+	}
     },
     editEdge:function(data,callback){
-
-     console.log("je suis dans editEdge");
+		if (tagFilterActive==false){
     	var edge_label_value;
 
         edgesDataset.update({
@@ -451,17 +458,21 @@ containerr = $("#mynetwork");
         }
         edgesDataset.update(updateArray);
       }
+	  }
     },
     deleteNode:function(data,callback){
+		if (tagFilterActive==false){
 		idselect = data.nodes[0];
 		remove();
 		neighbourhoodHighlight({nodes:[]});
-		
+		 }
     },
     deleteEdge:function(data,callback){
+		if (tagFilterActive==false){
   		idselect=data.edges[0];
       console.log(idselect);
 	   	removeEdge();
+		 }
     }
   }
 };
@@ -479,7 +490,6 @@ maxid = 0;
 nodesDataset.map(function(obj){     
     if (obj.id > maxid) maxid = obj.id;    
 });
-//alert(maxid);
 }
 
  }
@@ -772,7 +782,7 @@ $(document).on("click",function(e){
 });
 
 $(document).keydown(function(e) {        
-	if (e.keyCode == 27) {
+	if (e.keyCode == 27) { 
 		document.getElementById('network-popUp').style.display = 'none';
 	}
 });
@@ -794,9 +804,11 @@ $(document).keydown(function(e) {
 	}
 });
 
-$(document).keydown(function(e) {  
+$(document).keydown(function(e) {
+		if (tagFilterActive==false){
    if (e.keyCode == 46 && idselect!=undefined ) {
     remove();
+  }
   }
 });
 

@@ -327,13 +327,10 @@ var edges = [
 {id:190,from:67,to:54,label:"-",color:"rgba(60,60,60,0.6)"},
 {id:191,from:129,to:124,label:"+",color:"rgba(60,60,60,0.6)"},
 {id:192,from:115,to:129,label:"-",color:"rgba(60,60,60,0.6)"},
-{id:193,from:115,to:129,label:"+",color:"rgba(60,60,60,0.6)"},
-{id:194,from:115,to:40,label:"+",color:"rgba(60,60,60,0.6)"},
-{id:195,from:115,to:40,label:"+",color:"rgba(60,60,60,0.6)"},
-{id:196,from:115,to:40,label:"+",color:"rgba(60,60,60,0.6)"},
-{id:197,from:88,to:129,label:"+",color:"rgba(60,60,60,0.6)"},
-{id:198,from:34,to:129,label:"-",color:"rgba(60,60,60,0.6)"},
-{id:199,from:29,to:129,label:"-",color:"rgba(60,60,60,0.6)"}
+{id:193,from:115,to:40,label:"+",color:"rgba(60,60,60,0.6)"},
+{id:194,from:88,to:129,label:"+",color:"rgba(60,60,60,0.6)"},
+{id:195,from:34,to:129,label:"-",color:"rgba(60,60,60,0.6)"},
+{id:196,from:29,to:129,label:"-",color:"rgba(60,60,60,0.6)"}
 
 ];
 

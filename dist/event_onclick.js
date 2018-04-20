@@ -351,6 +351,7 @@ function neighbourhoodHighlight(params) {
 
 // This function fired on double click
 function addNodefunction(){
+	if (tagFilterActive==false){
 
 	//document.getElementById('operation').innerHTML = "Add Node";
 	document.getElementById('network-popUp').style.display = 'block';
@@ -431,6 +432,6 @@ function addNodefunction(){
 		}
 	}
 	nodesDataset.update(updateArray);
-	
+	}
 
 }

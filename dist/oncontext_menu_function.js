@@ -297,7 +297,7 @@ function unset_selected(){
 
 
 function editNode(){ 
-
+if (tagFilterActive==false){
 	document.getElementById('network-popUp').style.display = 'block';
 
 	document.getElementById('node-label').value=allNodes[idselect].label;
@@ -362,12 +362,12 @@ function editNode(){
 
 // hideMenu();
 		updateLeftPane();
-
+}
 }
 
 
  function remove() {
-	
+	if (tagFilterActive==false){
 	var selected = network.getSelectedNodes();
 	//var selectedEdges = network.getSelectedEdges();
 	
@@ -387,6 +387,7 @@ function editNode(){
 		}
 	}else{
 		remove2();
+	} 
 	} 
 } 
  
@@ -479,6 +480,7 @@ else{
 }
 
 function editEdge(){
+	if (tagFilterActive==false){
 	var edge_label_value;
 
     		//document.getElementById('operation').innerHTML = "Add Edge";
@@ -531,12 +533,12 @@ function editEdge(){
     			updateArray.push(allEdges[edgeId]);
     		}
     		edgesDataset.update(updateArray);
-    	
+   } 	
 }
 
 function removeEdge() {
 	
-	
+	if (tagFilterActive==false){
 	var selected = network.getSelectedEdges();
 	
 	if (selected.length>1)
@@ -556,7 +558,7 @@ function removeEdge() {
 	else 
 		removeEdge2();
 		
-	
+	 }
  }
  
  
