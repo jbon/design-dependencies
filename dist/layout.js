@@ -3,8 +3,20 @@ var layout_hierarchical_active=false;
 
 var temp;
 var allNodesTemp;
+var maxid;
 
-function layout_physical(){ 
+/*  $('input[name=layout]').change(function(){
+    if($(this).is(':checked')) {
+     layout_physical()
+    } else {
+        layout_hierarchical()
+    }
+	}); */
+
+
+ function layout_physical(){ 
+	document.getElementById('physical').style.background='rgba(120,120,120,0.6)';
+document.getElementById('hierarchical').style.background='rgba(220,220,220,0.6)';
  
 	if(layout_physical_active != true){
 
@@ -12,14 +24,17 @@ function layout_physical(){
 	   console.log(typeof $("#text_scenario")[0].innerHTML);
 
 		redrawAll();
-	}else if($("#text_scenario")[0].innerHTML.includes("You are already on the") == false){
+	}/* else if($("#text_scenario")[0].innerHTML.includes("You are already on the") == false){
 
 	  		document.getElementById("text_scenario").innerHTML+="<br>" + "You are already on the physical layout !";
-		}
+		} */
 	
-}
-var maxid;
+} 
+
 function layout_hierarchical(){
+	
+	document.getElementById('hierarchical').style.background='rgba(120,120,120,0.6)';
+document.getElementById('physical').style.background='rgba(220,220,220,0.6)';
 	
 		//console.log(JSON.stringify(allNodes));
 	//allNodes=nodesDataset.get({returnType:"Object"});
@@ -536,3 +551,5 @@ options = {
 	
  
 	}
+
+   

@@ -24,6 +24,7 @@ function draw_the_path(){
  
   function reset_parameters()
   { 
+
   	var updateArray=[];
   	for(var nodeId in allNodes)
   	{
@@ -90,6 +91,8 @@ function draw_the_path(){
 	clearInterval(show_compliance_3); 
 	clearInterval(show_compliance_4);
 	
+	  	updateLeftPane();
+
 
   }
 
@@ -129,7 +132,7 @@ function updateLeftPane() {
 	// console.log(nodesDataset);
 
 	var availableTags = nodesDataset.map(function(obj) { 
-		return obj.label; 
+		return obj.label != undefined ? obj.label : obj.hiddenLabel; 
 	});
 
 	$( "#tags" ).autocomplete({  
@@ -168,8 +171,6 @@ var tabTag=[];
 var check_ifPresent_list=[];
 
 function add_tag(){
-	// console.log(tabTag);
-
 	for (var nodeId in allNodes)
 	{
 		for (var i=0; i<(allNodes[nodeId].tags).length;i++)
@@ -181,7 +182,7 @@ function add_tag(){
 			}
 		} 
 	}
-	// console.log(tabTag);
+
 	for(var i=0; i<tabTag.length;i++)
 	{ 
 		if(check_ifPresent_list.includes(tabTag[i])==false){
@@ -192,7 +193,6 @@ function add_tag(){
 			check_ifPresent_list.push(tabTag[i]);
 		}
 	}
-	// console.log(tabTag);
 
 		$(document).ready(function() {
 			$('#tagSelectBox').select2({
@@ -217,13 +217,15 @@ $(function(){
 	});
 })
 
-
 var nodeId_Array=[];
 var nodeArray=[];
+
 function filterByTag(){
 	
 	var selectedTag=($('#tagSelectBox').val());
-	//console.log(selectedTag);
+	
+	closeAttributePane();
+
 	if(selectedTag != null){
 		nodeArray=[];
 		var edgeArray=[];
@@ -243,7 +245,6 @@ function filterByTag(){
 			}
 			tagFilterActive = false;
 		}
-
 
 		tagFilterActive=true;
 
@@ -270,9 +271,6 @@ function filterByTag(){
 				}
 			}
 		}
-
-		//console.log(nodeArray);
-		//console.log(edgeArray);
 
 		for(var id_node in nodeArray){
 			if(nodeArray[id_node].id>id_to_replace){
@@ -302,15 +300,10 @@ function filterByTag(){
 			edgeArray[id_edge].id=parseInt(id_edge);
 		}
 
-		//console.log(nodeArray);
-		//console.log(edgeArray);
-
 		nodesDataset = new vis.DataSet(nodeArray);
 		edgesDataset = new vis.DataSet(edgeArray);
 
-		//console.log(nodesDataset);
 		updateLeftPane();
-		// console.log(edgesDataset);
 		
 			var layout_state=layout_hierarchical_active;
 
@@ -320,7 +313,7 @@ function filterByTag(){
 			}
 
 	}else{
-		// console.log(tagFilterActive);
+
 		if(tagFilterActive == true){
 			nodesDataset = temp_nodesDataset;
 			edgesDataset = temp_edgesDataset;
@@ -335,20 +328,6 @@ function filterByTag(){
 		}
 	}
 	
-	/* if (tagFilterActive==true){
-	network.setOptions(
-		{
-			manipulation:{
-				addNode :false,
-				addEdge: false,
-				deleteNode:false,
-				deleteEdge:false,
-				editEdge:false
-				
-			}
-		}); 
-	} */
-		
 	
 }
 
@@ -360,7 +339,7 @@ function reset_dataset(){
 	check_ifPresent_list=[];
 	$('#tagSelectBox').empty();
 	redrawAll();
-	attributepane.style.display="none";
+	closeAttributePane();
 	
 	/* var tagList = document.getElementById("tagSelectBox");
 	var option = document.createElement("option");
@@ -463,3 +442,40 @@ function openGraph(){
 	
 }
 
+// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx MODE xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+function edit_graph(){
+model_analysis_active=false;
+edit_graph_active=true;
+
+document.getElementById('editgraph').style.background='rgba(120,120,120,0.6)';
+document.getElementById('modelanalysis').style.background='rgba(220,220,220,0.6)';
+
+
+var divsToHide = document.getElementsByClassName("vis-manipulation"); //divsToHide is an array
+    for(var i = 0; i < divsToHide.length; i++){
+        divsToHide[i].style.display = "block"; 
+	}
+} 
+
+
+
+function model_analysis(){
+edit_graph_active=false;	
+model_analysis_active=true;
+
+document.getElementById('modelanalysis').style.background='rgba(120,120,120,0.6)';
+document.getElementById('editgraph').style.background='rgba(220,220,220,0.6)';	
+hideButton();
+}
+
+function hideButton(){
+	var divsToHide = document.getElementsByClassName("vis-manipulation"); //divsToHide is an array
+    for(var i = 0; i < divsToHide.length; i++){
+        divsToHide[i].style.display = "none"; 
+    }	
+}
+	
+	
+	
+	

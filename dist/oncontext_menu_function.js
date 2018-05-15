@@ -208,6 +208,8 @@ function source_increase(){
 		
 
 	}
+		 updateLeftPane();
+
 }
 
 function source_decrease(){
@@ -222,9 +224,8 @@ function source_decrease(){
 		set_as_source();
 		decrease();
 		draw_with_target();
-		
-
 	}
+	 updateLeftPane();
 }
 function increase_target(){
 	set_as_target();
@@ -234,6 +235,8 @@ function increase_target(){
 	if(sourceId != undefined){
 		draw_with_target();
 	}
+		 updateLeftPane();
+
 }
 
 function decrease_target(){
@@ -244,6 +247,8 @@ function decrease_target(){
 	if(sourceId != undefined){
 		draw_with_target();
 	}
+		 updateLeftPane();
+
 }
 
 

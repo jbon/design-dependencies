@@ -14,9 +14,10 @@
 	
 	<!-- Jquery ui library used for the autocomplete function -->
 	<link rel="stylesheet" href="./jquery-ui-1.12.1/jquery-ui.min.css">
-	<!-- <script src="./jquery-ui-1.12.1/jquery-ui.js"></script>   -->
-	<script src="https://code.jquery.com/jquery-1.12.4.js"></script> 
-     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> 
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<script src="./jquery-ui-1.12.1/jquery-ui.js"></script>  
+
+  <!--    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>  -->
 
 	<!-- javascript library select2 for the tags -->
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/css/select2.min.css" rel="stylesheet" />
@@ -57,7 +58,7 @@
 </head>
 
 
-<body>
+<body onload="edit_graph(); layout_physical()">
 
 	<!-- XXXXXXXXXXXXXXXXXXXX Left pane XXXXXXXXXXXXXXXXXXXXXX -->
 	<div id="optionsContainer" style="text-align: center;"></div>
@@ -76,47 +77,32 @@
 			<input id="tags">
 		</div>
 
+		
+		 <p><div  class="mode" id="soustitre" >Mode :</div>
+        <!-- <div class="modebuttons"><span class="custom-checkbox" ><input type="radio" name="mode" id="editgraph" checked="checked">Edit graph</span></div>
+        <div class="modebuttons"><span class="custom-checkbox" ><input type="radio" name="mode" id="modelanalysis">Model analysis</span></div> -->
+		<div class="modebuttons"><button class="custom-checkbox" type="radio" name="mode" id="editgraph" onclick="edit_graph()" >Edit graph</button> </div>
+	    <div class="modebuttons"><button class="custom-checkbox" type="radio" name="mode" id="modelanalysis" onclick="model_analysis()" >Model analysis</button> </div>
+       
+   
+		
+		<p><div id="soustitre">Layout :</div>
+		<div class="modebuttons"><button class="custom-checkbox" type="radio" name="layout" id="physical"  onclick="layout_physical()" >Physical</button> </div>
+        <div class="modebuttons"><button class="custom-checkbox" type="radio" name="layout" id="hierarchical"  onclick="layout_hierarchical()">Hierarchical</button> </div>
 
-		 <p><div id="soustitre">Layout :</div>
-			<!-- <button class="buttonLeft" id="physical" onclick="layout_physical() ">Physical</button>
-			<button class="buttonLeft"  class="topcoat-button-bar__button full" id="hierarchical" onclick="layout_hierarchical()">Hierarchical</button>
-			 -->
-		<div class="topcoat-button-bar full">
-  			 <div class="topcoat-button-bar__item">
-				<button class="topcoat-button-bar__button full" id="physical" onclick="layout_physical() "><span id="soustitre">Physical</span></button>
-  			 </div>
-   			 <div class="topcoat-button-bar__item">
-				<button class="topcoat-button-bar__button full" id="hierarchical" onclick="layout_hierarchical()"><span id="soustitre">Hierarchical</span></button>		
-   			</div>
+		<div>
+			<p><span id="soustitre">Tags :</span>
+			<select id="tagSelectBox" name="tagsFilters[]" multiple="multiple" style="width:95%"></select>
 		</div>
-
-			<div>
-				 <p><span id="soustitre">Tags :</span>
-					<select id="tagSelectBox" name="tagsFilters[]" multiple="multiple" style="width:95%">
-					</select>
-				</div>
-
-		<div class="topcoat-button-bar full">
-  			 <div class="topcoat-button-bar__item">
-					<button class="topcoat-button-bar__button full" onclick="reset_dataset()"><span id="soustitre">New graph</span></button>
-  			 </div>
-   			 <div class="topcoat-button-bar__item">
-						<button class="topcoat-button-bar__button full" onclick="reset_parameters()"><span id="soustitre">Reset</span></button>
-   			</div>
-
-		</div>
-				 <p>
-		<div class="topcoat-button-bar full">
-		<div class="topcoat-button-bar__item">
-						 <button class="topcoat-button-bar__button full" onclick="LocalStorage(); window.open('Open-graph.html')"><span id="soustitre">Identify keys parameters</span></button> 
-						<!-- <form action="./Open-graph.html"><button class="topcoat-button-bar__button full" ><span id="soustitre">Graph</span></button></form> -->
-   			</div>
-	</div>
+				
+		<button class="custom-identifykp" onclick="LocalStorage(); window.open('Open-graph.html')"><span>Identify keys parameters</span></button> 
+		<button class="custom-rst" onclick="reset_parameters()"><span>Reset</span></button>		 
 
 			</div> 
 
 			<pre id="eventSpan"></pre>
 
+	<!-- XXXXXXXXXXXXXXXXXXXX Top buttons XXXXXXXXXXXXXXXXXXXXXX -->
 
 			<div>		
 				<div id="load_click">
@@ -126,6 +112,10 @@
 
 				<div id="save_changes" onclick="save_changes()">
 					<input type="image" title="Save changes" alt="image" src="./images/save_img.png"/> 
+				</div>
+				
+				<div id="new_graph" onclick="reset_dataset()">
+					<input type="image" title="New graph" alt="image" src="./images/new_graph.png"/> 
 				</div>
 
 
@@ -163,12 +153,6 @@
     		};	
     	</script>
     </div>
-
-
-	
-<!-- 	<div class="chart-container" style="position: fixed;  right: 50px; top: 60px; height:40vh; width:80vw">
-    <canvas id="myChart"></canvas>
-</div> -->
 
 <div id="container" style="position: fixed;  right: 50px; top: 60px; height:40vh; width:80vw"></div>
 
@@ -246,15 +230,18 @@
     	<li class="menu-item">
     		<button type="button" class="menu-btn" id="unset"> <i class="fa fa-eraser"></i> <span class="menu-text">Unset</span> </button>
     	</li>
-    	<li class="menu-separator"></li>
-    	</div>
+		</div>
+		
+    	<!-- <li class="menu-separator"></li> -->
+      <div id="toHide2">
+		
     	<li class="menu-item">
     		<button type="button" class="menu-btn" id="edit"> <i class="fa fa-edit"></i> <span class="menu-text" id="editProperties">Edit</span> </button>
     	</li>
     	<li class="menu-item">
     		<button type="button" class="menu-btn" id="remove"> <i class="fa fa-trash"></i> <span class="menu-text">Delete</span> </button>
     	</li>
-
+</div>
 	</menu>
 
 

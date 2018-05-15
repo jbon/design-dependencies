@@ -3,11 +3,19 @@ var show_consequences_3;
 var show_compliance_2;
 var show_compliance_3;
 var show_compliance_4;
+var attributePaneOpen=0;
 
 
 function openAttributePane(params) {
 
 	attributepane.style.display="block";
+	
+	// change Id for the position of top buttons
+	if (document.getElementById('load_click') != null){
+	document.getElementById('load_click').id = 'load_click_pos2';
+	document.getElementById('save_changes').id = 'save_changes_pos2';
+	document.getElementById('new_graph').id = 'new_graph_pos2';
+	} 
 
 	var selectedNode = params.nodes[0];
 
@@ -88,7 +96,16 @@ function openAttributePane(params) {
 }
 
 function closeAttributePane() {
+	
+	// change Id for the position of top buttons
+	if (document.getElementById('load_click_pos2') != null){
+	document.getElementById('load_click_pos2').id = 'load_click';
+	document.getElementById('save_changes_pos2').id = 'save_changes';
+	document.getElementById('new_graph_pos2').id = 'new_graph';
+	}
+	
 	attributepane.style.display="none";
+	attributePaneOpen==0;
 }
 
 function focusNode(nodeId) {
@@ -351,7 +368,7 @@ function neighbourhoodHighlight(params) {
 
 // This function fired on double click
 function addNodefunction(){
-	if (tagFilterActive==false){
+if (tagFilterActive==false && model_analysis_active==false){
 
 	//document.getElementById('operation').innerHTML = "Add Node";
 	document.getElementById('network-popUp').style.display = 'block';

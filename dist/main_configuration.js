@@ -27,7 +27,7 @@
       var positionX=0;
       var positionY=0;
       var active=0;
-      var container;
+      //var container;
 	  var containerr;
 
 	  
@@ -46,6 +46,12 @@
       var popUpEditEdges=0;
       var editEdgeId;
 	  
+	  var selectedNode;
+var selectedEdge;
+
+var model_analysis_active;
+var edit_graph_active;
+	  
 	    var canvas;
 		var ctx;
 		var rect = {}, drag = false;
@@ -56,7 +62,7 @@
 
  function redrawAll() {
 containerr = $("#mynetwork");
- container = document.getElementById('mynetwork');
+ //container = document.getElementById('mynetwork');
 
  	 options = { 
       /*  layout:{
@@ -172,8 +178,7 @@ containerr = $("#mynetwork");
 
 	$('#tag-input').empty();
 	for(var i=0; i<tabTag.length;i++)
-	{ 
-        
+	{     
  		var tagList = document.getElementById("tag-input");
 		var option = document.createElement("option");
 		option.text = tabTag[i];
@@ -202,7 +207,7 @@ containerr = $("#mynetwork");
         		description: $('#node-description').html(),   
         		shape:"ellipse",
         		color:'rgba(60,60,60,0.6)',
-				    tags:tabTagNew
+				tags:tabTagNew
         	});       
 			
 			maxid++;
@@ -215,7 +220,7 @@ containerr = $("#mynetwork");
         	document.getElementById('network-popUp').style.display = 'none'; 
    	        updateLeftPane();
    	 	 
-	 	add_tag();
+			add_tag();
         };
 
         document.getElementById('cancelButton').onclick = function(){
@@ -241,6 +246,7 @@ containerr = $("#mynetwork");
     addEdge: function (data, callback) {
 	if (tagFilterActive==false){
     	var edge_label_value="";
+		
 		//no possibility to add an edge which already exist
 		for(var i=0; i<edgesDataset.length;i++){
 			if(data.from==allEdges[i].from && data.to==allEdges[i].to){
@@ -265,16 +271,13 @@ containerr = $("#mynetwork");
 			 function save_edge (){
 
     			if($('input.boxplus').prop('checked')){
-    				// console.log("je passe");
     				edge_label_value= '+';
     			}else if($('input.boxminus').prop('checked')){
-    				// console.log("je passe 2");
     				edge_label_value= '-';
     			}
     			else{
     				alert("Please select one of the influence directions before validating edge edtition");
     			}
-    			// console.log(edge_label_value)
 
     			if(edge_label_value != ""){
     				allEdges=edgesDataset.get({returnType:"Object"});
@@ -287,7 +290,6 @@ containerr = $("#mynetwork");
     				});
 
     				allEdges=edgesDataset.get({returnType:"Object"});
-    				// console.log(edgesDataset);
 
     				document.getElementById('network-popUp_edge').style.display = 'none';
     			}
@@ -317,6 +319,8 @@ containerr = $("#mynetwork");
     	}
 	}	
     },
+	
+	
     editNode:function(data,callback){
 	if (tagFilterActive==false){
     editNode();
@@ -329,6 +333,8 @@ containerr = $("#mynetwork");
     });
 	}
     },
+	
+	
     editEdge:function(data,callback){
 		if (tagFilterActive==false){
     	var edge_label_value;
@@ -460,6 +466,8 @@ containerr = $("#mynetwork");
       }
 	  }
     },
+	
+	
     deleteNode:function(data,callback){
 		if (tagFilterActive==false){
 		idselect = data.nodes[0];
@@ -480,6 +488,7 @@ containerr = $("#mynetwork");
 data = {nodes: nodesDataset , edges:edgesDataset };
 
 network = new vis.Network(containerr[0], data, options);  
+
 
 allNodes=nodesDataset.get({returnType:"Object"});
 allEdges=edgesDataset.get({returnType:"Object"});
@@ -520,6 +529,9 @@ nodesDataset.map(function(obj){
   		neighbourhoodHighlight({nodes:[]});
   		closeAttributePane();
   	}
+	if(model_analysis_active){
+		hideButton();
+   }
   });
   
   /*  document.onclick=function(params){
@@ -689,8 +701,8 @@ function hideMenu(){
 
 function onContextMenu(e){
 	e.preventDefault();
-	var selectedNode=showMenu(e.pageX, e.pageY);
-  var selectedEdge=showMenuEdge(e.pageX, e.pageY);
+	 selectedNode=showMenu(e.pageX, e.pageY);
+   selectedEdge=showMenuEdge(e.pageX, e.pageY);
 
  // console.log(selectedNode + " edge " + selectedEdge);
 	
@@ -702,7 +714,17 @@ function onContextMenu(e){
     
     console.log("node");
   	
-     $("#toHide").show();
+	if (model_analysis_active==true){
+		$("#data-action").show();
+		 $("#toHide").show();
+         $("#toHide2").hide();	
+	}	
+	if(edit_graph_active==true){
+		$("#data-action").show();
+		$("#toHide").hide();
+        $("#toHide2").show();
+	}
+    // $("#toHide").show();
 
     document.getElementById("source_increase").onclick=source_increase;
 
@@ -729,7 +751,15 @@ function onContextMenu(e){
 
     console.log("edge");
 
-    $("#toHide").hide();
+   // $("#toHide").hide();
+   if (model_analysis_active==true){
+		 $("#data-action").hide();
+	}	
+	if(edit_graph_active==true){
+		$("#data-action").show();
+	     $("#toHide").hide();
+        $("#toHide2").show();
+	}
 
     $('#editProperties').text("Edit properties");
 
@@ -817,8 +847,7 @@ $(document).keydown(function(e) {
 // });
 
 
-
-
+ // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  MULTI SELECTION xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 
   function saveDrawingSurface() {
@@ -895,7 +924,7 @@ $(document).ready(function() {
             selectNodesFromHighlight();
         }
 		
-		if (network.getSelectedNodes().length!= 0)
+		if (network.getSelectedNodes().length!= 0 && edit_graph_active==true)
 			{
 					 network.setOptions(
 		{
@@ -912,113 +941,6 @@ document.body.oncontextmenu = function() {return false;};
 	//network = new vis.Network(containerr[0], data, options);
 
 });   
-
-/* // Everything is in there
-const makeMeMultiSelect = (container, network, nodes) => {
-		const NO_CLICK = 0;
-		const RIGHT_CLICK = 3;
-    
-    // Disable default right-click dropdown menu
-    //containerr[0].oncontextmenu = () => false;
-    
-    // State
-    
-    let drag = false, DOMRect = {};
-
-    // Selector
-    
-    const canvasify = (DOMx, DOMy) => {
-    		const { x, y } = network.DOMtoCanvas({ x: DOMx, y: DOMy });
-			//console.log([x, y]);
-      	return [x, y];
-    };
-    
-    const correctRange = (start, end) =>
-        start < end ? [start, end] : [end, start];
-
-    const selectFromDOMRect = () => {
-        const [sX, sY] = canvasify(DOMRect.startX, DOMRect.startY);
-        const [eX, eY] = canvasify(DOMRect.endX, DOMRect.endY);
-        const [startX, endX] = correctRange(sX, eX);
-        const [startY, endY] = correctRange(sY, eY);
-
-        network.selectNodes(nodes.reduce(
-            (selected, { id }) => {
-                const { x, y } = network.getPositions(id)[id];
-                return (startX <= x && x <= endX && startY <= y && y <= endY) ?
-                    selected.concat(id) : selected;
-            }, []
-        ));
-    }
-	
-	
-	
-	
-// Listeners
-
-    container.on("mousedown", function({ which, pageX, pageY }) {
-    		// When mousedown, save the initial rectangle state
-        if(which === RIGHT_CLICK) {
-            Object.assign(DOMRect, {
-                startX: pageX - this.offsetLeft,
-                startY: pageY - this.offsetTop,
-                endX: pageX - this.offsetLeft,
-                endY: pageY - this.offsetTop
-            });
-            drag = true;
-        }
-    });
-
-    container.on("mousemove", function({ which, pageX, pageY }) {
-    		// Make selection rectangle disappear when accidently mouseupped outside 'container'
-        if(which === NO_CLICK && drag) {
-            drag = false;
-            network.redraw();
-        }
-        // When mousemove, update the rectangle state
-        else if(drag) {
-            Object.assign(DOMRect, {
-                endX: pageX - this.offsetLeft,
-                endY: pageY - this.offsetTop
-            });
-            network.redraw();
-        }
-    });
-
-    container.on("mouseup", function({ which }) {
-    		// When mouseup, select the nodes in the rectangle
-        if(which === RIGHT_CLICK) {
-            drag = false;
-            network.redraw();
-            selectFromDOMRect();
-        }
-    });
-	
-	// Drawer
-
-    network.on('afterDrawing', ctx => {
-        if(drag) {
-            const [startX, startY] = canvasify(DOMRect.startX, DOMRect.startY);
-            const [endX, endY] = canvasify(DOMRect.endX, DOMRect.endY);
-
-            ctx.setLineDash([5]);
-            ctx.strokeStyle = 'rgba(78, 146, 237, 0.75)';
-            ctx.strokeRect(startX, startY, endX - startX, endY - startY);
-            ctx.setLineDash([]);
-            ctx.fillStyle = 'rgba(151, 194, 252, 0.45)';
-            ctx.fillRect(startX, startY, endX - startX, endY - startY);
-        }
-    });
-}; // end makeMeMultiSelect
-
-$(document).ready(() => {
-	//container = $("#network");
-     network = new vis.Network(container, { nodes, edges }, options);
-
-		makeMeMultiSelect(container, network, nodes);
-}); */
-
-
 
 function LocalStorage(){
   createTab();
