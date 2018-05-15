@@ -517,7 +517,7 @@ nodesDataset.map(function(obj){
   });
 
    network.on("click", function(params){
-  	if(params.nodes.length!=0){ 
+  	if(params.nodes.length!=0 && model_analysis_active==true){ 
   		neighbourhoodHighlight(params);
   		openAttributePane(params);
   		focusNode(params.nodes[0]);
@@ -825,12 +825,13 @@ $(document).keydown(function(e) {
 
 $(document).keydown(function(e) {        
 	if (e.keyCode == 27) {
-		network.setOptions(
+		/* network.setOptions(
 		{
 			manipulation:{
 				initiallyActive :true
 			}
-		});
+		}); */
+		reset_parameters();
 	}
 });
 

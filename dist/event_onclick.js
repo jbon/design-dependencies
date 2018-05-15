@@ -168,12 +168,12 @@ function close_questionmark_popup()
 function show_consequences(){
 	
    document.getElementById('questionMark-popUp').style.display = 'none';
-   network.setOptions(
+   /* network.setOptions(
 		{
 			manipulation:{
 				initiallyActive :true
 			}
-		});
+		}); */
    document.getElementById("text_scenario").innerHTML="Right click on a parameter for exploring the consequences of a change in this parameter";
 
    $()
@@ -209,12 +209,12 @@ function show_consequences(){
 function show_compliance(){
 	
   document.getElementById('questionMark-popUp').style.display = 'none';
-  network.setOptions(
+  /* network.setOptions(
 		{
 			manipulation:{
 				initiallyActive :true
 			}
-		});
+		}); */
    document.getElementById("text_scenario").innerHTML="Right click on a parameter you want to set as target";
    
    show_compliance_2=setInterval(
@@ -277,12 +277,12 @@ function show_compliance(){
 function graph_navigate(){
 
  document.getElementById('questionMark-popUp').style.display = 'none';
- network.setOptions(
+ /* network.setOptions(
 		{
 			manipulation:{
 				initiallyActive :true
 			}
-		});
+		}); */
  document.getElementById("text_scenario").innerHTML="Left click on a parameter to display the parameters it influences and those it is influenced by";
   
   $(document).keydown(function(e) {        

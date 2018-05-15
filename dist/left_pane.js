@@ -26,6 +26,7 @@ function draw_the_path(){
   { 
 
   	var updateArray=[];
+	closeAttributePane();
   	for(var nodeId in allNodes)
   	{
   		allNodes[nodeId].shape="ellipse";
