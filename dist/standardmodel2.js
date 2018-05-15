@@ -1,5 +1,5 @@
 var nodes= [
-    {id: 0, label: "Disassembly effort", description: "Effort which needs to be applied in order to seperate two cpmponents in disassembly", shape: "ellipse", color: "rgba(80,80,80,0.6)", tags:[] },
+    {id: 0, label: "Disassembly effort", description: "Effort which needs to be applied in order to seperate two cpmponents in disassembly", shape: "ellipse", color: "rgba(80,80,80,0.6)", tags:["1"] },
     {id: 1, label: "Required force/energy", description: "Force which needs to be applied in order to seperate two components", shape: "ellipse", color: "rgba(80,80,80,0.6)", tags:[] },
     {id: 2, label: "Size/complexity of required tool", description: "Kind of tools which are necessary to seperate two components in disassembly (from bare hands to welding or a heavy hammer)", shape: "ellipse", color: "rgba(80,80,80,0.6)", tags:[] },
     {id: 3, label: "Required time", description: "Time which is necessary for seperating two cpmponents in disassembly", shape: "ellipse", color: "rgba(80,80,80,0.6)", tags:[] },
