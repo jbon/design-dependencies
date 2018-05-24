@@ -494,6 +494,7 @@ allNodes=nodesDataset.get({returnType:"Object"});
 allEdges=edgesDataset.get({returnType:"Object"});
 listener();
 
+
 if (tagFilterActive==false){
 maxid = 0;
 nodesDataset.map(function(obj){     

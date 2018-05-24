@@ -226,6 +226,7 @@ function filterByTag(){
 	var selectedTag=($('#tagSelectBox').val());
 	
 	closeAttributePane();
+	
 
 	if(selectedTag != null){
 		nodeArray=[];
