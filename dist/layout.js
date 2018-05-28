@@ -160,7 +160,7 @@ options = {
 
     	},
 
-    	width: 0.15,
+    	width: 1,
 
     	font: {
     		size:30,

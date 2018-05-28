@@ -20,8 +20,13 @@ function openAttributePane(params) {
 	var selectedNode = params.nodes[0];
 
 	var LABEL=document.getElementById('affichageLabel');
-	LABEL.innerHTML = nodesDataset.get(params.nodes[0]).label  ;
-	
+	if (nodesDataset.get(params.nodes[0]).label.includes('(-)')==true || nodesDataset.get(params.nodes[0]).label.includes('(+)')==true || nodesDataset.get(params.nodes[0]).label.includes('(?)')==true){
+		var newlabel=nodesDataset.get(params.nodes[0]).label.substring(0,nodesDataset.get(params.nodes[0]).label.length-3);
+		LABEL.innerHTML=newlabel;
+	}
+	else{
+		LABEL.innerHTML = nodesDataset.get(params.nodes[0]).label  ;
+	}
 	
 	var TAGG=document.getElementById('affichageTag');
 	TAGG.innerHTML = "   ";
@@ -47,7 +52,14 @@ function openAttributePane(params) {
 
 				var ing=document.createElement("div");
 				ing.id=edgesDataset.get(x).to;
+				
+				if (allNodes[edgesDataset.get(x).to].label.includes('(-)')==true || allNodes[edgesDataset.get(x).to].label.includes('(+)')==true || allNodes[edgesDataset.get(x).to].label.includes('(?)')==true){
+				var newlabel=allNodes[edgesDataset.get(x).to].label.substring(0,allNodes[edgesDataset.get(x).to].label.length-3);
+				ing.innerHTML=newlabel;
+				}
+				else{
 				ing.innerHTML=allNodes[edgesDataset.get(x).to].label;
+				}
 
 				INFLUENCING.appendChild(ing);
 				document.getElementById(edgesDataset.get(x).to).onmouseover = function() {
@@ -70,7 +82,15 @@ function openAttributePane(params) {
 			if(edgesDataset.get(x).to==params.nodes[0] && allNodes[edgesDataset.get(x).from].label != undefined){
 				var ed=document.createElement("div");
 				ed.id=edgesDataset.get(x).from;
+				
+				if (allNodes[edgesDataset.get(x).from].label.includes('(-)')==true || allNodes[edgesDataset.get(x).from].label.includes('(+)')==true || allNodes[edgesDataset.get(x).from].label.includes('(?)')==true){
+				var newlabel=allNodes[edgesDataset.get(x).from].label.substring(0,allNodes[edgesDataset.get(x).from].label.length-3);
+				ed.innerHTML=newlabel;
+				}
+				else{
 				ed.innerHTML=allNodes[edgesDataset.get(x).from].label;
+				}
+				
 				INFLUENCED.appendChild(ed);
 
 				document.getElementById(edgesDataset.get(x).from).onmouseover = function() {
@@ -160,8 +180,7 @@ document.getElementById("usage_4").onmouseout = function() {
 });
 } 
 
-function close_questionmark_popup()
-{
+function close_questionmark_popup(){
 	document.getElementById('questionMark-popUp').style.display = 'none';
 }
 
