@@ -13,6 +13,16 @@ There is no installation required. Just download the package on a local folder.
 To use the application, open the file "Design-dependencies.html" with a web brower. That's it! 
 The tool is still under development, so there is no user manual so far. Work in progress...
 
+## Dependencies / credits
+
+This application uses:
+- [vis.js](http://visjs.org/): a dynamic, browser based visualization library
+- [jquery](https://jquery.com/): a fast, small, and feature-rich JavaScript library
+- [dagre.js](https://github.com/dagrejs/dagre): a directed graph layout for JavaScript
+- [select2.js](https://select2.org/): a jQuery replacement for select boxes
+- [highcharts.js](https://www.highcharts.com/): an interactive JavaScript charts library
+- [font awesome](https://fontawesome.com/): icon set and toolkit
+
 ## Learn more
 
 This application is developped as part of research works performed at the Technische Universitaet Berlin, Germany, and the University of Bath, England. More background information under:
