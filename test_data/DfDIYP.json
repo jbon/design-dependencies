@@ -1,0 +1,326 @@
+{
+	"nodes": [{
+			"id": 0,
+			"label": "Design for DIY production",
+			"description": "TBD",
+			"shape": "ellipse",
+			"color": "rgba(80,80,80,0.6)",
+			"tags": [],
+			"additionalInformation": "TBD",
+			"example": "TBD",
+			"files": [],
+			"scale": 2,
+			"source": "Bonvoisin, Galla and Prendeville, 2017"
+		}, {
+			"id": 1,
+			"label": "modular design",
+			"description": "Use modular design",
+			"shape": "ellipse",
+			"color": "rgba(80,80,80,0.6)",
+			"tags": [],
+			"additionalInformation": "Modularity, i.e. the distribution of sub-functions of the product among distinct functional carriers with clearly defined interfaces, can help achieving a clear separation of vitamins and DIY parts.",
+			"example": "De-couple energy source and usage, so that any type of source can be used (e.g. electric motor, hydraulic pressure) for generating a given movement.",
+			"files": [],
+			"scale": 3,
+			"source": "Bonvoisin, Galla and Prendeville, 2017"
+		}, {
+			"id": 2,
+			"label": "Standard tools",
+			"description": "Opt for processes that can be performed with standard tools",
+			"shape": "ellipse",
+			"color": "rgba(80,80,80,0.6)",
+			"tags": [],
+			"additionalInformation": "The more widely available the required tools are, the more probable it is that it will be accessible to anyone.",
+			"example": "Bolting instead of welding",
+			"files": [],
+			"scale": 1,
+			"source": "Bonvoisin, Galla and Prendeville, 2017"
+		}, {
+			"id": 3,
+			"label": "Commonplace materials",
+			"description": "Use commonplace materials",
+			"shape": "ellipse",
+			"color": "rgba(80,80,80,0.6)",
+			"tags": [],
+			"additionalInformation": "The more widely available the required materials are, the more probable it is that they can be purchased by anyone.",
+			"example": "Wood plate in sizes available in hardware stores.",
+			"files": [],
+			"scale": 2,
+			"source": "Bonvoisin, Galla and Prendeville, 2017"
+		}, {
+			"id": 4,
+			"label": "Discarded materials",
+			"description": "Use discarded materials and materials that are to-hand",
+			"shape": "ellipse",
+			"color": "rgba(80,80,80,0.6)",
+			"tags": [],
+			"additionalInformation": "Designing a product made of discarded materials that can be commonly used in households may be a solution for facilitating purchase. It should be however considered that discarded materials may have lower accuracy and require pre-processing steps.",
+			"example": "TBD",
+			"files": [],
+			"scale": 2,
+			"source": "Bonvoisin, Galla and Prendeville, 2017"
+		}, {
+			"id": 5,
+			"label": "Standard components",
+			"description": "Use general purpose and standard components",
+			"shape": "ellipse",
+			"color": "rgba(80,80,80,0.6)",
+			"tags": [],
+			"additionalInformation": "Standard components may be more easily available than exotic ones. Using them may therefore ease the purchasing process.",
+			"example": "Widely available standards nuts and bolts that can be found in hardware stores. ",
+			"files": [],
+			"scale": 2,
+			"source": "Bonvoisin, Galla and Prendeville, 2017"
+		}, {
+			"id": 6,
+			"label": "Room for tailoring",
+			"description": "Give room for tailoring",
+			"shape": "ellipse",
+			"color": "rgba(80,80,80,0.6)",
+			"tags": [],
+			"additionalInformation": "A motivation for making a product in a DIY setting is the possibility to get a tailored product. Flexibility can be built in the product design in order to ease the tailoring process.",
+			"example": "Parameterized design of a bicycle frame.",
+			"files": [],
+			"scale": 2,
+			"source": "Bonvoisin, Galla and Prendeville, 2017"
+		}, {
+			"id": 7,
+			"label": "Flexible construction",
+			"description": "Give room for flexible construction",
+			"shape": "ellipse",
+			"color": "rgba(80,80,80,0.6)",
+			"tags": [],
+			"additionalInformation": "Giving a scope for last-minute tweaking in case the design cannot exactly be realized as described in the product requirements would allow overcoming shortages in the production process.",
+			"example": "High geometric and material tolerances, beams with equally separated attachment holes.",
+			"files": [],
+			"scale": 2,
+			"source": "Bonvoisin, Galla and Prendeville, 2017"
+		}, {
+			"id": 8,
+			"label": "Reversible joinings",
+			"description": "Prefer reversible to permanent joining features",
+			"shape": "ellipse",
+			"color": "rgba(80,80,80,0.6)",
+			"tags": [],
+			"additionalInformation": "Using removable and adjustable joining features allows accommodating mistakes or correcting misalignments in the assembly process.",
+			"example": "Interlocking elements or nuts and bolts vs. welding.",
+			"files": [],
+			"scale": 2,
+			"source": "Bonvoisin, Galla and Prendeville, 2017"
+		}, {
+			"id": 9,
+			"label": "Vitamin variation",
+			"description": "Reduce vitamin variation",
+			"shape": "ellipse",
+			"color": "rgba(80,80,80,0.6)",
+			"tags": [],
+			"additionalInformation": "If several vitamins are required, it may be useful to use the same vitamin each time needed in order to reduce the purchase and storage effort.",
+			"example": "One type of bolt for the assembly of all parts of the product, one type of step motors for translating the plateau of a machine-tool in all three directions or space. ",
+			"files": [],
+			"scale": 2,
+			"source": "Bonvoisin, Galla and Prendeville, 2017"
+		}, {
+			"id": 10,
+			"label": "Raw material variation",
+			"description": "Reduce raw material variation",
+			"shape": "ellipse",
+			"color": "rgba(80,80,80,0.6)",
+			"tags": [],
+			"additionalInformation": "Strive designing all DIY-components so they can be made out of the same material and using same processes. This would allow reducing the purchasing effort and the requirements for processing tools. ",
+			"example": "3D design made of assembled laser-cut plywood.",
+			"files": [],
+			"scale": 2,
+			"source": "Bonvoisin, Galla and Prendeville, 2017"
+		}, {
+			"id": 11,
+			"label": "Symmetries",
+			"description": "Use symmetries",
+			"shape": "ellipse",
+			"color": "rgba(80,80,80,0.6)",
+			"tags": [],
+			"additionalInformation": "Using symmetries is another way of reducing part variation, to use several times the same part and to profit from learning curve in the production.",
+			"example": "TBD",
+			"files": [],
+			"scale": 2,
+			"source": "Bonvoisin, Galla and Prendeville, 2017"
+		}, {
+			"id": "12",
+			"label": "Stackability",
+			"description": "Offer scalability through “stackability”.",
+			"shape": "ellipse",
+			"color": "rgba(80,80,80,0.6)",
+			"tags": [],
+			"additionalInformation": "Building a product of a large size/power may be more difficult than building numbers of small products that can be combined in order to reach the desired size/power. It reduces the risk and need of handling larger and heavy products.",
+			"example": "A high luminous emittance can be reached by combining several LED.",
+			"files": [],
+			"scale": 2,
+			"source": "Bonvoisin, Galla and Prendeville, 2017"
+		}, {
+			"id": 13,
+			"label": "Ease of handling",
+			"description": "Ensure ease of handling and transportation",
+			"shape": "ellipse",
+			"color": "rgba(80,80,80,0.6)",
+			"tags": [],
+			"additionalInformation": "Bulky or fragile products may be difficult to handle and may require specific handling or holding mechanisms. In those case, use built-in handling mechanisms or provide DIY handling tools.",
+			"example": "Wheels and contact points built in the frame of the product, DIY building jig",
+			"files": [],
+			"scale": 2,
+			"source": "Bonvoisin, Galla and Prendeville, 2017"
+		}, {
+			"id": 14,
+			"label": "DIY options",
+			"description": "Offer different depths of DIY",
+			"shape": "ellipse",
+			"color": "rgba(80,80,80,0.6)",
+			"tags": [],
+			"additionalInformation": "Not everybody have the same skills, tools, and interest in building things. It may be interesting giving the maker the possibility to choose by itself, which of the parts he or she consider as a vitamin. ",
+			"example": "TBD",
+			"files": [],
+			"scale": 2,
+			"source": "Bonvoisin, Galla and Prendeville, 2017"
+		}, {
+			"id": "15",
+			"label": "Simple solutions",
+			"description": "Opt for simple solutions",
+			"shape": "ellipse",
+			"color": "rgba(80,80,80,0.6)",
+			"tags": [],
+			"additionalInformation": "The simpler the design the more probable it is someone will have the required tools and skills to build it. Because there is no universal definition for simplicity, you may offer different alternatives for each function.",
+			"example": "Avoid reciprocating parts",
+			"files": [],
+			"scale": 2,
+			"source": "Bonvoisin, Galla and Prendeville, 2017"
+		}, {
+			"id": 16,
+			"label": "Material availability",
+			"description": "Use materials that can be easily procured",
+			"shape": "ellipse",
+			"color": "rgba(80,80,80,0.6)",
+			"tags": [],
+			"additionalInformation": "TBD",
+			"example": "TBD",
+			"files": [],
+			"scale": 2,
+			"source": "Bonvoisin, Galla and Prendeville, 2017"
+		}, {
+			"id": 17,
+			"label": "Reduced BOM",
+			"description": "Reduce the number of different parts to be produced",
+			"shape": "ellipse",
+			"color": "rgba(80,80,80,0.6)",
+			"tags": [],
+			"additionalInformation": "TBD",
+			"example": "TBD",
+			"files": [],
+			"scale": 2,
+			"source": "Bonvoisin, Galla and Prendeville, 2017"
+		}, {
+			"id": 18,
+			"label": "Flexible design",
+			"description": "Use flexible design so the product can be adapted to the production environment",
+			"shape": "ellipse",
+			"color": "rgba(80,80,80,0.6)",
+			"tags": [],
+			"additionalInformation": "TBD",
+			"example": "TBD",
+			"files": [],
+			"scale": 2,
+			"source": "Bonvoisin, Galla and Prendeville, 2017"
+		}
+
+	],
+
+	"edges": [{
+			"id": 1,
+			"from": 0,
+			"to": 2,
+			"label": "+"
+		}, {
+			"id": 2,
+			"from": 0,
+			"to": 15,
+			"label": "+"
+		}, {
+			"id": 3,
+			"from": 0,
+			"to": 16,
+			"label": "+"
+		}, {
+			"id": 4,
+			"from": 0,
+			"to": 17,
+			"label": "+"
+		}, {
+			"id": 5,
+			"from": 0,
+			"to": 18,
+			"label": "+"
+		}, {
+			"id": 6,
+			"from": 0,
+			"to": 1,
+			"label": "+"
+		}, {
+			"id": 7,
+			"from": 0,
+			"to": 12,
+			"label": "+"
+		}, {
+			"id": 8,
+			"from": 2,
+			"to": 13,
+			"label": "+"
+		}, {
+			"id": 9,
+			"from": 16,
+			"to": 3,
+			"label": "+"
+		}, {
+			"id": 10,
+			"from": 16,
+			"to": 4,
+			"label": "+"
+		}, {
+			"id": 11,
+			"from": 16,
+			"to": 5,
+			"label": "+"
+		}, {
+			"id": 12,
+			"from": 17,
+			"to": 9,
+			"label": "+"
+		}, {
+			"id": 13,
+			"from": 17,
+			"to": 10,
+			"label": "+"
+		}, {
+			"id": 14,
+			"from": 17,
+			"to": 11,
+			"label": "+"
+		}, {
+			"id": 15,
+			"from": 18,
+			"to": 14,
+			"label": "+"
+		}, {
+			"id": 16,
+			"from": 18,
+			"to": 6,
+			"label": "+"
+		}, {
+			"id": 17,
+			"from": 18,
+			"to": 7,
+			"label": "+"
+		}, {
+			"id": 18,
+			"from": 18,
+			"to": 8,
+			"label": "+"
+		}
+	]
+}
