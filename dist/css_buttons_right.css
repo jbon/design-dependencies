@@ -1,0 +1,123 @@
+ /*XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+   CSS FOR THE RIGHT BUTTONS
+ XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX*/
+
+/* Button bottom right question mark */
+#questionMark {
+	display: block;
+	position:absolute;
+	bottom:49px;
+	right:57px;
+	z-index: 2;
+	border-radius: 17px;
+	width: 30px;
+    height: 30px;
+    padding:2px;
+}
+
+#questionMark:hover {
+    box-shadow: 0px 0px 3px 3px rgba(56,207,21,.3);
+}
+
+/* Positions buttons top right when attribute pane is close */
+#load_click{
+  display: block;
+  position:absolute;
+  top:1%;
+  right:6%;
+  z-index:  2;
+  width: 30px;
+  height: 30px;
+  padding: 2px;
+  border-radius: 17px;
+}
+
+#save_changes{
+  display: block;
+  position:absolute;
+  top:1%;
+  right:3.5%;
+  width: 30px;
+  height: 30px;
+  z-index:  2;
+  border-radius: 17px;
+  padding:2px;
+}
+
+#new_graph{
+  display: block;
+  position:absolute;
+  top:1%;
+  right:1%;
+  width: 30px;
+  height: 30px;
+  z-index:  2;
+  border-radius: 17px;
+  padding:2px;
+}
+
+#load_click:hover {
+    box-shadow: 0px 0px 3px 3px rgba(162,41,187,.3);
+}
+
+#save_changes:hover {
+    box-shadow: 0px 0px 3px 3px rgba(255,152,24,.3);
+}
+
+#new_graph:hover {
+    box-shadow: 0px 0px 3px 3px rgba(66,207,255,.3);
+}
+
+/* Positions buttons top right when attribute pane is open */
+#load_click_pos2{
+  display: block;
+  position:absolute;
+  top:1%;
+  right:23%;
+  z-index:  2;
+  width: 30px;
+  height: 30px;
+  padding:2px;
+  border-radius: 17px;
+}
+
+#save_changes_pos2{
+  display: block;
+  position:absolute;
+  top:1%;
+  right:20.5%;
+  width: 30px;
+  height: 30px;
+  z-index:  2;
+  border-radius: 17px;
+  padding:2px;
+}
+
+#new_graph_pos2{
+  display: block;
+  position:absolute;
+  top:1%;
+  right:18%;
+  width: 30px;
+  height: 30px;
+  z-index:  2;
+  border-radius: 17px;
+  padding:2px;
+}
+
+#load_click_pos2:hover {
+    box-shadow: 0px 0px 3px 3px rgba(162,41,187,.3);
+}
+
+#save_changes_pos2:hover {
+    box-shadow: 0px 0px 3px 3px rgba(255,152,24,.3);
+}
+
+#new_graph_pos2:hover {
+    box-shadow: 0px 0px 3px 3px rgba(66,207,255,.3);
+}
+
+
+ input#file {
+  display: none;
+} 

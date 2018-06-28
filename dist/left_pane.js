@@ -1,136 +1,14 @@
+// XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+// File that contains all the functions used in the left pane: search function, modes functions, tags functions, scatter plot graph functions 
+// and reset function.
+// The functions for hierarchical and physical layout can be found in the file layout.js
+// XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
 	
-function draw_the_path(){
+// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  Autocomplete JQUERY  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
-	if (sourceId==undefined) {
-
-		alert("No source node selected");
-
-	}else {
-
-		if(targetIDs.length == 0 ){
-			draw_in_all_canvas();
-		}
-		else if(targetIDs.length>=1){
-			draw_with_target();
-		}
-
-	}
-
-}
-
-
-  // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx reset parameters i.e. shape and color of the nodes FUNCTION xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
- 
-  function reset_parameters()
-  { 
-
-  	var updateArray=[];
-	closeAttributePane();
-  	for(var nodeId in allNodes)
-  	{
-  		allNodes[nodeId].shape="ellipse";
-  		allNodes[nodeId].color='rgba(60,60,60,0.6)';
-
-  		if(allNodes[nodeId].font != "#ffffff"){
-  			allNodes[nodeId].font={
-  				color:"#ffffff"
-  			};
-  		}
-
-  		if (allNodes[nodeId].hiddenLabel !== undefined) {
-  			allNodes[nodeId].label=allNodes[nodeId].hiddenLabel;
-  			allNodes[nodeId].hiddenLabel = undefined;
-  		}else if(draw_in_all_canvas_active==1 && nodeId != sourceId){
-  			console.log(allNodes[nodeId].label=allNodes[nodeId].label.substring(0,allNodes[nodeId].label.length-4));
-  		}
-
-  	}
-  	for (var edgeId in allEdges){
-  		allEdges[edgeId].color='rgba(60,60,60,0.6)';
-  	}
-
-  	// if(tagFilterActive == true && draw_in_all_canvas_active == 0){
-  	// 	nodesDataset = temp_nodesDataset;
-  	// 	edgesDataset = temp_edgesDataset;
-  	// 	redrawAll();
-  	// 	tagFilterActive=false;
-  	// }
-
-  	sourceId=undefined;
-  	targetIDs=[] ;
-  	result_path=[""];
-  	source_movement=0;
-  	target_decrease=[];
-  	target_increase=[];
-  	active=0;
-  	draw_in_all_canvas_active=0;
-
-  	var updateArray = [];
-  	for (var edgeId in allEdges) {
-  		updateArray.push(allEdges[edgeId]);
-  	}
-  	edgesDataset.update(updateArray);
-
-  	var updateArray = [];
-  	for (nodeId in allNodes) {
-  		if (allNodes.hasOwnProperty(nodeId)) {
-  			updateArray.push(allNodes[nodeId]);
-  		}
-  	}
-  	nodesDataset.update(updateArray);
-	
-	setAsSource=0;
-	setAsTarget=0;
-	
-	// $('#tagSelectBox').empty();
-	
-	document.getElementById("text_scenario").innerHTML=" ";
-	clearInterval(show_consequences_2);
-    clearInterval(show_consequences_3);
-	clearInterval(show_compliance_2); 
-	clearInterval(show_compliance_3); 
-	clearInterval(show_compliance_4);
-	
-	  	updateLeftPane();
-
-
-  }
-
-
-  // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  Algorithm that allows us to find the path beetween 2 nodes FUNCTION xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
-  function save_changes(){
-// function save(text, filename){
-	var a = document.createElement('a');
-	var nodes_arr = [];
-	var edges_arr = [];
-
-	for (var i in allNodes)
-		nodes_arr.push(allNodes[i]);
-	for (var i in allEdges)
-		edges_arr.push(allEdges[i]);
-	
-	a.setAttribute('href', 'data:text/plain;charset=utf-8,'+encodeURIComponent(JSON.stringify({nodes:nodes_arr, edges:edges_arr})));
-	a.setAttribute('download', "data.json");
-	document.body.appendChild(a);
-	a.click();
-	document.body.appendChild(a);
-
-// }
-}
-// var obj = {a: "Hello", b: "World");
-
-
-
-
-// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  Autocomplete JQUERY  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-
-
+// Function for the search bar
 function updateLeftPane() {
-
-
-	// console.log(nodesDataset);
 
 	var availableTags = nodesDataset.map(function(obj) { 
 		return obj.label != undefined ? obj.label : obj.hiddenLabel; 
@@ -147,7 +25,6 @@ function updateLeftPane() {
 				return [obj.id, obj.label != undefined ? obj.label : obj.hiddenLabel]; 
 			});
 			var id = nodesLabels.filter(o => o[1] == label)[0][0];
-      // console.log(id);
 
       neighbourhoodHighlight({nodes:[id]});
       openAttributePane({nodes:[id]});
@@ -159,18 +36,48 @@ function updateLeftPane() {
 });
 }
 
-
 $(function () {
 	updateLeftPane();
 });
 
+// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx MODES EDIT GRAPH AND MODEL ANALYSIS xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+function edit_graph(){
+model_analysis_active=false;
+edit_graph_active=true;
+
+document.getElementById('editgraph').style.background='rgba(120,120,120,0.6)';
+document.getElementById('modelanalysis').style.background='rgba(220,220,220,0.6)';
+
+var divsToHide = document.getElementsByClassName("vis-manipulation"); //divsToHide is an array
+    for(var i = 0; i < divsToHide.length; i++){
+        divsToHide[i].style.display = "block"; 
+    }	
+} 
+
+function model_analysis(){
+edit_graph_active=false;	
+model_analysis_active=true;
+
+document.getElementById('modelanalysis').style.background='rgba(120,120,120,0.6)';
+document.getElementById('editgraph').style.background='rgba(220,220,220,0.6)';	
+hideButton();
+}
+
+function hideButton(){
+	var divsToHide = document.getElementsByClassName("vis-manipulation"); //divsToHide is an array
+    for(var i = 0; i < divsToHide.length; i++){
+        divsToHide[i].style.display = "none"; 
+    }	
+}
 
 
-// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx TAGGGG xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx TAGS xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 var tabTag=[];
 var check_ifPresent_list=[];
 
+// Allows you to update tags in the left pane when modifying or adding a node with new tags
 function add_tag(){
 	for (var nodeId in allNodes)
 	{
@@ -206,13 +113,11 @@ function add_tag(){
 	
 };
 
-
 var temp_nodesDataset=[];
 var temp_edgesDataset=[];
 var tagFilterActive=false;
 
 $(function(){
-	// console.log($('#tagSelectBox').val());
 	$('#tagSelectBox').on('select2:select select2:unselect',function(){
 		filterByTag();
 	});
@@ -221,13 +126,13 @@ $(function(){
 var nodeId_Array=[];
 var nodeArray=[];
 
+// Allows you to retrace the graph to see the graph filtered (nodes with the tags)
 function filterByTag(){
 	
 	var selectedTag=($('#tagSelectBox').val());
 	
 	closeAttributePane();
 	
-
 	if(selectedTag != null){
 		nodeArray=[];
 		var edgeArray=[];
@@ -277,22 +182,20 @@ function filterByTag(){
 		for(var id_node in nodeArray){
 			if(nodeArray[id_node].id>id_to_replace){
 			var id_to_replace=nodeArray[id_node].id;
-			console.log("old id " + id_to_replace);
+			//console.log("old id " + id_to_replace);
 			nodeArray[id_node].id=parseInt(id_node);
-			console.log("new id " + id_node);
+			//console.log("new id " + id_node);
 
 			for(var id_edge in edgeArray){
 
 				if(edgeArray[id_edge].to == id_to_replace){
-					console.log("to " + edgeArray[id_edge].to);
+					//console.log("to " + edgeArray[id_edge].to);
 					edgeArray[id_edge].to=parseInt(id_node);
-					console.log("to " + edgeArray[id_edge].to);
+					//console.log("to " + edgeArray[id_edge].to);
 				}else if(edgeArray[id_edge].from == id_to_replace){
-					console.log("from " + edgeArray[id_edge].from);
+					//console.log("from " + edgeArray[id_edge].from);
 					edgeArray[id_edge].from=parseInt(id_node);
-					console.log("from " + edgeArray[id_edge].from);
-					console.log(" ");
-
+					//console.log("from " + edgeArray[id_edge].from);
 				}
 			}
 		}
@@ -333,37 +236,13 @@ function filterByTag(){
 	
 }
 
-function reset_dataset(){
-	tagFilterActive=false;
-	nodesDataset= new vis.DataSet([]);
-	edgesDataset=new vis.DataSet([]);
-	console.log(typeof nodesDataset);
-	check_ifPresent_list=[];
-	$('#tagSelectBox').empty();
-	redrawAll();
-	closeAttributePane();
-	
-	/* var tagList = document.getElementById("tagSelectBox");
-	var option = document.createElement("option");
-	option.text = "";
-	tagList.add(option); */
-			
-	
-}
+// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx Identify key parameters xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
+var tab2=new Array();
 
-
-// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx GRAPH xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
-	var tab2=new Array();
-
+// This function creates an array of data that will allow you to draw the scatter plot graph when you click on "identify key parameters"
 function createTab() {
 	
-	/* maxid = 0;
-nodesDataset.map(function(obj){     
-    if (obj.id > maxid) maxid = obj.id;    
-}); */
-
 	var tab=new Array();
 	var ing=0;
 	var ed=0;
@@ -371,16 +250,23 @@ nodesDataset.map(function(obj){
 	for (var i=0; i<maxid+1; i++)
 		{
 		if(allNodes[i] != undefined){
-	tab[indice]=new Array();
+		tab[indice]=new Array();
 		   var selected=allNodes[i];
 		   
-		    if (selected.hiddenLabel !== undefined) {
+		    /* if (selected.hiddenLabel !== undefined) {
 				selected.label = selected.hiddenLabel;
 				selected.hiddenLabel = undefined;
 			} 
+		   tab[indice][0]=selected.label; */
 		   
-		   tab[indice][0]=selected.label;
-
+		   if (selected.hiddenLabel != undefined) {
+			   tab[indice][0]=selected.hiddenLabel;
+			 }
+			else{ 
+			tab[indice][0]=selected.label;
+			}
+			
+			
 				for(var x=0; x<edgesDataset.length; x++ ){
 					if(edgesDataset.get(x).from==selected.id){
 						ing++;
@@ -398,8 +284,8 @@ nodesDataset.map(function(obj){
 			indice++;
 		}
 		}
-	console.log(tab);
-	//return tab;
+	//console.log(tab);
+
 	tab2=new Array();
 	var quit= 0 ;
 	tab2[0]	= tab[0];
@@ -426,58 +312,85 @@ nodesDataset.map(function(obj){
 		return tab2;
 }
 
+// This function calls the createTab() function and uses sessionStorage to access tab2 in Open-graph.html
+function LocalStorage(){
+  createTab();
+  sessionStorage.setItem("storage",JSON.stringify(tab2));
+}
 
 
-function openGraph(){
+// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx RESET PARANETERS xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+ 
+  function reset_parameters(){ 
+  	var updateArray=[];
+	closeAttributePane();
+	active=0 ;
+  	for(var nodeId in allNodes)
+  	{
+  		allNodes[nodeId].shape="ellipse";
+  		allNodes[nodeId].color='rgba(60,60,60,0.6)';
+
+  		if(allNodes[nodeId].font != "#ffffff"){
+  			allNodes[nodeId].font={
+  				color:"#ffffff"
+  			};
+  		}
+
+  		if (allNodes[nodeId].hiddenLabel !== undefined) {
+  			allNodes[nodeId].label=allNodes[nodeId].hiddenLabel;
+  			allNodes[nodeId].hiddenLabel = undefined;
+  		}else if(draw_in_all_canvas_active==1 && nodeId != sourceId){
+  			console.log(allNodes[nodeId].label=allNodes[nodeId].label.substring(0,allNodes[nodeId].label.length-4));
+  		}
+
+  	}
+  	for (var edgeId in allEdges){
+  		allEdges[edgeId].color='rgba(60,60,60,0.6)';
+  	}
+
+  	// if(tagFilterActive == true && draw_in_all_canvas_active == 0){
+  	// 	nodesDataset = temp_nodesDataset;
+  	// 	edgesDataset = temp_edgesDataset;
+  	// 	redrawAll();
+  	// 	tagFilterActive=false;
+  	// }
+
+  	sourceId=undefined;
+  	targetIDs=[] ;
+  	result_path=[""];
+  	source_movement=0;
+  	target_decrease=[];
+  	target_increase=[];
+  	draw_in_all_canvas_active=0;
+
+  	var updateArray = [];
+  	for (var edgeId in allEdges) {
+  		updateArray.push(allEdges[edgeId]);
+  	}
+  	edgesDataset.update(updateArray);
+
+  	var updateArray = [];
+  	for (nodeId in allNodes) {
+  		if (allNodes.hasOwnProperty(nodeId)) {
+  			if(allNodes[nodeId].label.includes("(+)") || allNodes[nodeId].label.includes("(-)") || allNodes[nodeId].label.includes("(?)")){
+  				allNodes[nodeId].label=allNodes[nodeId].label.substring(0,allNodes[nodeId].label.length-4);
+  			}  			
+				updateArray.push(allNodes[nodeId]);
+
+  		}
+  	}
+  	nodesDataset.update(updateArray);
 	
+	// $('#tagSelectBox').empty();
 	
-	 var items = [];
-	  var labells = [];
-  for (var i = 0; i <nodesDataset.length; i++) {
-      items.push({x: tab[i][1], y: tab[i][2], label: tab[i][0] });
+	document.getElementById("text_scenario").innerHTML=" ";
+	clearInterval(show_consequences_2);
+    clearInterval(show_consequences_3);
+	clearInterval(show_compliance_2); 
+	clearInterval(show_compliance_3); 
+	clearInterval(show_compliance_4);
+	
+	updateLeftPane();
+
+
   }
-  
-  for (var i = 0; i <nodesDataset.length; i++) {
-      labells.push(tab[i][0]);
-  }
-
-	
-}
-
-// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx MODE xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
-function edit_graph(){
-model_analysis_active=false;
-edit_graph_active=true;
-
-document.getElementById('editgraph').style.background='rgba(120,120,120,0.6)';
-document.getElementById('modelanalysis').style.background='rgba(220,220,220,0.6)';
-
-
-var divsToHide = document.getElementsByClassName("vis-manipulation"); //divsToHide is an array
-    for(var i = 0; i < divsToHide.length; i++){
-        divsToHide[i].style.display = "block"; 
-	}
-} 
-
-
-
-function model_analysis(){
-edit_graph_active=false;	
-model_analysis_active=true;
-
-document.getElementById('modelanalysis').style.background='rgba(120,120,120,0.6)';
-document.getElementById('editgraph').style.background='rgba(220,220,220,0.6)';	
-hideButton();
-}
-
-function hideButton(){
-	var divsToHide = document.getElementsByClassName("vis-manipulation"); //divsToHide is an array
-    for(var i = 0; i < divsToHide.length; i++){
-        divsToHide[i].style.display = "none"; 
-    }	
-}
-	
-	
-	
-	

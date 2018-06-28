@@ -11,28 +11,32 @@
 	<script src="./fontawesome/svg-with-js/js/fontawesome-all.min.js"></script>
 	
 	<!-- Jquery ui library used for the autocomplete function -->
-	<link rel="stylesheet" href="./jquery-ui-1.12.1/jquery-ui.min.css">
-	<script src="./jquery-ui-1.12.1/jquery-1.12.4.js"></script>
-	<script src="./jquery-ui-1.12.1/jquery-ui.js"></script>  
+	<link rel="stylesheet" href="./jquery/jquery-ui.min.css">
+	<script src="./jquery/jquery-1.12.4.js"></script>
+	<script src="./jquery/jquery-ui.js"></script>  
 
 	<!-- javascript library select2 for the tags -->
 	<link rel="stylesheet" href="./select2/select2.min.css">
 	<script src="./select2/select2.min.js"></script> 
 
 	<!-- initial data -->
-	<script src="dist/standardmodel3.js"></script>
+	<script src="dist/standardmodel.js"></script>
 	
 	<!-- visjs library => docs : http://visjs.org/docs/network/ -->
 	<script type="text/javascript" src="dist/vis.js"></script>
 	<link type="text/css" rel="stylesheet" href="dist/vis-network.min.css">
-	<script type="text/javascript" src="dist/exampleUtil.js"></script>
 	<script type="text/javascript" src="dist/vis-network.min.js"></script>
 	
 	<!-- javascript library for the graph to identify keys parameters -->      
 	<script src="./highcharts/highcharts.js"></script>
 	
-	<!-- My css and js files -->
-	<link type="text/css" rel="stylesheet" href="dist/mycss.css">
+	<!-- css and js files -->
+    <link type="text/css" rel="stylesheet" href="dist/css_general.css"> 
+	<link type="text/css" rel="stylesheet" href="dist/css_buttons_right.css">
+	<link type="text/css" rel="stylesheet" href="dist/css_left_pane.css">
+	<link type="text/css" rel="stylesheet" href="dist/css_right_pane.css">
+	<link type="text/css" rel="stylesheet" href="dist/css_pop_up.css">
+	<link type="text/css" rel="stylesheet" href="dist/css_oncontext_menu.css">
 	<script  type="text/javascript"  src="dist/layout.js"></script>
 	<script  type="text/javascript"  src="dist/event_onclick.js"></script>
 	<script  type="text/javascript"  src="dist/oncontext_menu_function.js"></script>
@@ -49,12 +53,13 @@
 </head>
 
 
-<body onload="model_analysis(); layout_physical()">
+<body onload="model_analysis(); layout_hierarchical()">
 
 	<!-- XXXXXXXXXXXXXXXXXXXX Left pane XXXXXXXXXXXXXXXXXXXXXX -->
+	
 	<div id="optionsContainer" style="text-align: center;"></div>
 
-	<div id="mynetwork"></div>
+	 <div id="mynetwork"></div>
 	<div id="column_left">
 
 		<img src="./images/logo.png" alt="" id="photos">
@@ -63,7 +68,7 @@
 		<p></p>
 		<p></p>
 
-		<div class="ui-widget">
+		<div>
 			<label for="tags" id="soustitre"> Search : </label>
 			<input id="tags">
 		</div>
@@ -84,15 +89,13 @@
 		<button class="custom-identifykp" onclick="LocalStorage(); window.open('Open-graph.html')"><span>Identify keys parameters</span></button> 
 		<button class="custom-rst" onclick="reset_parameters()"><span>Reset</span></button>		 
 
-			</div> 
-
-			<pre id="eventSpan"></pre>
+	</div>  
 
 	<!-- XXXXXXXXXXXXXXXXXXXX Top buttons XXXXXXXXXXXXXXXXXXXXXX -->
 
-			<div>		
+	<div>		
 				<div id="load_click">
-					<input type="image" alt="image" title="Import data" src="dist/img/network/importIcon.png"/>
+					<input type="image" alt="image" title="Import data" src="./images/import_icon.png"/>
 				</div>
 					<input type="file" name="load" id="file"  accept=".json">
 
@@ -127,6 +130,7 @@
 					$('#tagSelectBox').empty();
     				
     				redrawAll();
+					layout_hierarchical();
 					
 					for(var i in allNodes){
 						console.log()
@@ -140,13 +144,13 @@
 				</script>
     </div>
 
-<div id="container" style="position: fixed;  right: 50px; top: 60px; height:40vh; width:80vw"></div>
+
 
 
     <!-- XXXXXXXXXXXXXXXXXXXX Right popup pane XXXXXXXXXXXXXXXXXXXXXX -->
 
     <div id="attributepane">
-    	<div class="text">
+    	 <div class="text"> 
     		<div title="Close" class="left-close returntext" onclick="closeAttributePane();"> 
     			 <div class="c cf"><span id="soustitre">Return to the full network</span></div>
     		</div>
@@ -162,16 +166,7 @@
     		<p  id="affichageTag" class="soustitre"></p>
 			<span id="soustitre">Description :</span>
     		<p  id="affichageDescription" class="soustitre"></p>
-    		<div class="nodeattributes">
-    			<div class="name"></div>
-    			<div class="data"></div>
-
-
-    			<div class="link">
-    				<ul>
-    				</ul>
-    			</div>
-    		</div>			
+    		
     		<div class="headertext">
     			<span id="soustitre" >Influencing factor</span>
     		</div>	
@@ -181,7 +176,6 @@
     			<span id="soustitre" >Influenced factor</span>
     		</div>	
     		<p  id="influenced" class="soustitre"></p>
-
 
     	</div>
     </div>
@@ -213,6 +207,22 @@
     			</li>
     		</menu>
     	</li>
+		
+		<li class="menu-item submenu">
+    		<button type="button" class="menu-btn" id="assume">  <i class="fa fa-check"></i><span class="menu-text">Assume value</span> </button>
+    		<menu class="menu">
+    			<li class="menu-item">
+    				<button type="button" class="menu-btn" id="assume_increase"> <i class="fa fa-arrow-up"></i> <span class="menu-text">Increasing</span> </button>
+    			</li>
+    			<li class="menu-item">
+    				<button type="button" class="menu-btn" id="assume_decrease"> <i class="fa fa-arrow-down"></i> <span class="menu-text">Decreasing</span> </button>
+    			</li>
+    		</menu>
+    	</li>
+
+
+
+
     	<li class="menu-item">
     		<button type="button" class="menu-btn" id="unset"> <i class="fa fa-eraser"></i> <span class="menu-text">Unset</span> </button>
     	</li>
@@ -227,7 +237,7 @@
     	<li class="menu-item">
     		<button type="button" class="menu-btn" id="remove"> <i class="fa fa-trash"></i> <span class="menu-text">Delete</span> </button>
     	</li>
-</div>
+      </div>
 	</menu>
 
 
@@ -244,12 +254,9 @@
 
 				<span id="soustitre">Label </span><input type="text" style="white-space:nowrap;" id="node-label" value="new value" ><br><br>
 				<span id="soustitre">Tag    </span><select id="tag-input" name="tagsFilters[]" multiple="multiple" style="width:60%"></select>
-				
-				<!-- <div class="container"> -->
 
 				<div class="row">
 					<div id='col-md-12' >
-
 
 						<div class="toolbar">
 
@@ -291,8 +298,6 @@
 			</div>
 
 				<script type="text/javascript" >
-
-					<!-- var colorPalette = ['000000', 'FF9966', '6699FF', '99FF66', 'CC0000', '00CC00', '0000CC', '333333', '0066FF', 'FFFFFF']; -->
 					var colorPalette = ['FF0000', 'FFC000', 'FFFF00', '92D050', '00B050', '00B0F0', '0070C0', '7030A0', 'FFFFFF', '000000'];
 					var forePalette = $('.fore-palette');
 					var backPalette = $('.back-palette');
@@ -319,21 +324,21 @@
 			<input class="button_popup" type="button" value="Save" id="saveButton"/>
 			<input class="button_popup" type="button" value="Cancel" id="cancelButton"/>
 		</div>
+		
+		<!-- XXXXXXXXXXXXXXXXXXXX AddEdge/EditEdge popup window XXXXXXXXXXXXXXXXXXXXXX -->
 
 		<div id=network-popUp_edge>
 			<span id="titre">Set edge properties</span> <br>
-			<!-- <div> -->
 			<br>
 			<label class="checkbox_edge"><input type="checkbox" name="label" class="boxplus"/>  <span class="soustitre"> Same direction </span><span class="checkmark"></span></label><br>
 			<label class="checkbox_edge"><input type="checkbox" name="label" class="boxminus"/> <span class="soustitre"> Opposite direction </span><span class="checkmark"></span></label><br>
-			<!-- </div> -->
 			<br>
 			<input class="button_popup" type="button" value="Save" id="saveButton_edge" />
 			<input class="button_popup" type="button" value="Cancel" id="cancelButton_edge" />
 		</div>
 
 
-
+			<!-- XXXXXXXXXXXXXXXXXXXX Question mark button and popup window XXXXXXXXXXXXXXXXXXXXXX -->
 
 		<div id="questionMark-popUp">
 			<img src="./images/fancybox_sprite.png" alt="" id="button_close" onclick="close_questionmark_popup()">
@@ -354,12 +359,11 @@
 			<input type="image" alt="image" src="./images/questionMark.png" onclick="questionMark_click()"/> 
 		</div>
 
-
 		<div id="text_scenario_css">
 			<p id="text_scenario" class="usage_scenario"></p>
 		</div>
 
-		<br />
+		
 	
 
 	</body>

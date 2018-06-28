@@ -1,9 +1,16 @@
+ // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+// File that contains all the functions used in the oncontext menu, for the analysis mode and edit mode 
+// XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+
+// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  FUNCTIONS FOR ANALYSIS MODE xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+// Set the selected node as a source and make the set as source possible if the selected node is already set as a target
 function set_as_source(){ 
 
 	neighbourhoodHighlight({nodes:[]});
 
 	if(sourceId == undefined ){
-		console.log(sourceId);
 		// if(allNodes[idselect].shape!="triangle"){
 			for(var i in targetIDs)
 				if(idselect == targetIDs[i]){
@@ -18,10 +25,8 @@ function set_as_source(){
 
 			// }
 		}else{
-			console.log("je rentre");
 			target_storage();
 			set_as_source();
-
 		}
 
 		var updateArray = [];
@@ -39,7 +44,8 @@ function set_as_source(){
 	var temp_targetIds;
 	var temp_idselect;
 
-	function target_storage(){
+// Store the targets id and call the appropriate function depending on the what is in target_increase and target_decrease	
+function target_storage(){
 		temp_targetIds=targetIDs;
 		temp_target_decrease=target_decrease;
 		temp_target_increase=target_increase;
@@ -66,10 +72,11 @@ function set_as_source(){
 		target_increase=temp_target_increase;
 		target_decrease=temp_target_decrease;
 		idselect=temp_idselect;
+		
 	}
 
-
-	function set_as_target(){
+// Change the shape of the node if the node is a target and put it as a star and reset the shape of the node if it’s already a star	
+function set_as_target(){
 
 		if(allNodes[idselect].shape!="star"){
 			if(idselect == sourceId){
@@ -110,7 +117,7 @@ function set_as_source(){
 
 }
 
-
+// Import the good image of the source or the target if it’s selected as increase
 function increase(){ 
 
 	if(sourceId==idselect){
@@ -151,7 +158,7 @@ nodesDataset.update(updateArray);
     // hideMenu();
 }
 
-
+// Same than previous function but when decrease is selected 
 function decrease(){ 
 
 	if(sourceId==idselect){
@@ -193,65 +200,113 @@ nodesDataset.update(updateArray);
     // hideMenu();
 }
 
+// Reset the (-), (+) and (?) if it exists in the label
+function check_if_sign_in_label(){
+ 	  	var updateArray = [];
+  	for (nodeId in allNodes) {
+  		if (allNodes.hasOwnProperty(nodeId)) {
+			if(allNodes[nodeId].label != undefined){
+  			if(allNodes[nodeId].label.includes("(+)") || allNodes[nodeId].label.includes("(-)") || allNodes[nodeId].label.includes("(?)")){
+  				allNodes[nodeId].label=allNodes[nodeId].label.substring(0,allNodes[nodeId].label.length-4);
+  			}  			
+			updateArray.push(allNodes[nodeId]);
 
+  		}
+		}
+  	}
+  	nodesDataset.update(updateArray);
+  	}
+	
+// Call all the functions necessary when the node is selected as an increasing source	
 function source_increase(){
-	setAsSource=1;
 	if(targetIDs.length == 0 ){
 		set_as_source();
 		increase();
-		draw_in_all_canvas();
-		
+   		check_if_sign_in_label();
+		draw_in_all_canvas();		
 	}else if(targetIDs.length != 0){
 		set_as_source();
 		increase();
+		check_if_sign_in_label();
 		draw_with_target();
-		
-
 	}
 		 updateLeftPane();
-
 }
 
+// Call all the functions necessary when the node is selected as an decreasing source
 function source_decrease(){
-	setAsSource=1;
+	check_if_sign_in_label();
 	if(targetIDs.length == 0){
 		set_as_source();
 		decrease();
+		check_if_sign_in_label();
 		draw_in_all_canvas();
-	
-
 	}else if(targetIDs.length != 0){
 		set_as_source();
 		decrease();
+		check_if_sign_in_label();
 		draw_with_target();
 	}
 	 updateLeftPane();
 }
+
+// Call all the functions necessary when the node is selected as an increasing target
 function increase_target(){
 	set_as_target();
 	increase();
-	setAsTarget=1;
 
 	if(sourceId != undefined){
 		draw_with_target();
+	}else{
+		target_propagation();
 	}
 		 updateLeftPane();
 
 }
 
+// Call all the functions necessary when the node is selected as an decreasing target
 function decrease_target(){
 	set_as_target();
 	decrease();
-	setAsTarget=1;
 
 	if(sourceId != undefined){
 		draw_with_target();
+	}else{
+		target_propagation();
 	}
-		 updateLeftPane();
+	updateLeftPane();
 
 }
 
+var assumingValue;
 
+// Store the assume value in the node label and call the propagation function
+function increase_assume(){
+	console.log(allNodes[idselect]);
+	if(sourceId != undefined && allNodes[idselect].label.includes("(?)") ){
+		assumingValue=1;
+        allNodes[idselect].label=allNodes[idselect].label.substring(0,allNodes[idselect].label.length-4);
+        allNodes[idselect].label += " (+)";  
+		console.log(assumingValue);
+		draw_in_all_canvas();
+	}
+}
+
+// Store the assume value in the node label and call the propagation function
+function decrease_assume(){
+		console.log(allNodes[idselect]);
+
+	if (sourceId != undefined && allNodes[idselect].label.includes("(?)")){
+		assumingValue=-1;
+        allNodes[idselect].label=allNodes[idselect].label.substring(0,allNodes[idselect].label.length-4);
+		allNodes[idselect].label += " (-)"; 
+
+		console.log(assumingValue);
+		draw_in_all_canvas();
+	}
+}
+
+// Reset the source or the target variable and put the shape back to ellipse
 function unset_selected(){
 
   	if(allNodes[idselect].shape != "ellipse" && idselect!=sourceId){
@@ -300,7 +355,9 @@ function unset_selected(){
   	nodesDataset.update(updateArray);
 }
 
+// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  FUNCTIONS FOR EDIT MODE xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
+// Function to edit node
 function editNode(){ 
 if (tagFilterActive==false){
 	document.getElementById('network-popUp').style.display = 'block';
@@ -370,7 +427,7 @@ if (tagFilterActive==false){
 }
 }
 
-
+// Functions to remove one or more nodes
  function remove() {
 	if (tagFilterActive==false){
 	var selected = network.getSelectedNodes();
@@ -484,6 +541,7 @@ else{
   // hideMenu();
 }
 
+// Function to edit edge
 function editEdge(){
 	if (tagFilterActive==false){
 	var edge_label_value;
@@ -541,6 +599,7 @@ function editEdge(){
    } 	
 }
 
+// Functions to remove one or more edges
 function removeEdge() {
 	
 	if (tagFilterActive==false){
@@ -552,8 +611,6 @@ function removeEdge() {
 		return a.id - b.id;
 		});
 	selected.reverse();
-		
-	console.log(selected);
 
 	 for (var n in selected) {
       idselect = selected[n];
@@ -565,7 +622,6 @@ function removeEdge() {
 		
 	 }
  }
- 
  
 function removeEdge2(){
 	   	var length=edgesDataset.length; 

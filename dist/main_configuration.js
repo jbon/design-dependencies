@@ -1,77 +1,74 @@
-      var network={}; 
+// XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+// File that contains all the functions needed for configuration
+// XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+
+// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  GLOBAL VARIABLES xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+	  
+	  // data 
+	  var nodesDataset = new vis.DataSet(nodes);
+      var edgesDataset = new vis.DataSet(edges); 	  
+	  var container;  
+	  var data;
+	  var network={}; 
       var allNodes; 
       var allEdges; 
-
-      var highlightActive = false;
-      // var nodes=[];
-      // var edges=[];
-      var nodesDataset = new vis.DataSet(nodes);
-      var edgesDataset = new vis.DataSet(edges); 
-      var exportAreavalue;
-      var options;
-
-      var sourceId;
-      var targetIDs=[];
+      
+	  //variables for the propagation
       var idselect;
-
-
-      var data;
-      var source_movement=0; 
+	  var sourceId;
+      var targetIDs=[];
+	  var source_movement=0; 
       var target_increase=[];
       var target_decrease=[];
-
+	  var active=0;
+	  
+	  // variables position for the click/doubleclick
       var locX=0;
       var locY=0;
-
-
       var positionX=0;
       var positionY=0;
-      var active=0;
-      //var container;
-	  var containerr;
-
 	  
-	    var show_menu=0;
-		var setAsSource=0; 
-	    var setAsTarget=0;
-
-	    var tabTagg=[];
-      var DIR="dist/triangle_star_img/";
+	  // variables to know which mode is active 	
+      var model_analysis_active;
+      var edit_graph_active;
 	  
-	    var menuWidth;
-	    var menuHeight;
-	    var windowWidth;
-	    var windowHeight;
-
-      var popUpEditEdges=0;
+      //variable for edit edge
       var editEdgeId;
-	  
-	  var selectedNode;
-var selectedEdge;
 
-var model_analysis_active;
-var edit_graph_active;
+	  // path for the target images  
+      var DIR="dist/triangle_star_img/";
+	 
+	  // variables for the multiselection
+	  var canvas;
+	  var ctx;
+	  var rect = {}, drag = false;
+	  var drawingSurfaceImageData;
+	  var nodesIdInDrawing = [];
 	  
-	    var canvas;
-		var ctx;
-		var rect = {}, drag = false;
-		var drawingSurfaceImageData;
-		var nodesIdInDrawing = [];
+	  // variable for the text guidance (to know when to change the text)
+	  var show_menu=0;
+	  
+	  // variables for the oncontext menu  (corner display)
+	  var menuWidth;
+	  var menuHeight;
+	  var windowWidth;
+	  var windowHeight;
 
- // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  CONFIGURATION FUNCTION xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  CONFIGURATION FUNCTION xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  
+ // Configuration function for the physical layout
+ // In the options, definition of the node style, edges style, interaction, configure, physics, manipulation.
+ //See vis.js documentation for the options :
+ // http://visjs.org/docs/network/index.html?keywords=options#options
 
  function redrawAll() {
-containerr = $("#mynetwork");
- //container = document.getElementById('mynetwork');
+container = $("#mynetwork");
 
- 	 options = { 
-      /*  layout:{
-         improvedLayout: false
-       }, */
-      nodes: {
+options = { 
+      
+    nodes: {  
       	margin: 5,
-        // color:'#000000',
-        
         widthConstraint: {
         	maximum: 150
         },
@@ -86,7 +83,6 @@ containerr = $("#mynetwork");
         		maxVisible: 20
         	}
         },
-
         font: {
         	color:'#ffffff',
         	size: 16,
@@ -102,18 +98,13 @@ containerr = $("#mynetwork");
     	color:{
     		inherit:false,
     		color:'rgba(60,60,60,0.6)',
-    		//hover:'rgba(60,60,60,0.6)',
     		highlight:'rgba(60,60,60,0.6)',
-
     	},
-
     	width: 1,
-
     	font: {
     		size:30,
     		align: 'top'
     	},
-
     	arrows: 'to',
     },
 
@@ -125,25 +116,16 @@ containerr = $("#mynetwork");
     	tooltipDelay: 200,
     	navigationButtons: true,
     	multiselect:true
-      // keyboard: true
+     },
 
-  },
-
-  configure: {
+    configure: {
   	container: document.getElementById('optionsContainer'),
   	showButton: false
-  },   
+     },    
  
-  physics:{
+    physics:{
   	enabled: true,
 
-      // barnesHut: {
-      //   gravitationalConstant: -10000,
-      //   centralGravity: 0.15,
-      //   springLength: 95,
-      //   springConstant: 0.02,
-      //   avoidOverlap: 0
-      // },
       barnesHut:{
         gravitationalConstant:-50000,
       	centralGravity:0.0002,
@@ -163,15 +145,18 @@ containerr = $("#mynetwork");
       }
   },
 
-  manipulation: {
+    manipulation: {
+		
     enabled:true,
   	initiallyActive :true,
 
-  addNode: function (data, callback) {
-	  if (tagFilterActive==false){
+    addNode: function (data, callback) {
+		
+	if (tagFilterActive==false){
+		  
    document.getElementById('network-popUp').style.display = 'block';
    document.getElementById('node-label').value="";
-	 document.getElementById('tag-input').value="";
+   document.getElementById('tag-input').value="";
    document.getElementById('node-label').focus(); 
 
    $('#node-description').html("");
@@ -320,7 +305,6 @@ containerr = $("#mynetwork");
 	}	
     },
 	
-	
     editNode:function(data,callback){
 	if (tagFilterActive==false){
     editNode();
@@ -334,7 +318,6 @@ containerr = $("#mynetwork");
 	}
     },
 	
-	
     editEdge:function(data,callback){
 		if (tagFilterActive==false){
     	var edge_label_value;
@@ -343,7 +326,6 @@ containerr = $("#mynetwork");
               id:data.id,
               from:data.from,
               to:data.to
-              // label:edge_label_value
             });
 
         var updateArray = [];
@@ -354,7 +336,6 @@ containerr = $("#mynetwork");
 
     	if (typeof data.to == "number") {
 
-    		// document.getElementById('operation').innerHTML = "Add Edge";
     		document.getElementById('network-popUp_edge').style.display = 'block';
 
     		$('input.boxplus').prop('checked',false);
@@ -407,7 +388,6 @@ containerr = $("#mynetwork");
     			updateArray.push(allEdges[edgeId]);
     		}
     		edgesDataset.update(updateArray);
-        popUpEditEdges=1;
     	}else{
 
           document.getElementById('network-popUp_edge').style.display = 'block';
@@ -467,7 +447,6 @@ containerr = $("#mynetwork");
 	  }
     },
 	
-	
     deleteNode:function(data,callback){
 		if (tagFilterActive==false){
 		idselect = data.nodes[0];
@@ -475,7 +454,8 @@ containerr = $("#mynetwork");
 		neighbourhoodHighlight({nodes:[]});
 		 }
     },
-    deleteEdge:function(data,callback){
+    
+	deleteEdge:function(data,callback){
 		if (tagFilterActive==false){
   		idselect=data.edges[0];
       console.log(idselect);
@@ -483,17 +463,21 @@ containerr = $("#mynetwork");
 		 }
     }
   }
-};
+
+  };
 
 data = {nodes: nodesDataset , edges:edgesDataset };
 
-network = new vis.Network(containerr[0], data, options);  
-
+network = new vis.Network(container[0], data, options);  
 
 allNodes=nodesDataset.get({returnType:"Object"});
 allEdges=edgesDataset.get({returnType:"Object"});
+
 listener();
 
+ if(model_analysis_active){
+		hideButton();
+   } 
 
 if (tagFilterActive==false){
 maxid = 0;
@@ -504,14 +488,15 @@ nodesDataset.map(function(obj){
 
  }
  
-  // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  CLICK EVENT xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+ 
+// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  CLICK EVENT xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   
+  // This function defines onclick actions (onclick on a node, doubleclick on the network, right click on a node or an edge)
    function listener(){
 	 
   if(nodesDataset.length == 0){
   	network.setOptions( { physics: false } );
   }
-
 
   network.on("stabilizationIterationsDone", function () {
   	network.setOptions( { physics: false } );
@@ -522,53 +507,20 @@ nodesDataset.map(function(obj){
   		neighbourhoodHighlight(params);
   		openAttributePane(params);
   		focusNode(params.nodes[0]);
-      idselect=params.nodes[0];
-	  console.log(params);
-	  console.log(params[0]);
-	  
+        idselect=params.nodes[0];
   	}else{
   		neighbourhoodHighlight({nodes:[]});
   		closeAttributePane();
   	}
-	if(model_analysis_active){
+	 if(model_analysis_active){
 		hideButton();
-   }
+   } 
   });
   
-  /*  document.onclick=function(params){
-  	if(params.nodes.length!=0){ 
-  		neighbourhoodHighlight(params);
-  		openAttributePane(params);
-  		focusNode(params.nodes[0]);
-      idselect=params.nodes[0];
-  	}else{
-  		neighbourhoodHighlight({nodes:[]});
-  		closeAttributePane();
-  	}
-  }  */
-  
- /*  document.onclick=function(){
-	  var selected=network.getSelectedNodes();
-	  console.log(salut);
-  	if(selected.length!=0){ 
-		console.log(salut);
-  		//neighbourhoodHighlight(selected[0]);
-  		//openAttributePane(selected[0]);
-  		focusNode(selected[0]);
-      //idselect=params.nodes[0];
-  	}else{
-  		neighbourhoodHighlight({nodes:[]});
-  		closeAttributePane();
-  	}
-  } */
-
   document.onclick=function(e){
-
-  	if(locX==0 && locY==0)
-  	{
-  		locX=e.pageX,
+  	if(locX==0 && locY==0){
+		locX=e.pageX,
   		locY=e.pageY
-     console.log(locX + "  " + locY);
     }
 }
   // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  Add Node on doubleclick FUNCTION xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
@@ -576,12 +528,10 @@ nodesDataset.map(function(obj){
   network.on("doubleClick",addNodefunction);
 
   // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  oncontext menu FUNCTION xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
-
-  var menu = document.querySelector('.menu');
-  var cursorX;
-  var cursorY;
-
+    var menu = document.querySelector('.menu');
+	var cursorX;
+    var cursorY;
+	  
   document.onmousemove = function(e){
   	cursorX = e.pageX;
   	cursorY = e.pageY;
@@ -589,12 +539,9 @@ nodesDataset.map(function(obj){
 
   function showMenuEdge(x,y){
     var selectedEdge= network.getEdgeAt({x:cursorX, y:cursorY});
-    //console.log(selectedEdge);
 
     if (selectedEdge != undefined) {
-      menu.classList.add('show-menu');
-      //menu.style.left = x + 'px';
-      //menu.style.top = y + 'px';
+    menu.classList.add('show-menu');
     
     menuWidth = menu.offsetWidth;
     menuHeight = menu.offsetHeight + 14;
@@ -620,20 +567,13 @@ nodesDataset.map(function(obj){
       menu.style.top = y + "px";
     }
   
-      
-
-      // console.log(menu.offsetWidth);
-
-      // idselect=selectedEdge;
     show_menu=1;
   
     }
     else {
       hideMenu();
-    //resizeListener();
     }
 
-  // params.event.preventDefault();
   return selectedEdge;
   }
 
@@ -643,8 +583,6 @@ nodesDataset.map(function(obj){
 
   	if (selectedNode != undefined) {
   		menu.classList.add('show-menu');
-  		//menu.style.left = x + 'px';
-  		//menu.style.top = y + 'px';
 		
 		menuWidth = menu.offsetWidth;
 		menuHeight = menu.offsetHeight + 14;
@@ -670,29 +608,16 @@ nodesDataset.map(function(obj){
 			menu.style.top = y + "px";
 		}
 	
-  		// console.log(menu.offsetWidth);
-
-  		// idselect=selectedNode;
 		show_menu=1;
 	
   	}
   	else {
   		hideMenu();
-		//resizeListener();
   	}
 
-  // params.event.preventDefault();
   return selectedNode;
 }
 
-/* function resizeListener() {
-	
-   window.onresize = function(e) {
-	   alert('ok');
-    hideMenu();
-  }; 
-  
-} */
 
 function hideMenu(){
 	menu.classList.remove('show-menu');
@@ -701,19 +626,14 @@ function hideMenu(){
 }
 
 function onContextMenu(e){
-	e.preventDefault();
-	 selectedNode=showMenu(e.pageX, e.pageY);
+   e.preventDefault();
+   selectedNode=showMenu(e.pageX, e.pageY);
    selectedEdge=showMenuEdge(e.pageX, e.pageY);
-
- // console.log(selectedNode + " edge " + selectedEdge);
 	
   if(selectedNode != undefined){
 
     idselect=selectedNode;
-    
     showMenu(e.pageX, e.pageY);
-    
-    console.log("node");
   	
 	if (model_analysis_active==true){
 		$("#data-action").show();
@@ -725,24 +645,18 @@ function onContextMenu(e){
 		$("#toHide").hide();
         $("#toHide2").show();
 	}
-    // $("#toHide").show();
 
     document.getElementById("source_increase").onclick=source_increase;
-
   	document.getElementById("source_decrease").onclick=source_decrease;
-
   	document.getElementById("target_increase").onclick=increase_target; 
-
-  	document.getElementById("target_decrease").onclick=decrease_target; 
-
+  	document.getElementById("target_decrease").onclick=decrease_target;     
+	document.getElementById("assume_increase").onclick=increase_assume; 
+    document.getElementById("assume_decrease").onclick=decrease_assume;
     document.getElementById("unset").onclick=unset_selected; 
-
   	document.getElementById("edit").onclick=editNode;
-
   	document.getElementById("remove").onclick=remove;
     
     selectedNode=undefined;
-
 
     document.addEventListener('click', onClick, false);
 
@@ -752,7 +666,6 @@ function onContextMenu(e){
 
     console.log("edge");
 
-   // $("#toHide").hide();
    if (model_analysis_active==true){
 		 $("#data-action").hide();
 	}	
@@ -765,9 +678,7 @@ function onContextMenu(e){
     $('#editProperties').text("Edit properties");
 
     document.getElementById("edit").onclick=editEdge;
-
     document.getElementById("remove").onclick=removeEdge;
-    
     document.addEventListener('click', onClick, false);
 
     selectedEdge=undefined;
@@ -778,7 +689,6 @@ function onContextMenu(e){
 
 function onClick(e){
 	hideMenu();
-	//resizeListener();
 	document.removeEventListener('click', onClick);
 }
 
@@ -802,40 +712,26 @@ layout_hierarchical_active=false;
 var node_pos_onclkX=0;
 var node_pos_onclkY=0;
 
+// get positions
 $(document).on("click",function(e){
       node_pos_onclkX=e.pageX;
       node_pos_onclkY=e.pageY;
 
     if( network.getEdgeAt({x:node_pos_onclkX, y:node_pos_onclkY}) != undefined){
       editEdgeId= network.getEdgeAt({x:node_pos_onclkX, y:node_pos_onclkY});
-      console.log(editEdgeId);
     }
 });
 
+// actions when the esc key is pressed
 $(document).keydown(function(e) {        
 	if (e.keyCode == 27) { 
 		document.getElementById('network-popUp').style.display = 'none';
-	}
-});
-
-$(document).keydown(function(e) {        
-	if (e.keyCode == 27) {
 		document.getElementById('network-popUp_edge').style.display = 'none';
-	}
-});
-
-$(document).keydown(function(e) {        
-	if (e.keyCode == 27) {
-		/* network.setOptions(
-		{
-			manipulation:{
-				initiallyActive :true
-			}
-		}); */
 		reset_parameters();
 	}
 });
 
+// action when the delete key is pressed
 $(document).keydown(function(e) {
 		if (tagFilterActive==false){
    if (e.keyCode == 46 && idselect!=undefined ) {
@@ -844,13 +740,8 @@ $(document).keydown(function(e) {
   }
 });
 
-// $("div.vis-button.vis-edit").on("click",function(){
-//   console.log(data.from + "  " + data.to);
-// });
-
 
  // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  MULTI SELECTION xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
 
   function saveDrawingSurface() {
    drawingSurfaceImageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
@@ -862,11 +753,9 @@ function restoreDrawingSurface() {
 
 function selectNodesFromHighlight() {
     var fromX, toX, fromY, toY;
-    // var nodesIdInDrawing = [];
 	nodesIdInDrawing = [];
     var xRange = getStartToEnd(rect.startX, rect.w);
     var yRange = getStartToEnd(rect.startY, rect.h);
-
     var allNodes = nodesDataset.get();
     for (var i = 0; i < allNodes.length; i++) {
         var curNode = allNodes[i];
@@ -884,12 +773,11 @@ function getStartToEnd(start, theLen) {
 }
 
 $(document).ready(function() { 
-    containerr.on("mousemove", function(e) {
+    container.on("mousemove", function(e) {
         if (drag) { 
             restoreDrawingSurface();
             rect.w = (e.pageX - this.offsetLeft) - rect.startX;
             rect.h = (e.pageY - this.offsetTop) - rect.startY ;
-
             ctx.setLineDash([5]);
             ctx.strokeStyle = "rgb(102, 102, 102)";
             ctx.strokeRect(rect.startX, rect.startY, rect.w, rect.h);
@@ -899,37 +787,30 @@ $(document).ready(function() {
         }
     });
 
-    containerr.on("mousedown", function(e) {
+    container.on("mousedown", function(e) {
         if (e.button == 2) { 
-			
 			canvas = network.canvas.frame.canvas;
 			ctx = canvas.getContext('2d');
-			//console.log("test");
-			
             selectedNodes = e.ctrlKey ? network.getSelectedNodes() : null;
             saveDrawingSurface();
             var that = this;
             rect.startX = e.pageX - this.offsetLeft;
             rect.startY = e.pageY - this.offsetTop;
             drag = true;
-            containerr[0].style.cursor = "crosshair";
+            container[0].style.cursor = "crosshair";
         }
     }); 
 
-    containerr.on("mouseup", function(e) {
+    container.on("mouseup", function(e) {
         if (e.button == 2) { 
-
             restoreDrawingSurface();
             drag = false;
-
-            containerr[0].style.cursor = "default";
+            container[0].style.cursor = "default";
             selectNodesFromHighlight();
         }
 		
-		if (network.getSelectedNodes().length!= 0 && edit_graph_active==true)
-			{
-					 network.setOptions(
-		{
+		if (network.getSelectedNodes().length!= 0 && edit_graph_active==true){
+		     network.setOptions({
 			manipulation:{
 				initiallyActive :true
 			}
@@ -939,14 +820,4 @@ $(document).ready(function() {
     });
 
 document.body.oncontextmenu = function() {return false;};
-
-	//network = new vis.Network(containerr[0], data, options);
-
 });   
-
-function LocalStorage(){
-  createTab();
-  sessionStorage.setItem("storage",JSON.stringify(tab2));
-
-
-}

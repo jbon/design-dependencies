@@ -1,49 +1,31 @@
-var layout_physical_active=true;
-var layout_hierarchical_active=false; 
+// XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+// File that contains the two functions for the layout : layout_physical() and layout_hierarchical()
+// XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+var layout_physical_active;
+var layout_hierarchical_active; 
 
 var temp;
 var allNodesTemp;
 var maxid;
 
-/*  $('input[name=layout]').change(function(){
-    if($(this).is(':checked')) {
-     layout_physical()
-    } else {
-        layout_hierarchical()
-    }
-	}); */
-
-
+// It displays the data in a physical layout
  function layout_physical(){ 
 	document.getElementById('physical').style.background='rgba(120,120,120,0.6)';
-document.getElementById('hierarchical').style.background='rgba(220,220,220,0.6)';
+    document.getElementById('hierarchical').style.background='rgba(220,220,220,0.6)';
  
 	if(layout_physical_active != true){
-
-	   document.getElementById("text_scenario").innerHTML="";
-	   console.log(typeof $("#text_scenario")[0].innerHTML);
-
 		redrawAll();
-	}/* else if($("#text_scenario")[0].innerHTML.includes("You are already on the") == false){
-
-	  		document.getElementById("text_scenario").innerHTML+="<br>" + "You are already on the physical layout !";
-		} */
+	}
 	
 } 
 
+// It displays the data in a hierarchical layout
 function layout_hierarchical(){
-	
-	document.getElementById('hierarchical').style.background='rgba(120,120,120,0.6)';
-document.getElementById('physical').style.background='rgba(220,220,220,0.6)';
-	
-		//console.log(JSON.stringify(allNodes));
-	//allNodes=nodesDataset.get({returnType:"Object"});
-	
-	/* maxid = 0;
-nodesDataset.map(function(obj){     
-    if (obj.id > maxid) maxid = obj.id;    
-}); */
 
+	document.getElementById('hierarchical').style.background='rgba(120,120,120,0.6)';
+    document.getElementById('physical').style.background='rgba(220,220,220,0.6)';
+	
 		var updateArray = [];
  	for (var nodeId in allNodes) {
  		if (allNodes.hasOwnProperty(nodeId)) {
@@ -52,12 +34,8 @@ nodesDataset.map(function(obj){
  	}
 	temp= new vis.DataSet(updateArray);
 	
-	//console.log(JSON.stringify(temp));
-
-
+	
 	if(layout_hierarchical_active==false){
-	   
-	   document.getElementById("text_scenario").innerHTML="";
 	
 	 // Create a new directed graph 
 	 var g = new dagre.graphlib.Graph();
@@ -84,7 +62,6 @@ nodesDataset.map(function(obj){
 	 dagre.layout(g);
 
 	 var i=0;
-	//g.nodes().forEach(function(v)
 
 	for (var nodeId=0;nodeId<maxid+1;nodeId++){
 		if (allNodes[i]!= undefined)
@@ -182,11 +159,12 @@ options = {
 
   },
 
-  configure: {
+   configure: {
   	container: document.getElementById('optionsContainer'),
   	showButton: false
   },   
- 
+  
+  
   physics:{
   	enabled: false,
   },
@@ -436,7 +414,6 @@ options = {
     			updateArray.push(allEdges[edgeId]);
     		}
     		edgesDataset.update(updateArray);
-        popUpEditEdges=1;
     	}else{
 
           document.getElementById('network-popUp_edge').style.display = 'block';
@@ -513,18 +490,14 @@ options = {
 
 
 	data = {nodes: nodesDataset , edges:edgesDataset };
-	network = new vis.Network(containerr[0], data, options);  
+	network = new vis.Network(container[0], data, options);  
 	listener();
-	    //console.log(tempNodeDataset);
 
 		layout_physical_active=false;
 		layout_hierarchical_active=true;
 
     }
 	
-	else if($("#text_scenario")[0].innerHTML.includes("You are already on the") == false) {
-	  		document.getElementById("text_scenario").innerHTML+="<br>" + "You are already on the hierarchical layout !";
-		} 
 
 	allNodes=temp.get({returnType:"Object"});
 	
@@ -543,13 +516,9 @@ options = {
 	  return item;
 	}));
 	
-
-	/* console.log(JSON.stringify(allNodes));
-	console.log(JSON.stringify(temp));
-	console.log(JSON.stringify(nodesDataset)); */
-	
-	
- 
+if(model_analysis_active){
+		hideButton();
+   }
 	}
 
    
