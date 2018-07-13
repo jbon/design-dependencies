@@ -11,7 +11,7 @@ This tool allows displaying the network built by all causal relations between de
 ## Installation and use
 There is no installation required. Just download the package on a local folder. 
 To use the application, open the file "Design-dependencies.html" with a web brower. That's it! 
-The tool is still under development, so there is no user manual so far. Work in progress...
+The tool is still under development, so there is no user manual so far. A bit of development documentastion is available [here](doc/Development-doc.md). Work in progress...
 
 ## Dependencies / credits
 

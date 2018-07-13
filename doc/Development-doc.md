@@ -1,10 +1,14 @@
 # Development documentation
 
-[TOC]
+Table of contents:
+* [Software architecture](#software-architecture)
+* [Data model](#data-model)
+* [File format](#file-format)
+* [Functions](#functions)
 
 ## Software architecture
 
-####Custom source files
+#### Custom source files
 - HTML Files (in root dir ./)
   - `Design-dependencies.html`
   - `Open-graph.html`
@@ -25,7 +29,7 @@
   - `graph.js`
   - `standardmodel.js`
 
-###Used libraries
+### Used libraries
 
 - Vis.js (in ./dist)
   - `vis.js`
