@@ -50,7 +50,7 @@ Table of contents:
   - `fontawesome-all.min.css`
   - `fontawesome-all.min.js`
 
-##Data model
+## Data model
 On start and by default, the script `main_configuation.js` loads the data contained in `./dist/standardmodel.js`. It contains two variables `nodes` and `edges`. `nodes` contains the set of nodes and each node has an id, a description, a label, and possibly one or more tags. `edges` contains the set of edges and each edge has an id, the id of the node “to” and the id of the node “from”, and a label (+ or -).
 
 ```
@@ -98,7 +98,7 @@ for (var nodeId in allNodes) {
 nodesDataset.update(updateArray);
 
 ```
-##File format
+## File format
 The application can load and save files in JSON format formated as follows:
 ```
 {
