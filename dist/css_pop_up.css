@@ -1,0 +1,320 @@
+/*XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+   CSS FOR THE POP-UP
+ XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX*/
+
+
+/*POP UP ADD EDGE AND ADD NODE*/
+
+/*Buttons save and cancel*/
+.button_popup{
+	background-color: rgb(60,60,60);
+    border: none;
+    color: white;
+    /* padding: 15px 32px; */
+	padding: 7px 27px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+	cursor:pointer;
+}
+
+
+
+
+
+
+/*POP UP ADD/EDIT NODE*/
+
+#network-popUp {
+  display:none;
+  position:absolute;
+ left: 0; 
+  right: 0; 
+  top:0;
+  bottom:0;
+  margin-left: auto; 
+  margin-right: auto; 
+  margin-bottom: auto;
+  margin-top: auto;
+  z-index:299;
+  width:850px;
+  height:300px;
+  background-color: #f9f9f9;
+  border-style:solid;
+  border-width:3px;
+  border-color: rgba(21,95,100,0.6);
+  padding:2%;
+  padding-bottom:10%;
+}
+
+#node-label {
+	border:1px solid #aaa; 
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+	background-color: white;
+    background-position: 10px 10px;
+    background-repeat: no-repeat;
+	width:490px;
+	height:28px;
+	font-size: 16px;
+}
+
+#node-description{
+  -moz-appearance: textfield-multiline;
+  -webkit-appearance: textarea;
+  border: 1px solid gray;
+  font-family: Arial, Helvetica, sans-serif;
+  overflow: auto;
+  border:1px solid #aaa; 
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+  resize: both;
+  padding: 1em;
+  height: 150px;
+  background-color: #FFFFFF;
+  color:#2c2c2c;
+  max-width: 800px;
+  max-height: 130px;
+  min-width: 800px;
+  min-height: 130px;
+}
+
+
+/*tool bar for description*/
+.toolbar {
+  text-align: center;
+}
+
+.toolbar a,
+.fore-wrapper,
+.back-wrapper {
+  border: 1px solid #AAA;
+  background: #FFF;
+  font-family: 'Candal';
+  border-radius: 1px;
+  color: black;
+  padding: 3px;
+  width: 1.9em;
+  margin: -2px;
+  margin-top: 10px;
+  display: inline-block;
+  text-decoration: none;
+  box-shadow: 0px 1px 0px #CCC;
+}
+
+.toolbar a:hover,
+.fore-wrapper:hover,
+.back-wrapper:hover {
+  background: #f2f2f2;
+  border-color: #8c8c8c;
+}
+
+a[data-command='redo'],
+a[data-command='strikeThrough'],
+a[data-command='justifyFull'],
+a[data-command='insertOrderedList'],
+a[data-command='outdent'],
+a[data-command='p'],
+a[data-command='superscript'] {
+  margin-right: 5px;
+  border-radius: 0 3px 3px 0;
+}
+
+a[data-command='undo'],
+.fore-wrapper,
+a[data-command='justifyLeft'],
+a[data-command='insertUnorderedList'],
+a[data-command='indent'],
+a[data-command='h1'],
+a[data-command='subscript'] {
+  border-radius: 3px 0 0 3px;
+}
+
+a.palette-item {
+  height: 1em;
+  border-radius: 3px;
+  margin: 2px;
+  width: 1em;
+  border: 1px solid #CCC;
+}
+
+a.palette-item:hover {
+  border: 1px solid #CCC;
+  box-shadow: 0 0 3px #333;
+}
+
+.fore-palette,
+.back-palette {
+  display: none;
+}
+
+.fore-wrapper,
+.back-wrapper {
+  display: inline-block;
+  cursor: pointer;
+}
+
+.fore-wrapper:hover .fore-palette,
+.back-wrapper:hover .back-palette {
+  display: block;
+  float: left;
+  position: absolute;
+  padding: 3px;
+  width: 160px;
+  background: #FFF;
+  border: 1px solid #DDD;
+  box-shadow: 0 0 5px #CCC;
+  height: 70px;
+}
+
+.fore-palette a,
+.back-palette a {
+  background: #FFF;
+  margin-bottom: 2px;
+}
+
+
+
+/*POP UP ADD EDGE*/
+
+#network-popUp_edge {
+  display:none;
+  position:absolute;
+  left: 0; 
+  right: 0; 
+  top:0;
+  bottom:0;
+  margin-left: auto; 
+  margin-right: auto; 
+  margin-bottom: auto;
+  margin-top: auto;
+  z-index:299;
+  width:330px;
+  height:200px;
+  background-color: #f9f9f9;
+  border-style:solid;
+  border-width:3px;
+  border-color: rgba(21,95,100,0.6);
+  padding:3%;
+}
+
+/* Checkbox same direction/opposite direction */
+/* Customize the label (the container) */
+.checkbox_edge {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+/* Hide the browser's default checkbox */
+.checkbox_edge input {
+  position: absolute;
+  opacity: 0;
+}
+ /* Create a custom checkbox */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #ccc;
+}
+ /*On mouse-over */
+.checkbox_edge:hover input ~ .checkmark {
+  background-color: #888;
+}
+/* When the checkbox is checked*/
+.checkbox_edge input:checked ~ .checkmark {
+  background-color: rgba(21,95,100,0.6);
+}
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkbox_edge:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+/* Show the checkmark when checked */
+.checkbox_edge input:checked ~ .checkmark:after {
+  display: block;
+}
+/* Style the checkmark/indicator */
+.checkbox_edge .checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+} 
+
+
+
+
+
+
+
+
+/*POP UP QUESTION MARK*/
+
+#questionMark-popUp {
+  display:none;
+  position:absolute;
+  left: 0; 
+  right: 0; 
+  top:0;
+  bottom:0;
+  margin-left: auto; 
+  margin-right: auto; 
+  margin-bottom: auto;
+  margin-top: auto;
+  z-index:299;
+  width:600px;
+  height:250px;
+  background-color: #f9f9f9;
+  border-style:solid;
+  border-width:3px;
+  border-color: rgba(21,95,100,0.6);
+  padding:2%; 
+}
+
+#button_close{
+  position:absolute;
+  right: 5px; 
+  top:5px;
+  cursor:pointer;
+}
+
+div#text_scenario_css {
+    z-index:0;
+    position: absolute; 
+    bottom: 5px; 
+    width: 99%; 
+}
+div#text_scenario_css p {
+    text-align: center; 
+}
+
+.usages{
+	cursor: pointer;
+	font-size:18px;
+	font-family: Arial, Helvetica, sans-serif;
+	color: rgb(60,60,60);
+}
+
+.usage_scenario{
+	font-size:18px;
+	font-family: Arial, Helvetica, sans-serif;
+	color: rgb(60,60,60);
+}
+

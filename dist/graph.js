@@ -1,3 +1,11 @@
+// XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+// File that contains the function to draw the scatter graph
+// XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+
+//This function uses sessionStorage to access the data to plot the graph (tab2).
+//The highcharts library is used to draw the scatter graph.
+//See the documentation for the different options: https://api.highcharts.com/highcharts/plotOptions.scatter
 
 function Storage(){
 	 var items = [];
@@ -6,7 +14,7 @@ function Storage(){
 
 	 for (var i = 0; i <tab.length; i++) {
       items.push({x: tab[i][1], y: tab[i][2], label: tab[i][0] });
-  }
+     }
   
 	
  Highcharts.chart('container', {
@@ -84,15 +92,5 @@ function Storage(){
      
 	}); 
     }
-  
- /*  (function (H) {
-    H.wrap(H.Tooltip.prototype, 'refresh', function (proceed, point, e) {
-        if (e && e.type !== 'mousemove') {
-            proceed.call(this, point, e);
-        }
-    });
-    H.addEvent(H.Point.prototype, 'click', function (e) {
-        e.point.series.chart.tooltip.refresh(e.point.label);
-    });
-}(Highcharts)); */
+
 

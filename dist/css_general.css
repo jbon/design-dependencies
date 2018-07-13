@@ -1,0 +1,43 @@
+ /*XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+   GLOBAL NETWORK CSS
+ XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX*/
+ 
+ 
+#mynetwork {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+}
+
+ #optionsContainer {
+  height:100%; 
+  width:800px;
+  background-color: #EEEEEE;
+  z-index: 1;
+  display: none;
+} 
+ 
+#titre {
+	 font-size:34px;
+	 font-family: Arial, Helvetica, sans-serif;
+	 font-weight: bold;
+	 color: rgb(60,60,60);
+	 cursor: default;
+}
+
+#soustitre {
+	 font-size:16px;
+	 color: rgb(40,40,40);
+	 font-family: Arial, Helvetica, sans-serif;
+	 cursor: default;
+	 font-weight: bold;
+}
+
+.soustitre {
+	font-size:14px;
+	 color: rgb(40,40,40);
+	 font-family: Arial, Helvetica, sans-serif;
+}
